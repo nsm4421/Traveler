@@ -2,6 +2,16 @@
 analysis_options.yaml
 module.iml
 pubspec.lock
+**.g.dart
+**.config.dart
+**.freezed.dart
+
+lib/data/model/export.dart
+lib/data/repository_impl/export.dart
+lib/data/datasource/export.dart
+lib/domain/entity/export.dart
+lib/domain/usecase/export.dart
+lib/domain/repository/export.dart
 
 # Miscellaneous
 *.class
