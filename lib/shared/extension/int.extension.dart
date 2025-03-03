@@ -8,4 +8,8 @@ extension IntExtension on int {
   Duration get durationInMilli => Duration(microseconds: this);
 
   Duration get durationInSec => Duration(seconds: this);
+
+  Duration get durationInHour => Duration(hours: this);
+
+  Duration get durationInDays => Duration(days: this);
 }

@@ -7,12 +7,8 @@ import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/repository/export.dart';
 import 'package:module/shared/shared.export.dart';
 
-import '../logger.mixin.dart';
-
 @LazySingleton(as: JourneyRepository)
-class JourneyRepositoryImpl
-    with RepositoryLoggerMixIn
-    implements JourneyRepository {
+class JourneyRepositoryImpl with LoggerMixIn implements JourneyRepository {
   final RemoteAuthDataSource _remoteAuthDataSource;
   final RemoteJourneyDataSource _remoteJourneyDataSource;
 
@@ -37,7 +33,7 @@ class JourneyRepositoryImpl
           .then((_) => ApiSuccess<void>())
           .then(Right.new);
     } catch (error) {
-      logger.e(error);
+      logger.e([LogTags.repository.name, error]);
       return Left(ApiFailure());
     }
   }
@@ -50,7 +46,7 @@ class JourneyRepositoryImpl
           .then((_) => ApiSuccess<void>())
           .then(Right.new);
     } catch (error) {
-      logger.e(error);
+      logger.e([LogTags.repository.name, error]);
       return Left(ApiFailure());
     }
   }
@@ -64,7 +60,7 @@ class JourneyRepositoryImpl
           .then((data) => ApiSuccess<List<JourneyEntity>>(data: data))
           .then(Right.new);
     } catch (error) {
-      logger.e(error);
+      logger.e([LogTags.repository.name, error]);
       return Left(ApiFailure());
     }
   }
@@ -86,7 +82,7 @@ class JourneyRepositoryImpl
           .then((_) => ApiSuccess<void>())
           .then(Right.new);
     } catch (error) {
-      logger.e(error);
+      logger.e([LogTags.repository.name, error]);
       return Left(ApiFailure());
     }
   }

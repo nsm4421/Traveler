@@ -6,10 +6,8 @@ import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/repository/export.dart';
 import 'package:module/shared/shared.export.dart';
 
-import '../logger.mixin.dart';
-
 @LazySingleton(as: AuthRepository)
-class AuthRepositoryImpl with RepositoryLoggerMixIn implements AuthRepository {
+class AuthRepositoryImpl with LoggerMixIn implements AuthRepository {
   final RemoteAuthDataSource _remoteAuthDataSource;
 
   AuthRepositoryImpl(this._remoteAuthDataSource);
@@ -31,7 +29,7 @@ class AuthRepositoryImpl with RepositoryLoggerMixIn implements AuthRepository {
           .then((data) => ApiSuccess<UserEntity>(data: data))
           .then(Right.new);
     } catch (error) {
-      logger.e(error);
+      logger.e([LogTags.repository.name, error]);
       return Left(ApiFailure());
     }
   }
@@ -44,7 +42,7 @@ class AuthRepositoryImpl with RepositoryLoggerMixIn implements AuthRepository {
           .then((data) => ApiSuccess<void>())
           .then(Right.new);
     } catch (error) {
-      logger.e(error);
+      logger.e([LogTags.repository.name, error]);
       return Left(ApiFailure());
     }
   }
@@ -67,7 +65,7 @@ class AuthRepositoryImpl with RepositoryLoggerMixIn implements AuthRepository {
           .then((data) => ApiSuccess<void>())
           .then(Right.new);
     } catch (error) {
-      logger.e(error);
+      logger.e([LogTags.repository.name, error]);
       return Left(ApiFailure());
     }
   }

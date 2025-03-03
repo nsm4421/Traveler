@@ -3,7 +3,6 @@ import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/repository/export.dart';
-import 'package:module/domain/usecase/logger.mixin.dart';
 import 'package:module/shared/shared.export.dart';
 
 part 'scenario/sign_in.usecase.dart';
@@ -13,7 +12,7 @@ part 'scenario/sign_up.usecase.dart';
 part 'scenario/sign_out.usecase.dart';
 
 @lazySingleton
-class AuthUseCase with UseCaseLoggerMixIn {
+class AuthUseCase with LoggerMixIn {
   final AuthRepository _repository;
 
   AuthUseCase(this._repository);

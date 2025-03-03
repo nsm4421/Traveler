@@ -6,12 +6,8 @@ import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/repository/export.dart';
 import 'package:module/shared/shared.export.dart';
 
-import '../logger.mixin.dart';
-
 @LazySingleton(as: ApplyRepository)
-class ApplyRepositoryImpl
-    with RepositoryLoggerMixIn
-    implements ApplyRepository {
+class ApplyRepositoryImpl with LoggerMixIn implements ApplyRepository {
   final RemoteAuthDataSource _remoteAuthDataSource;
   final RemoteApplyDataSource _remoteApplyDataSource;
 

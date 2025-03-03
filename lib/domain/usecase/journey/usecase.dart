@@ -4,7 +4,6 @@ import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/repository/export.dart';
-import 'package:module/domain/usecase/logger.mixin.dart';
 import 'package:module/shared/shared.export.dart';
 
 part 'scenario/create_journey.usecase.dart';
@@ -16,7 +15,7 @@ part 'scenario/modify_journey.usecase.dart';
 part 'scenario/delete_journey.usecase.dart';
 
 @lazySingleton
-class JourneyUseCase with UseCaseLoggerMixIn {
+class JourneyUseCase with LoggerMixIn {
   final JourneyRepository _repository;
 
   JourneyUseCase(this._repository);

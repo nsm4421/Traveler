@@ -1,13 +1,22 @@
+import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 
-part 'filter.dart';
+enum LogTags {
+  dataSource,
+  repository,
+  useCase,
+  bloc;
+}
 
-class CustomLoggerUtil {
-  static Logger genLogger(
-          {List<LogTags>? allowedTags, PrettyPrinter? printer}) =>
-      Logger(
-          filter: allowedTags == null || allowedTags.isEmpty
-              ? null
-              : CustomLogFilter(allowedTags: allowedTags),
-          printer: printer ?? PrettyPrinter());
+@lazySingleton
+mixin class LoggerMixIn {
+  final Logger logger = Logger(
+    printer: PrettyPrinter(
+      methodCount: 2,
+      errorMethodCount: 8,
+      lineLength: 120,
+      colors: true,
+      printEmojis: true,
+    ),
+  );
 }

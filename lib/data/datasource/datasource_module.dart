@@ -14,20 +14,18 @@ import 'journey/remote_datasource_impl.dart';
 abstract class LocalDataSourceModule {}
 
 @module
-abstract class RemoteDataSourceModule {
+abstract class RemoteDataSourceModule with LoggerMixIn {
   final SupabaseClient _supabaseClient = Supabase.instance.client;
-  final Logger _logger =
-      CustomLoggerUtil.genLogger(allowedTags: [LogTags.dataSource]);
 
   @lazySingleton
   RemoteAuthDataSource get auth => RemoteAuthDataSourceImpl(
-      supabaseClient: _supabaseClient, logger: _logger);
+      supabaseClient: _supabaseClient, logger: logger);
 
   @lazySingleton
   RemoteJourneyDataSource get journey => RemoteJourneyDataSourceImpl(
-      supabaseClient: _supabaseClient, logger: _logger);
+      supabaseClient: _supabaseClient, logger: logger);
 
   @lazySingleton
   RemoteApplyDataSource get apply => RemoteApplyDataSourceImpl(
-      supabaseClient: _supabaseClient, logger: _logger);
+      supabaseClient: _supabaseClient, logger: logger);
 }
