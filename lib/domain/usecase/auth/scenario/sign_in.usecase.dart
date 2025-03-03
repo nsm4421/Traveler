@@ -2,14 +2,22 @@ part of '../usecase.dart';
 
 class SignInUseCase {
   final AuthRepository _repository;
+  final Logger _logger;
 
-  SignInUseCase(this._repository);
+  SignInUseCase({required AuthRepository repository, required Logger logger})
+      : _repository = repository,
+        _logger = logger;
 
   Future<Either<FailureResult, SuccessResult<UserEntity>>> call(
       {required String username, required String password}) async {
-    return await _repository
-        .signIn(username: username, password: password)
-        .then((res) => res.fold((l) => Left(FailureResult.from(l)),
-            (r) => Right(SuccessResult<UserEntity>.from(r))));
+    try {
+      return await _repository
+          .signIn(username: username, password: password)
+          .then((res) => res.fold((l) => Left(FailureResult.from(l)),
+              (r) => Right(SuccessResult<UserEntity>.from(r))));
+    } catch (error) {
+      _logger.e([LogTags.useCase, error]);
+      return const Left(FailureResult(message: 'error occurs on use case'));
+    }
   }
 }

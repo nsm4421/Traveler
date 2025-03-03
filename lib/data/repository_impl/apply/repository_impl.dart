@@ -6,8 +6,12 @@ import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/repository/export.dart';
 import 'package:module/shared/shared.export.dart';
 
+import '../logger.mixin.dart';
+
 @LazySingleton(as: ApplyRepository)
-class ApplyRepositoryImpl implements ApplyRepository {
+class ApplyRepositoryImpl
+    with RepositoryLoggerMixIn
+    implements ApplyRepository {
   final RemoteAuthDataSource _remoteAuthDataSource;
   final RemoteApplyDataSource _remoteApplyDataSource;
 
@@ -29,7 +33,7 @@ class ApplyRepositoryImpl implements ApplyRepository {
           .then((_) => ApiSuccess<void>())
           .then(Right.new);
     } catch (error) {
-      // TODO : 오류처리
+      logger.e([LogTags.repository.name, error]);
       return Left(ApiFailure());
     }
   }
@@ -42,7 +46,7 @@ class ApplyRepositoryImpl implements ApplyRepository {
           .then((_) => ApiSuccess<void>())
           .then(Right.new);
     } catch (error) {
-      // TODO : 오류처리
+      logger.e([LogTags.repository.name, error]);
       return Left(ApiFailure());
     }
   }
@@ -56,7 +60,7 @@ class ApplyRepositoryImpl implements ApplyRepository {
           .then((data) => ApiSuccess<List<ApplyEntity>>(data: data))
           .then(Right.new);
     } catch (error) {
-      // TODO : 오류처리
+      logger.e([LogTags.repository.name, error]);
       return Left(ApiFailure());
     }
   }
@@ -76,7 +80,7 @@ class ApplyRepositoryImpl implements ApplyRepository {
           .then((_) => ApiSuccess<void>())
           .then(Right.new);
     } catch (error) {
-      // TODO : 오류처리
+      logger.e([LogTags.repository.name, error]);
       return Left(ApiFailure());
     }
   }

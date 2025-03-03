@@ -2,8 +2,11 @@ part of '../usecase.dart';
 
 class SignUpUseCase {
   final AuthRepository _repository;
+  final Logger _logger;
 
-  SignUpUseCase(this._repository);
+  SignUpUseCase({required AuthRepository repository, required Logger logger})
+      : _repository = repository,
+        _logger = logger;
 
   // TODO : 프로필 사진 업롣 기능
   Future<Either<FailureResult, SuccessResult<void>>> call(
@@ -12,14 +15,19 @@ class SignUpUseCase {
       required Sex sex,
       required DateTime bornAt,
       required String password}) async {
-    return await _repository
-        .signUp(
-            username: username,
-            description: description,
-            sex: sex,
-            bornAt: bornAt,
-            password: password)
-        .then((res) => res.fold((l) => Left(FailureResult.from(l)),
-            (r) => Right(SuccessResult<void>.from(r))));
+    try {
+      return await _repository
+          .signUp(
+              username: username,
+              description: description,
+              sex: sex,
+              bornAt: bornAt,
+              password: password)
+          .then((res) => res.fold((l) => Left(FailureResult.from(l)),
+              (r) => Right(SuccessResult<void>.from(r))));
+    } catch (error) {
+      _logger.e([LogTags.useCase, error]);
+      return const Left(FailureResult(message: 'error occurs on use case'));
+    }
   }
 }

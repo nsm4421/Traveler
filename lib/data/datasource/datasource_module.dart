@@ -1,4 +1,7 @@
 import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
+import 'package:module/shared/shared.export.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'apply/remote_datasource.dart';
 import 'apply/remote_datasource_impl.dart';
@@ -12,12 +15,19 @@ abstract class LocalDataSourceModule {}
 
 @module
 abstract class RemoteDataSourceModule {
-  @lazySingleton
-  RemoteAuthDataSource get auth => RemoteAuthDataSourceImpl();
+  final SupabaseClient _supabaseClient = Supabase.instance.client;
+  final Logger _logger =
+      CustomLoggerUtil.genLogger(allowedTags: [LogTags.dataSource]);
 
   @lazySingleton
-  RemoteJourneyDataSource get journey => RemoteJourneyDataSourceImpl();
+  RemoteAuthDataSource get auth => RemoteAuthDataSourceImpl(
+      supabaseClient: _supabaseClient, logger: _logger);
 
   @lazySingleton
-  RemoteApplyDataSource get apply => RemoteApplyDataSourceImpl();
+  RemoteJourneyDataSource get journey => RemoteJourneyDataSourceImpl(
+      supabaseClient: _supabaseClient, logger: _logger);
+
+  @lazySingleton
+  RemoteApplyDataSource get apply => RemoteApplyDataSourceImpl(
+      supabaseClient: _supabaseClient, logger: _logger);
 }

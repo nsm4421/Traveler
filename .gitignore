@@ -5,6 +5,8 @@ pubspec.lock
 **.g.dart
 **.config.dart
 **.freezed.dart
+supabase/
+.env
 
 lib/data/model/export.dart
 lib/data/repository_impl/export.dart

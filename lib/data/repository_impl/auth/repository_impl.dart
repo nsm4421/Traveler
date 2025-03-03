@@ -6,8 +6,10 @@ import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/repository/export.dart';
 import 'package:module/shared/shared.export.dart';
 
+import '../logger.mixin.dart';
+
 @LazySingleton(as: AuthRepository)
-class AuthRepositoryImpl implements AuthRepository {
+class AuthRepositoryImpl with RepositoryLoggerMixIn implements AuthRepository {
   final RemoteAuthDataSource _remoteAuthDataSource;
 
   AuthRepositoryImpl(this._remoteAuthDataSource);
@@ -29,7 +31,7 @@ class AuthRepositoryImpl implements AuthRepository {
           .then((data) => ApiSuccess<UserEntity>(data: data))
           .then(Right.new);
     } catch (error) {
-      // TODO : 오류처리
+      logger.e(error);
       return Left(ApiFailure());
     }
   }
@@ -42,7 +44,7 @@ class AuthRepositoryImpl implements AuthRepository {
           .then((data) => ApiSuccess<void>())
           .then(Right.new);
     } catch (error) {
-      // TODO : 오류처리
+      logger.e(error);
       return Left(ApiFailure());
     }
   }
@@ -65,7 +67,7 @@ class AuthRepositoryImpl implements AuthRepository {
           .then((data) => ApiSuccess<void>())
           .then(Right.new);
     } catch (error) {
-      // TODO : 오류처리
+      logger.e(error);
       return Left(ApiFailure());
     }
   }

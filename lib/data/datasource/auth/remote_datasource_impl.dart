@@ -1,8 +1,18 @@
+import 'package:logger/logger.dart';
 import 'package:module/data/model/export.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'remote_datasource.dart';
 
 class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
+  final SupabaseClient _supabaseClient;
+  final Logger _logger;
+
+  RemoteAuthDataSourceImpl(
+      {required SupabaseClient supabaseClient, required Logger logger})
+      : _supabaseClient = supabaseClient,
+        _logger = logger;
+
   @override
   // TODO: implement currentUser
   UserModel get currentUser => throw UnimplementedError();
