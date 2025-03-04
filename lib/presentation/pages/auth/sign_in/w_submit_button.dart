@@ -1,4 +1,4 @@
-part of 's_create_journey.dart';
+part of 's_sign_in.dart';
 
 class SubmitButtonWidget extends StatelessWidget {
   const SubmitButtonWidget({super.key});
@@ -8,7 +8,7 @@ class SubmitButtonWidget extends StatelessWidget {
     return ElevatedButton(
         onPressed: () async {
           FocusScope.of(context).unfocus();
-          await context.read<CreateJourneyCubit>().submit();
+          await context.read<SignInCubit>().submit();
         },
         child: Text("Submit"));
   }

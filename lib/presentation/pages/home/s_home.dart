@@ -20,6 +20,16 @@ class HomeScreen extends StatelessWidget {
           children: [
             ElevatedButton(
                 onPressed: () {
+                  context.push(Routes.signUp.path);
+                },
+                child: Text("Sign Up")),
+            ElevatedButton(
+                onPressed: () {
+                  context.push(Routes.signIn.path);
+                },
+                child: Text("Sign In")),
+            ElevatedButton(
+                onPressed: () {
                   context.push(Routes.journey.path);
                 },
                 child: Text("Journey")),

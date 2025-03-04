@@ -42,7 +42,15 @@ class CreateJourneyCubit extends Cubit<CreateJourneyState> with LoggerMixIn {
   Future<void> submit() async {
     try {
       if (!validate) {
-        logger.w([LogTags.bloc.name, 'validation fails']);
+        logger.w([
+          LogTags.bloc.name,
+          'validation fails',
+          'country:${state.country}',
+          'title:${state.title}',
+          'content:${state.content}',
+          'startDate:${state.startDate}',
+          'endDate:${state.endDate}',
+        ]);
         emit(state.copyWith(
             status: Status.error, errorMessage: 'validation fails'));
         return;

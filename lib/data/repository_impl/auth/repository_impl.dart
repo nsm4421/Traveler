@@ -21,10 +21,10 @@ class AuthRepositoryImpl with LoggerMixIn implements AuthRepository {
 
   @override
   Future<Either<ApiFailure, ApiSuccess<UserEntity>>> signIn(
-      {required String username, required String password}) async {
+      {required String email, required String password}) async {
     try {
       return await _remoteAuthDataSource
-          .signIn(SignInRequestModel(username: username, password: password))
+          .signIn(email: email, password: password)
           .then(UserEntity.from)
           .then((data) => ApiSuccess<UserEntity>(data: data))
           .then(Right.new);
@@ -49,7 +49,8 @@ class AuthRepositoryImpl with LoggerMixIn implements AuthRepository {
 
   @override
   Future<Either<ApiFailure, ApiSuccess<void>>> signUp(
-      {required String username,
+      {required String email,
+      required String username,
       required String description,
       required Sex sex,
       required DateTime bornAt,
@@ -57,6 +58,7 @@ class AuthRepositoryImpl with LoggerMixIn implements AuthRepository {
     try {
       return await _remoteAuthDataSource
           .signUp(SignUpRequestModel(
+              email: email,
               username: username,
               password: password,
               description: description,

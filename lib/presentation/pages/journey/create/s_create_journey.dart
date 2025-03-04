@@ -10,6 +10,8 @@ part 'f_select_date.dart';
 
 part 'f_edit_content.dart';
 
+part 'f_select_country.dart';
+
 part 'w_submit_button.dart';
 
 class CreateJourneyScreen extends StatelessWidget {
@@ -26,7 +28,8 @@ class CreateJourneyScreen extends StatelessWidget {
           children: [
             SelectDateFragment(),
             EditContentFragment(),
-            SubmitButton(),
+            SelectCountryFragment(),
+            SubmitButtonWidget(),
           ],
         ),
       ),

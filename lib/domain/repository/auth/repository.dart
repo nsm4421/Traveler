@@ -9,13 +9,14 @@ abstract interface class AuthRepository {
 
   Future<Either<ApiFailure, ApiSuccess<void>>> signUp(
       {required String username,
+      required String email,
       required String description,
       required Sex sex,
       required DateTime bornAt,
       required String password});
 
   Future<Either<ApiFailure, ApiSuccess<UserEntity>>> signIn(
-      {required String username, required String password});
+      {required String email, required String password});
 
   Future<Either<ApiFailure, ApiSuccess<void>>> signOut();
 }

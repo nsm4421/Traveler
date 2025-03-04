@@ -2,6 +2,8 @@ part of 'router_config.dart';
 
 enum Routes {
   home('/'),
+  signIn('/auth/sign-in'),
+  signUp('/auth/sign-up'),
   journey('/journey'),
   createJourney('/journey/create'),
   apply('/apply'),

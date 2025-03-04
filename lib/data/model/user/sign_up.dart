@@ -9,6 +9,7 @@ part 'sign_up.g.dart';
 @freezed
 class SignUpRequestModel with _$SignUpRequestModel {
   const factory SignUpRequestModel({
+    required String email,
     required String username,
     required String password,
     required String description,

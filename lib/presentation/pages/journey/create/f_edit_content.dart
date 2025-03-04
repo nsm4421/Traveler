@@ -43,7 +43,7 @@ class _EditContentFragmentState extends State<EditContentFragment> {
 
   _handleUpdateContent() {
     if (!_contentFocus.hasFocus) {
-      context.read<CreateJourneyCubit>().update(title: _contentController.text);
+      context.read<CreateJourneyCubit>().update(content: _contentController.text);
     }
   }
 

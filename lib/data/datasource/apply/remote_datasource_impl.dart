@@ -13,27 +13,31 @@ class RemoteApplyDataSourceImpl implements RemoteApplyDataSource {
       : _supabaseClient = supabaseClient,
         _logger = logger;
 
+  String get _tableName => 'apply';
+
   @override
-  Future<void> create(CreateApplyModel model) {
-    // TODO: implement create
-    throw UnimplementedError();
+  Future<void> create(CreateApplyModel model) async {
+    await _supabaseClient.from(_tableName).insert(model.toJson());
   }
 
   @override
-  Future<void> delete(String id) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<void> delete(String id) async {
+    await _supabaseClient.from(_tableName).delete().eq("id", id);
   }
 
   @override
-  Future<Iterable<ApplyModel>> fetch() {
-    // TODO: implement fetch
-    throw UnimplementedError();
+  Future<Iterable<ApplyModel>> fetch() async {
+    return await _supabaseClient
+        .from(_tableName)
+        .select("*")
+        .then((res) => res.map(ApplyModel.fromJson));
   }
 
   @override
-  Future<void> modify(ModifyApplyModel model) {
-    // TODO: implement modify
-    throw UnimplementedError();
+  Future<void> modify(ModifyApplyModel model) async {
+    await _supabaseClient
+        .from(_tableName)
+        .update(model.toJson())
+        .eq("id", model.id);
   }
 }

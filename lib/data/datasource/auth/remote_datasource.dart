@@ -7,7 +7,7 @@ abstract interface class RemoteAuthDataSource {
 
   Future<void> signUp(SignUpRequestModel model);
 
-  Future<UserModel> signIn(SignInRequestModel model);
+  Future<UserModel> signIn({required String email, required String password});
 
   Future<void> signOut();
 }

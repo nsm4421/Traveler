@@ -9,10 +9,10 @@ class SignInUseCase {
         _logger = logger;
 
   Future<Either<FailureResult, SuccessResult<UserEntity>>> call(
-      {required String username, required String password}) async {
+      {required String email, required String password}) async {
     try {
       return await _repository
-          .signIn(username: username, password: password)
+          .signIn(email: email, password: password)
           .then((res) => res.fold((l) => Left(FailureResult.from(l)),
               (r) => Right(SuccessResult<UserEntity>.from(r))));
     } catch (error) {
