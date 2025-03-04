@@ -1,4 +1,3 @@
-import 'package:either_dart/src/either.dart';
 import 'package:injectable/injectable.dart';
 import 'package:module/data/datasource/export.dart';
 import 'package:module/data/model/export.dart';
@@ -18,66 +17,34 @@ class ApplyRepositoryImpl with LoggerMixIn implements ApplyRepository {
         _remoteApplyDataSource = remoteApplyDataSource;
 
   @override
-  Future<Either<ApiFailure, ApiSuccess<void>>> create(
-      {required String planId, required String content}) async {
-    try {
-      return await _remoteApplyDataSource
-          .create(CreateApplyModel(
-              plan_id: planId,
-              uid: _remoteAuthDataSource.currentUid,
-              content: content))
-          .then((_) => ApiSuccess<void>())
-          .then(Right.new);
-    } catch (error) {
-      logger.e([LogTags.repository.name, error]);
-      return Left(ApiFailure());
-    }
+  Future<void> create({required String planId, required String content}) async {
+    return await _remoteApplyDataSource.create(CreateApplyModel(
+        plan_id: planId,
+        uid: _remoteAuthDataSource.currentUid,
+        content: content));
   }
 
   @override
-  Future<Either<ApiFailure, ApiSuccess<void>>> delete(String id) async {
-    try {
-      return await _remoteApplyDataSource
-          .delete(id)
-          .then((_) => ApiSuccess<void>())
-          .then(Right.new);
-    } catch (error) {
-      logger.e([LogTags.repository.name, error]);
-      return Left(ApiFailure());
-    }
+  Future<void> delete(String id) async {
+    return await _remoteApplyDataSource.delete(id);
   }
 
   @override
-  Future<Either<ApiFailure, ApiSuccess<List<ApplyEntity>>>> fetch() async {
-    try {
-      return await _remoteApplyDataSource
-          .fetch()
-          .then((res) => res.map(ApplyEntity.from).toList())
-          .then((data) => ApiSuccess<List<ApplyEntity>>(data: data))
-          .then(Right.new);
-    } catch (error) {
-      logger.e([LogTags.repository.name, error]);
-      return Left(ApiFailure());
-    }
+  Future<List<ApplyEntity>> fetch() async {
+    return await _remoteApplyDataSource
+        .fetch()
+        .then((res) => res.map(ApplyEntity.from).toList());
   }
 
   @override
-  Future<Either<ApiFailure, ApiSuccess<void>>> modify(
+  Future<void> modify(
       {required String id,
       required String planId,
       required String content}) async {
-    try {
-      return await _remoteApplyDataSource
-          .modify(ModifyApplyModel(
-              id: id,
-              plan_id: planId,
-              uid: _remoteAuthDataSource.currentUid,
-              content: content))
-          .then((_) => ApiSuccess<void>())
-          .then(Right.new);
-    } catch (error) {
-      logger.e([LogTags.repository.name, error]);
-      return Left(ApiFailure());
-    }
+    return await _remoteApplyDataSource.modify(ModifyApplyModel(
+        id: id,
+        plan_id: planId,
+        uid: _remoteAuthDataSource.currentUid,
+        content: content));
   }
 }

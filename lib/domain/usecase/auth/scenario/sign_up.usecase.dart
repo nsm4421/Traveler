@@ -11,6 +11,7 @@ class SignUpUseCase {
   // TODO : 프로필 사진 업롣 기능
   Future<Either<FailureResult, SuccessResult<void>>> call(
       {required String username,
+      required String email,
       required String description,
       required Sex sex,
       required DateTime bornAt,
@@ -19,6 +20,7 @@ class SignUpUseCase {
       return await _repository
           .signUp(
               username: username,
+              email: email,
               description: description,
               sex: sex,
               bornAt: bornAt,

@@ -6,46 +6,25 @@ abstract class _Response {
   bool get ok;
 }
 
-class _Success<T> extends _Response {
+class Success<T> extends _Response {
   final T? data;
+  final String? message;
 
-  const _Success({this.data});
+  const Success({this.data, this.message});
 
   @override
   bool get ok => true;
 }
 
-class _Failure extends _Response {
+class Failure extends _Response {
   final ErrorCode? errorCode;
   final String? message;
 
-  const _Failure({this.errorCode, this.message});
+  const Failure({this.errorCode, this.message});
 
-  _Failure copyWith({String? message, ErrorCode? errorCode}) => _Failure(
+  Failure copyWith({String? message, ErrorCode? errorCode}) => Failure(
       message: message ?? this.message, errorCode: errorCode ?? this.errorCode);
 
   @override
   bool get ok => false;
-}
-
-/// response wrapper for data layer(repository)
-class ApiSuccess<T> extends _Success<T> {
-  ApiSuccess({super.data});
-}
-
-class ApiFailure extends _Failure {}
-
-/// response wrapper for domain layer(useCase)
-class SuccessResult<T> extends _Success<T> {
-  SuccessResult({super.data});
-
-  factory SuccessResult.from(ApiSuccess<T> apiResponse) =>
-      SuccessResult<T>(data: apiResponse.data);
-}
-
-class FailureResult extends _Failure {
-  const FailureResult({super.errorCode, super.message});
-
-  factory FailureResult.from(ApiFailure apiResponse) => FailureResult(
-      errorCode: apiResponse.errorCode, message: apiResponse.message);
 }
