@@ -21,6 +21,8 @@ class AuthUseCase with LoggerMixIn {
 
   String get currentUid => _repository.currentUid;
 
+  Stream<UserEntity?> get authStream => _repository.authStream;
+
   SignUpUseCase get signUp =>
       SignUpUseCase(repository: _repository, logger: logger);
 

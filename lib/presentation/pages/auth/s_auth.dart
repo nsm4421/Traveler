@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../router/router_config.dart';
+import '../../widgets/sign_out.widget.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen(this._navigationShell, {super.key});
-
-  final StatefulNavigationShell _navigationShell;
+class AuthScreen extends StatelessWidget {
+  const AuthScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +15,11 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 context.push(Routes.apply.path);
               },
-              child: Text("여행 앱 만들기"))),
+              child: Text("Auth Screen"))),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SignOutWidget(),
             ElevatedButton(
                 onPressed: () {
                   context.push(Routes.signUp.path);
