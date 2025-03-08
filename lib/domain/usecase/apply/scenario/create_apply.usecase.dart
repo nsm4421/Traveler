@@ -9,15 +9,15 @@ class CreateApplyUseCase {
       : _repository = repository,
         _logger = logger;
 
-  Future<Either<FailureResult, SuccessResult<void>>> call(
+  Future<Either<Failure, Success<void>>> call(
       {required String planId, required String content}) async {
     try {
-      return await _repository.create(planId: planId, content: content).then(
-          (res) => res.fold((l) => Left(FailureResult.from(l)),
-              (r) => Right(SuccessResult<void>.from(r))));
+      return await _repository
+          .create(planId: planId, content: content)
+          .then((_)=>Right(Success<void>()));
     } catch (error) {
       _logger.e([LogTags.useCase, error]);
-      return Left(FailureResult(message: 'error occurs on use case'));
+      return Left(Failure(message: 'error occurs on use case'));
     }
   }
 }

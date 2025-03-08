@@ -9,15 +9,15 @@ class FetchApplyUseCase {
       : _repository = repository,
         _logger = logger;
 
-  Future<Either<FailureResult, SuccessResult<List<ApplyEntity>>>> call(
+  Future<Either<Failure, Success<List<ApplyEntity>>>> call(
       {required String planId, required String content}) async {
     try {
-      return await _repository.fetch().then((res) => res.fold(
-          (l) => Left(FailureResult.from(l)),
-          (r) => Right(SuccessResult<List<ApplyEntity>>.from(r))));
+      return await _repository
+          .fetch()
+          .then((r) => Right(Success<List<ApplyEntity>>(data: r)));
     } catch (error) {
       _logger.e([LogTags.useCase, error]);
-      return const Left(FailureResult(message: 'error occurs on use case'));
+      return const Left(Failure(message: 'error occurs on use case'));
     }
   }
 }

@@ -8,16 +8,15 @@ class SignInUseCase {
       : _repository = repository,
         _logger = logger;
 
-  Future<Either<FailureResult, SuccessResult<UserEntity>>> call(
+  Future<Either<Failure, Success<UserEntity>>> call(
       {required String email, required String password}) async {
     try {
-      return await _repository
-          .signIn(email: email, password: password)
-          .then((res) => res.fold((l) => Left(FailureResult.from(l)),
-              (r) => Right(SuccessResult<UserEntity>.from(r))));
+      await _repository
+          .signIn(email: email, password: password);
+      return Right(Success<UserEntity>(data:_repository.currentUser));
     } catch (error) {
       _logger.e([LogTags.useCase, error]);
-      return const Left(FailureResult(message: 'error occurs on use case'));
+      return const Left(Failure(message: 'error occurs on use case'));
     }
   }
 }

@@ -9,14 +9,12 @@ class DeleteApplyUseCase {
       : _repository = repository,
         _logger = logger;
 
-  Future<Either<FailureResult, SuccessResult<void>>> call(String id) async {
+  Future<Either<Failure, Success<void>>> call(String id) async {
     try {
-      return await _repository.delete(id).then((res) => res.fold(
-          (l) => Left(FailureResult.from(l)),
-          (r) => Right(SuccessResult<void>.from(r))));
+      return await _repository.delete(id).then((_) => Right(Success<void>()));
     } catch (error) {
       _logger.e([LogTags.useCase, error]);
-      return const Left(FailureResult(message: 'error occurs on use case'));
+      return const Left(Failure(message: 'error occurs on use case'));
     }
   }
 }

@@ -9,18 +9,17 @@ class ModifyApplyUseCase {
       : _repository = repository,
         _logger = logger;
 
-  Future<Either<FailureResult, SuccessResult<void>>> call(
+  Future<Either<Failure, Success<void>>> call(
       {required String id,
-      required String planId,
-      required String content}) async {
+        required String planId,
+        required String content}) async {
     try {
       return await _repository
           .modify(id: id, planId: planId, content: content)
-          .then((res) => res.fold((l) => Left(FailureResult.from(l)),
-              (r) => Right(SuccessResult<void>.from(r))));
+          .then((_)=>Right(Success<void>()));
     } catch (error) {
       _logger.e([LogTags.useCase, error]);
-      return const Left(FailureResult(message: 'error occurs on use case'));
+      return const Left(Failure(message: 'error occurs on use case'));
     }
   }
 }

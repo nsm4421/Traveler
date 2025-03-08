@@ -9,7 +9,7 @@ class ModifyJourneyUseCase {
       : _repository = repository,
         _logger = logger;
 
-  Future<Either<FailureResult, SuccessResult<void>>> call({
+  Future<Either<Failure, Success<void>>> call({
     required String id,
     required String content,
     required Country country,
@@ -18,15 +18,14 @@ class ModifyJourneyUseCase {
     try {
       return await _repository
           .modify(
-              id: id,
-              content: content,
-              country: country,
-              dateTimeRange: dateTimeRange)
-          .then((res) => res.fold((l) => Left(FailureResult.from(l)),
-              (r) => Right(SuccessResult<void>.from(r))));
+          id: id,
+          content: content,
+          country: country,
+          dateTimeRange: dateTimeRange)
+          .then((_) => Right(Success<void>()));
     } catch (error) {
       _logger.e([LogTags.useCase, error]);
-      return const Left(FailureResult(message: 'error occurs on use case'));
+      return const Left(Failure(message: 'error occurs on use case'));
     }
   }
 }

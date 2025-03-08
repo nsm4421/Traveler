@@ -9,18 +9,18 @@ class FetchJourneyUseCase {
       : _repository = repository,
         _logger = logger;
 
-  Future<Either<FailureResult, SuccessResult<List<JourneyEntity>>>> call({
+  Future<Either<Failure, Success<List<JourneyEntity>>>> call({
     required String content,
     required Country country,
     required DateTimeRange dateTimeRange,
   }) async {
     try {
-      return await _repository.fetch().then((res) => res.fold(
-          (l) => Left(FailureResult.from(l)),
-          (r) => Right(SuccessResult<List<JourneyEntity>>.from(r))));
+      return await _repository
+          .fetch()
+          .then((r) => Right(Success<List<JourneyEntity>>(data:r)));
     } catch (error) {
       _logger.e([LogTags.useCase, error]);
-      return const Left(FailureResult(message: 'error occurs on use case'));
+      return const Left(Failure(message: 'error occurs on use case'));
     }
   }
 }
