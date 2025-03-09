@@ -1,10 +1,12 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:module/shared/shared.export.dart';
 import 'package:dio/dio.dart';
 
+import 'package:module/shared/shared.export.dart';
 import 'auth/datasource.dart';
 import 'auth/datasource_impl.dart';
+import 'database/trip_plan/datasource.dart';
+import 'database/trip_plan/datasource_impl.dart';
 
 @module
 abstract class RemoteDataSourceModule with LoggerMixIn {
@@ -18,7 +20,9 @@ abstract class RemoteDataSourceModule with LoggerMixIn {
   RemoteAuthDataSource get auth =>
       RemoteAuthDataSourceImpl(auth: _supabaseClient.auth, logger: logger);
 
-  // @lazySingleton
-  // RemoteTripDataSource get trip =>
-  //     RemoteTripDataSourceImpl(supabaseClient: _supabaseClient, logger: logger);
+  @lazySingleton
+  RemoteTripPlanDataSource get tripPlan => RemoteTripPlanDataSourceImpl(
+      postgrestClient: _supabaseClient.rest,
+      logger: logger,
+      tableName: Tables.tripPlan.name);
 }
