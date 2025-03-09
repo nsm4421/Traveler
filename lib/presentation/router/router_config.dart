@@ -1,20 +1,18 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+
 import 'package:module/dependency_injection.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
-import 'package:module/presentation/pages/home/create_trip/s_create_trip.dart';
+import 'package:module/presentation/bloc/export.dart';
 
-import '../bloc/auth/sign_in/cubit.dart';
-import '../bloc/auth/sign_up/cubit.dart';
-import '../bloc/home_bottom_nav/cubit.dart';
 import '../pages/auth/s_auth.dart';
 import '../pages/auth/sign_in/s_sign_in.dart';
 import '../pages/auth/sign_up/s_sign_up.dart';
+import '../pages/home/create_trip/s_create_trip.dart';
 import '../pages/home/display_trip/s_display_trip.dart';
 import '../pages/home/s_home.dart';
 import '../pages/home/setting/s_setting.dart';
@@ -52,7 +50,7 @@ class CustomRouter {
             .map((item) => item.path)
             .contains(state.matchedLocation);
         if (_isAuth.value && isAuthRoute) {
-          return Routes.displayTrip.path;
+          return Routes.values.firstWhere((item) => item.isHomeRoute).path;
         } else if (!_isAuth.value && !isAuthRoute) {
           return Routes.signIn.path;
         } else {
@@ -67,13 +65,10 @@ class CustomRouter {
           routes: [
             GoRoute(
                 path: Routes.signUp.path.split('/').last,
-                builder: (context, state) => BlocProvider(
-                    create: (_) => getIt<SignUpCubit>(),
-                    child: const SignUpScreen())),
+                builder: (context, state) => const SignUpScreen()),
             GoRoute(
                 path: Routes.signIn.path.split('/').last,
-                builder: (context, state) => BlocProvider(
-                    create: (_) => getIt<SignInCubit>(), child: const SignInScreen()))
+                builder: (context, state) => const SignInScreen())
           ]);
 
   StatefulShellRoute get _homeRouter => StatefulShellRoute.indexedStack(
@@ -106,7 +101,7 @@ class CustomRouter {
                 HomeBottomNav.setting => StatefulShellBranch(
                     routes: [
                       GoRoute(
-                        path: Routes.displayTrip.path,
+                        path: Routes.setting.path,
                         pageBuilder: (context, state) =>
                             const NoTransitionPage(child: SettingScreen()),
                       )
