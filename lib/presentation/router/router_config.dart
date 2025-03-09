@@ -7,14 +7,17 @@ import 'package:injectable/injectable.dart';
 import 'package:module/dependency_injection.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
+import 'package:module/presentation/pages/home/create_trip/s_create_trip.dart';
 
 import '../bloc/auth/sign_in/cubit.dart';
 import '../bloc/auth/sign_up/cubit.dart';
+import '../bloc/home_bottom_nav/cubit.dart';
 import '../pages/auth/s_auth.dart';
 import '../pages/auth/sign_in/s_sign_in.dart';
 import '../pages/auth/sign_up/s_sign_up.dart';
+import '../pages/home/display_trip/s_display_trip.dart';
 import '../pages/home/s_home.dart';
-import '../pages/journey/create/s_create_journey.dart';
+import '../pages/home/setting/s_setting.dart';
 
 part 'routes.dart';
 
@@ -49,7 +52,7 @@ class CustomRouter {
             .map((item) => item.path)
             .contains(state.matchedLocation);
         if (_isAuth.value && isAuthRoute) {
-          return Routes.home.path;
+          return Routes.displayTrip.path;
         } else if (!_isAuth.value && !isAuthRoute) {
           return Routes.signIn.path;
         } else {
@@ -66,32 +69,49 @@ class CustomRouter {
                 path: Routes.signUp.path.split('/').last,
                 builder: (context, state) => BlocProvider(
                     create: (_) => getIt<SignUpCubit>(),
-                    child: SignUpScreen())),
+                    child: const SignUpScreen())),
             GoRoute(
                 path: Routes.signIn.path.split('/').last,
                 builder: (context, state) => BlocProvider(
-                    create: (_) => getIt<SignInCubit>(), child: SignInScreen()))
+                    create: (_) => getIt<SignInCubit>(), child: const SignInScreen()))
           ]);
 
   StatefulShellRoute get _homeRouter => StatefulShellRoute.indexedStack(
       parentNavigatorKey: _rootNavigatorKey,
-      pageBuilder: (context, state, navigationShell) =>
-          NoTransitionPage(child: HomeScreen(navigationShell)),
-      branches: Routes.values.where((item) => !item.isAuthRoute).map((route) {
-        final widget = switch (route) {
-          Routes.createJourney => const CreateJourneyScreen(),
-          // TODO : Not Found Page 만들기
-          (_) => const Text("Path Not Found")
-        };
-        return StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: route.path,
-              pageBuilder: (context, state) {
-                return NoTransitionPage(child: widget);
-              },
-            )
-          ],
-        );
-      }).toList());
+      pageBuilder: (context, state, navigationShell) => NoTransitionPage(
+              child: BlocProvider(
+            create: (_) => getIt<HomeBottomNavCubit>(param1: navigationShell),
+            child: HomeScreen(navigationShell),
+          )),
+      branches: HomeBottomNav.values
+          .map((item) => switch (item) {
+                HomeBottomNav.home => StatefulShellBranch(
+                    routes: [
+                      GoRoute(
+                        path: Routes.displayTrip.path,
+                        pageBuilder: (context, state) =>
+                            const NoTransitionPage(child: DisplayTripScreen()),
+                      )
+                    ],
+                  ),
+                HomeBottomNav.createTrip => StatefulShellBranch(
+                    routes: [
+                      GoRoute(
+                        path: Routes.createTrip.path,
+                        pageBuilder: (context, state) =>
+                            const NoTransitionPage(child: CreateTripScreen()),
+                      )
+                    ],
+                  ),
+                HomeBottomNav.setting => StatefulShellBranch(
+                    routes: [
+                      GoRoute(
+                        path: Routes.displayTrip.path,
+                        pageBuilder: (context, state) =>
+                            const NoTransitionPage(child: SettingScreen()),
+                      )
+                    ],
+                  ),
+              })
+          .toList());
 }

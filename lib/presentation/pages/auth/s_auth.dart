@@ -10,16 +10,10 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: GestureDetector(
-              onTap: () {
-                context.push(Routes.apply.path);
-              },
-              child: Text("Auth Screen"))),
+      appBar: AppBar(title: Text("Auth Screen")),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SignOutWidget(),
             ElevatedButton(
                 onPressed: () {
                   context.push(Routes.signUp.path);
@@ -30,26 +24,6 @@ class AuthScreen extends StatelessWidget {
                   context.push(Routes.signIn.path);
                 },
                 child: Text("Sign In")),
-            ElevatedButton(
-                onPressed: () {
-                  context.push(Routes.journey.path);
-                },
-                child: Text("Journey")),
-            ElevatedButton(
-                onPressed: () {
-                  context.push(Routes.createJourney.path);
-                },
-                child: Text("Create Journey")),
-            ElevatedButton(
-                onPressed: () {
-                  context.push(Routes.apply.path);
-                },
-                child: Text("Apply")),
-            ElevatedButton(
-                onPressed: () {
-                  context.push(Routes.createApply.path);
-                },
-                child: Text("Create Apply")),
           ],
         ),
       ),
