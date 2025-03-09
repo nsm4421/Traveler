@@ -11,7 +11,7 @@ class SignUpRequestModel with _$SignUpRequestModel {
   const factory SignUpRequestModel({
     required String email,
     required String password,
-    required Data data
+    required SignUpRequestData data
   }) = _SignUpRequestModel;
 
   factory SignUpRequestModel.fromJson(Map<String, dynamic> json) =>
@@ -19,14 +19,14 @@ class SignUpRequestModel with _$SignUpRequestModel {
 }
 
 @freezed
-class Data with _$Data {
-  const factory Data({
+class SignUpRequestData with _$SignUpRequestData {
+  const factory SignUpRequestData({
     required String username,
     required String description,
     required Sex sex,
     required DateTime born_at,
-  }) = _Data;
+  }) = _SignUpRequestData;
 
-  factory Data.fromJson(Map<String, dynamic> json) =>
-      _$DataFromJson(json);
+  factory SignUpRequestData.fromJson(Map<String, dynamic> json) =>
+      _$SignUpRequestDataFromJson(json);
 }

@@ -48,7 +48,7 @@ class AuthRepositoryImpl with LoggerMixIn implements AuthRepository {
     return await _remoteAuthDataSource.signUp(SignUpRequestModel(
       email: email,
       password: password,
-      data: Data(
+      data: SignUpRequestData(
           username: username,
           description: description,
           sex: sex,
