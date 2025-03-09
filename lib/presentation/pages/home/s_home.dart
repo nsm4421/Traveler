@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _navigationShell,
-      bottomNavigationBar: const HomeBottomNavWidget(),
+      bottomNavigationBar: HomeBottomNavWidget(_navigationShell),
     );
   }
 }

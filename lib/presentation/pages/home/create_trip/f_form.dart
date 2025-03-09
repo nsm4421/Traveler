@@ -1,10 +1,24 @@
-import 'package:flutter/material.dart';
+part of 's_create_trip.dart';
 
 class CreateTripFormFragment extends StatelessWidget {
   const CreateTripFormFragment({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          const ContentWidget(),
+          12.height,
+          const HashtagWidget(),
+          12.height,
+          const MaxHeadCountWidget(),
+          12.height,
+          const SelectDateWidget(),
+          30.height
+        ],
+      ),
+    );
   }
 }

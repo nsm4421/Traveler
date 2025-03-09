@@ -8,6 +8,7 @@ import 'package:module/dependency_injection.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/presentation/bloc/export.dart';
+import 'package:module/presentation/bloc/trip_plan/create/cubit.dart';
 
 import '../pages/auth/s_auth.dart';
 import '../pages/auth/sign_in/s_sign_in.dart';
@@ -75,7 +76,7 @@ class CustomRouter {
       parentNavigatorKey: _rootNavigatorKey,
       pageBuilder: (context, state, navigationShell) => NoTransitionPage(
               child: BlocProvider(
-            create: (_) => getIt<HomeBottomNavCubit>(param1: navigationShell),
+            create: (_) => getIt<HomeBottomNavCubit>(),
             child: HomeScreen(navigationShell),
           )),
       branches: HomeBottomNav.values
@@ -93,8 +94,10 @@ class CustomRouter {
                     routes: [
                       GoRoute(
                         path: Routes.createTrip.path,
-                        pageBuilder: (context, state) =>
-                            const NoTransitionPage(child: CreateTripScreen()),
+                        pageBuilder: (context, state) => NoTransitionPage(
+                            child: BlocProvider(
+                                create: (_) => getIt<CreateTripPlanCubit>(),
+                                child: const CreateTripScreen())),
                       )
                     ],
                   ),
