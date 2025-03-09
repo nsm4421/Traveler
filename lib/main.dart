@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:module/dependency_injection.dart';
-import 'package:module/presentation/router/router_config.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dependency_injection.dart';
+import 'presentation/bloc/export.dart';
 import 'shared/shared.export.dart';
+
+import 'presentation/router/router_config.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,12 +24,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Travel App',
-      routerConfig: getIt<CustomRouter>().routerConfig,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrangeAccent),
-        useMaterial3: true,
+    return BlocProvider(
+      create: (_) => getIt<AuthenticationBloc>(), // 인증Bloc은 앱 전역에서 접근 가능
+      child: MaterialApp.router(
+        title: 'Travel App',
+        routerConfig: getIt<CustomRouter>().routerConfig,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrangeAccent),
+          useMaterial3: true,
+        ),
       ),
     );
   }
