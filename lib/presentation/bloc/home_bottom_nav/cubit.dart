@@ -4,13 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:module/shared/shared.export.dart';
 
-import '../../router/router_config.dart';
-
 part 'state.dart';
 
 @injectable
-class HomeBottomNavCubit extends Cubit<HomeBottomNavState> with LoggerMixIn{
-  HomeBottomNavCubit(@factoryParam this._navigationShell) : super(HomeBottomNavState());
+class HomeBottomNavCubit extends Cubit<HomeBottomNavState> with LoggerMixIn {
+  HomeBottomNavCubit(@factoryParam this._navigationShell)
+      : super(HomeBottomNavState());
 
   final StatefulNavigationShell _navigationShell;
 

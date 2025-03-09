@@ -14,6 +14,7 @@ lib/data/datasource/export.dart
 lib/domain/entity/export.dart
 lib/domain/usecase/export.dart
 lib/domain/repository/export.dart
+lib/presentation/bloc/export.dart
 
 # Miscellaneous
 *.class

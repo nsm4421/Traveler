@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../widgets/sign_out.widget.dart';
+
 class DisplayTripScreen extends StatelessWidget {
   const DisplayTripScreen({super.key});
 
@@ -9,6 +11,7 @@ class DisplayTripScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Display Trip'),
       ),
+      body: SignOutWidget(),
     );
   }
 }

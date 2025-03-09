@@ -3,12 +3,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:module/shared/shared.export.dart';
 import 'package:dio/dio.dart';
 
-import 'apply/datasource.dart';
-import 'apply/datasource_impl.dart';
 import 'auth/datasource.dart';
 import 'auth/datasource_impl.dart';
-import 'journey/datasource.dart';
-import 'journey/datasource_impl.dart';
 
 @module
 abstract class RemoteDataSourceModule with LoggerMixIn {
@@ -22,11 +18,7 @@ abstract class RemoteDataSourceModule with LoggerMixIn {
   RemoteAuthDataSource get auth =>
       RemoteAuthDataSourceImpl(auth: _supabaseClient.auth, logger: logger);
 
-  @lazySingleton
-  RemoteJourneyDataSource get journey => RemoteJourneyDataSourceImpl(
-      supabaseClient: _supabaseClient, logger: logger);
-
-  @lazySingleton
-  RemoteApplyDataSource get apply => RemoteApplyDataSourceImpl(
-      supabaseClient: _supabaseClient, logger: logger);
+  // @lazySingleton
+  // RemoteTripDataSource get trip =>
+  //     RemoteTripDataSourceImpl(supabaseClient: _supabaseClient, logger: logger);
 }
