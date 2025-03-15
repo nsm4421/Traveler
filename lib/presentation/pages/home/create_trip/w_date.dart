@@ -36,7 +36,6 @@ class _SelectDateWidgetState extends State<SelectDateWidget> {
               await showModalBottomSheet(
                   context: context,
                   builder: (_) {
-                    context.read<HomeBottomNavCubit>().switchIsVisible(false);
                     return Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 12),
@@ -53,9 +52,7 @@ class _SelectDateWidgetState extends State<SelectDateWidget> {
                                   .state
                                   .endDate)),
                     );
-                  }).whenComplete(() {
-                context.read<HomeBottomNavCubit>().switchIsVisible(true);
-              });
+                  });
             }, child: BlocBuilder<CreateTripPlanCubit, CreateTripPlanState>(
               builder: (context, state) {
                 return Text(

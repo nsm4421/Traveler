@@ -21,7 +21,10 @@ class RemoteTripPlanDataSourceImpl implements RemoteTripPlanDataSource {
   @override
   Future<void> create(EditTripPlanModel model) async {
     _logger.t([LogTags.dataSource, model.toJson()]);
-    await _postgrestClient.from(_tableName).insert(model.toJson());
+    await _postgrestClient.from(_tableName).insert({
+      ... model.toJson(),
+      'title' : model.title.isEmpty ? null : model.title
+    });
   }
 
   @override

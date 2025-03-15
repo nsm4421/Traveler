@@ -5,8 +5,8 @@ enum HomeBottomNav {
       label: "HOME",
       iconData: Icons.home_outlined,
       activeIconData: Icons.home_filled),
-  createTrip(
-      label: 'Trip',
+  myTrip(
+      label: 'MyTrip',
       iconData: Icons.airplane_ticket_outlined,
       activeIconData: Icons.airplane_ticket),
   setting(

@@ -5,7 +5,8 @@ enum Routes {
   signIn('/auth/sign-in', isAuthRoute: true),
   signUp('/auth/sign-up', isAuthRoute: true),
   displayTrip('/trip', isHomeRoute: true),
-  createTrip('/trip/create', isHomeRoute: true),
+  myTrip('/trip/my', isHomeRoute: true),
+  createTrip('/trip/my/create', isHomeRoute: false),
   setting('/setting', isHomeRoute: true);
 
   final String path;

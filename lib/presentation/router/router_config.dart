@@ -8,13 +8,14 @@ import 'package:module/dependency_injection.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/presentation/bloc/export.dart';
-import 'package:module/presentation/bloc/trip_plan/create/cubit.dart';
 
+import '../bloc/trip_plan/create/cubit.dart';
 import '../pages/auth/s_auth.dart';
 import '../pages/auth/sign_in/s_sign_in.dart';
 import '../pages/auth/sign_up/s_sign_up.dart';
 import '../pages/home/create_trip/s_create_trip.dart';
 import '../pages/home/display_trip/s_display_trip.dart';
+import '../pages/home/my_trip/s_my_trip.dart';
 import '../pages/home/s_home.dart';
 import '../pages/home/setting/s_setting.dart';
 
@@ -41,7 +42,7 @@ class CustomRouter {
         navigatorKey: _rootNavigatorKey,
         redirect: _redirect,
         refreshListenable: _isAuth,
-        routes: [_authRoutes, _homeRouter],
+        routes: [_authRoutes, _homeRouter, ..._routes],
       );
 
   FutureOr<String?> Function(BuildContext, GoRouterState) get _redirect =>
@@ -90,14 +91,12 @@ class CustomRouter {
                       )
                     ],
                   ),
-                HomeBottomNav.createTrip => StatefulShellBranch(
+                HomeBottomNav.myTrip => StatefulShellBranch(
                     routes: [
                       GoRoute(
-                        path: Routes.createTrip.path,
-                        pageBuilder: (context, state) => NoTransitionPage(
-                            child: BlocProvider(
-                                create: (_) => getIt<CreateTripPlanCubit>(),
-                                child: const CreateTripScreen())),
+                        path: Routes.myTrip.path,
+                        pageBuilder: (context, state) =>
+                            NoTransitionPage(child: MyTripScreen()),
                       )
                     ],
                   ),
@@ -112,4 +111,14 @@ class CustomRouter {
                   ),
               })
           .toList());
+
+  List<RouteBase> get _routes => [
+        GoRoute(
+          path: Routes.createTrip.path,
+          pageBuilder: (context, state) => NoTransitionPage(
+              child: BlocProvider(
+                  create: (_) => getIt<CreateTripPlanCubit>(),
+                  child: const CreateTripScreen())),
+        )
+      ];
 }

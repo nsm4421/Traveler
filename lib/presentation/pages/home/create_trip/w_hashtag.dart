@@ -8,8 +8,8 @@ class HashtagWidget extends StatefulWidget {
 }
 
 class _HashtagWidgetState extends State<HashtagWidget> {
-  late GlobalKey<FormState> _formKey;
   late TextEditingController _controller;
+  late GlobalKey<FormState> _formKey;
   late List<String> _hashtags;
 
   static const _maxCount = 5;
@@ -18,9 +18,9 @@ class _HashtagWidgetState extends State<HashtagWidget> {
   @override
   void initState() {
     super.initState();
-    _formKey = GlobalKey<FormState>();
     _controller = TextEditingController();
     _hashtags = context.read<CreateTripPlanCubit>().state.hashtags;
+    _formKey = GlobalKey<FormState>();
   }
 
   @override

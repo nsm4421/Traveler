@@ -32,6 +32,7 @@ class TripPlanRepositoryImpl with LoggerMixIn implements TripPlanRepository {
         country_code: country.code,
         min_head_count: minHeadCount,
         max_head_count: maxHeadCount,
+        hashtags: hashtags,
         start_date: startDate.toUtc().toIso8601String(),
         end_date: endDate.toUtc().toIso8601String()));
   }

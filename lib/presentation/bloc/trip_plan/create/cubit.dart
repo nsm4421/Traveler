@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:module/domain/usecase/export.dart';
@@ -9,9 +10,14 @@ part 'state.dart';
 
 @injectable
 class CreateTripPlanCubit extends Cubit<CreateTripPlanState> with LoggerMixIn {
-  CreateTripPlanCubit(this._useCase) : super(CreateTripPlanState());
+  CreateTripPlanCubit(this._useCase) : super(CreateTripPlanState()) {
+    _formKey = GlobalKey<FormState>(debugLabel: 'create-trip-form-key');
+  }
 
   final TripPlanUseCase _useCase;
+  late GlobalKey<FormState> _formKey;
+
+  GlobalKey<FormState> get formKey => _formKey;
 
   void initState({
     Status? status,
@@ -40,6 +46,14 @@ class CreateTripPlanCubit extends Cubit<CreateTripPlanState> with LoggerMixIn {
   }
 
   Future<void> submit() async {
+    // validate
+    _formKey.currentState?.save();
+    final ok = _formKey.currentState?.validate();
+    if (ok == null) {
+      logger.w([LogTags.bloc, 'form key is not attached']);
+    } else if (ok == false) {
+      logger.w([LogTags.bloc, 'title or content is not valid']);
+    }
     try {
       emit(state.copyWith(status: Status.loading));
       await _useCase.create

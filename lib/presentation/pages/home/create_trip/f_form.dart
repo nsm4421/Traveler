@@ -9,7 +9,7 @@ class CreateTripFormFragment extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          const ContentWidget(),
+          ContentWidget(context.read<CreateTripPlanCubit>().formKey),
           12.height,
           const HashtagWidget(),
           12.height,

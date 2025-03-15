@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:module/presentation/bloc/export.dart';
 import 'package:module/shared/shared.export.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -38,13 +39,18 @@ class CreateTripScreen extends StatelessWidget {
                   .initState(status: Status.initial, errorMessage: '');
             }
           });
+        } else if (state.status == Status.success) {
+          Timer(1.durationInSec, () {
+            if (context.mounted) {
+              context.pop();
+            }
+          });
         }
       },
       child: BlocBuilder<CreateTripPlanCubit, CreateTripPlanState>(
           builder: (context, state) {
         return LoadingOverLayWidget(
-            isLoading:
-                state.status == Status.loading || state.status == Status.error,
+            isLoading: state.status != Status.initial,
             loadingWidget: const Center(child: CircularProgressIndicator()),
             child: Scaffold(
               appBar: AppBar(
