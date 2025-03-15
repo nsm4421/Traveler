@@ -10,6 +10,8 @@ class CreatorModel with _$CreatorModel {
   const factory CreatorModel({
     required String id,
     required String username,
+    String? sex,
+    String? born_at,
   }) = _CreatorModel;
 
   factory CreatorModel.fromJson(Map<String, dynamic> json) =>

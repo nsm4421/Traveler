@@ -6,25 +6,54 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'datasource.dart';
 
 class RemoteTripPlanDataSourceImpl implements RemoteTripPlanDataSource {
-  final PostgrestClient _postgrestClient;
-  final String _tableName;
+  final PostgrestQueryBuilder _queryBuilder;
   final Logger _logger;
 
   RemoteTripPlanDataSourceImpl(
-      {required PostgrestClient postgrestClient,
-      required String tableName,
-      required Logger logger})
-      : _postgrestClient = postgrestClient,
-        _tableName = tableName,
+      {required PostgrestQueryBuilder queryBuilder, required Logger logger})
+      : _queryBuilder = queryBuilder,
         _logger = logger;
+
+  @override
+  Future<Iterable<FetchTripPlanModel>> fetch(
+      {DateTime? cursor, int limit = 20}) async {
+    // 테이블명 대문자, 컬럼명 소문자로!
+    return await _queryBuilder
+        .select("*, creator:USERS(id, username, sex, born_at)")
+        .lt('created_at', (cursor ?? DateTime.now()).toUtc().toIso8601String())
+        .order('created_at', ascending: false)
+        .limit(limit)
+        .then((res) {
+      if (res.isNotEmpty) {
+        _logger.t(res.first);
+      }
+      return res.map(FetchTripPlanModel.fromJson);
+    });
+  }
+
+  @override
+  Future<Iterable<FetchTripPlanModel>> fetchByUid(
+      {required String uid, DateTime? cursor, int limit = 20}) async {
+    // 테이블명 대문자, 컬럼명 소문자로!
+    return await _queryBuilder
+        .select("*, creator:USERS(id, username, sex, born_at)")
+        .eq("created_by", uid)
+        .lt('created_at', (cursor ?? DateTime.now()).toUtc().toIso8601String())
+        .order('created_at', ascending: false)
+        .limit(limit)
+        .then((res) {
+      if (res.isNotEmpty) {
+        _logger.t(res.first);
+      }
+      return res.map(FetchTripPlanModel.fromJson);
+    });
+  }
 
   @override
   Future<void> create(EditTripPlanModel model) async {
     _logger.t([LogTags.dataSource, model.toJson()]);
-    await _postgrestClient.from(_tableName).insert({
-      ... model.toJson(),
-      'title' : model.title.isEmpty ? null : model.title
-    });
+    await _queryBuilder.insert(
+        {...model.toJson(), 'title': model.title.isEmpty ? null : model.title});
   }
 
   @override
@@ -37,8 +66,6 @@ class RemoteTripPlanDataSourceImpl implements RemoteTripPlanDataSource {
   Future<void> modify(
       {required String id, required EditTripPlanModel data}) async {
     _logger.t([LogTags.dataSource, data.toJson()]);
-    await _postgrestClient
-        .from(_tableName)
-        .update({...data.toJson()}).eq("id", id);
+    await _queryBuilder.update({...data.toJson()}).eq("id", id);
   }
 }

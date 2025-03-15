@@ -22,7 +22,7 @@ abstract class RemoteDataSourceModule with LoggerMixIn {
 
   @lazySingleton
   RemoteTripPlanDataSource get tripPlan => RemoteTripPlanDataSourceImpl(
-      postgrestClient: _supabaseClient.rest,
-      logger: logger,
-      tableName: Tables.tripPlan.name);
+        queryBuilder: _supabaseClient.rest.from(Tables.tripPlan.name),
+        logger: logger,
+      );
 }

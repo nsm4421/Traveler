@@ -1,6 +1,10 @@
+import 'package:module/domain/entity/trip_plan/entity.dart';
 import 'package:module/shared/shared.export.dart';
 
 abstract interface class TripPlanRepository {
+  Future<List<TripPlanEntity>> fetch(
+      {String? uid, DateTime? cursor, int limit = 20});
+
   Future<void> create({
     required String title,
     required String content,

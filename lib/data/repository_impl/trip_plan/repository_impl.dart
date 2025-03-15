@@ -1,8 +1,8 @@
 import 'package:injectable/injectable.dart';
 import 'package:module/data/datasource/export.dart';
 import 'package:module/data/model/export.dart';
+import 'package:module/domain/entity/trip_plan/entity.dart';
 import 'package:module/domain/repository/export.dart';
-import 'package:module/domain/repository/trip_plan/repository.dart';
 import 'package:module/shared/shared.export.dart';
 
 @LazySingleton(as: TripPlanRepository)
@@ -15,6 +15,20 @@ class TripPlanRepositoryImpl with LoggerMixIn implements TripPlanRepository {
       required RemoteTripPlanDataSource remoteTripPlanDataSource})
       : _localStorageDataSource = localStorageDataSource,
         _remoteTripPlanDataSource = remoteTripPlanDataSource;
+
+  @override
+  Future<List<TripPlanEntity>> fetch(
+      {String? uid, DateTime? cursor, int limit = 20}) async {
+    if (uid == null) {
+      return await _remoteTripPlanDataSource
+          .fetch(cursor: cursor, limit: limit)
+          .then((res) => res.map(TripPlanEntity.from).toList());
+    } else {
+      return await _remoteTripPlanDataSource
+          .fetchByUid(uid: uid, cursor: cursor, limit: limit)
+          .then((res) => res.map(TripPlanEntity.from).toList());
+    }
+  }
 
   @override
   Future<void> create(
