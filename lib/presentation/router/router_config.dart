@@ -8,6 +8,7 @@ import 'package:module/dependency_injection.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/presentation/bloc/export.dart';
+import 'package:module/presentation/bloc/trip_plan/display/bloc.dart';
 
 import '../bloc/trip_plan/create/cubit.dart';
 import '../pages/auth/s_auth.dart';
@@ -95,8 +96,14 @@ class CustomRouter {
                     routes: [
                       GoRoute(
                         path: Routes.myTrip.path,
-                        pageBuilder: (context, state) =>
-                            NoTransitionPage(child: MyTripScreen()),
+                        pageBuilder: (context, state) => NoTransitionPage(
+                            child: BlocProvider(
+                                create: (_) => getIt<DisplayTripPlanBloc>()
+                                  ..add(MountDisplayTripPlanEvent(
+                                      uid: context
+                                          .read<AuthenticationBloc>()
+                                          .currentUid!)),
+                                child: const MyTripScreen())),
                       )
                     ],
                   ),

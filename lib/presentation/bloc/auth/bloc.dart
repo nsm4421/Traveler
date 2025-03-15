@@ -19,9 +19,10 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState>
   final AuthUseCase _useCase;
 
   late Stream<UserEntity?> _authStream;
-  late StreamSubscription<UserEntity?> _authSubscription;
 
   Stream<UserEntity?> get authStream => _authStream;
+
+  String? get currentUid => _useCase.currentUid;
 
   AuthenticationBloc(this._useCase) : super(AuthenticationState()) {
     on<InitialSessionEvent>(_onInitialSession);
