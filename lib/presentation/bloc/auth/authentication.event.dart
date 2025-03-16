@@ -1,4 +1,4 @@
-part of 'bloc.dart';
+part of 'authentication.bloc.dart';
 
 final class AuthenticationEvent {}
 

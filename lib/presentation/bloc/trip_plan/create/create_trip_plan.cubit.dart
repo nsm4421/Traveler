@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/shared/shared.export.dart';
 
-import '../../base_state.dart';
+import '../../base/base_state.dart';
 
-part 'state.dart';
+part 'create_trip_plan.state.dart';
 
 @injectable
 class CreateTripPlanCubit extends Cubit<CreateTripPlanState> with LoggerMixIn {
@@ -56,7 +56,7 @@ class CreateTripPlanCubit extends Cubit<CreateTripPlanState> with LoggerMixIn {
     }
     try {
       emit(state.copyWith(status: Status.loading));
-      await _useCase.create
+      await _useCase.createTripPlan
           .call(
               title: state.title,
               content: state.content,

@@ -1,13 +1,6 @@
-import 'package:module/shared/shared.export.dart';
+part of 'display.bloc.dart';
 
-class BaseState {
-  final Status status;
-  final String errorMessage;
-
-  BaseState({this.status = Status.initial, this.errorMessage = ''});
-}
-
-class DisplayState<T> extends BaseState {
+class DisplayState<T extends BaseEntity> extends BaseState {
   late final List<T> data;
   late final bool isEnd;
 

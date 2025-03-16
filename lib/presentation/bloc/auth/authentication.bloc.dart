@@ -7,11 +7,11 @@ import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/shared/shared.export.dart';
 
-import '../base_state.dart';
+import '../base/base_state.dart';
 
-part 'state.dart';
+part 'authentication.state.dart';
 
-part 'event.dart';
+part 'authentication.event.dart';
 
 @lazySingleton
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState>
@@ -21,6 +21,8 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState>
   late Stream<UserEntity?> _authStream;
 
   Stream<UserEntity?> get authStream => _authStream;
+
+  UserEntity? get currentUser => _useCase.currentUser;
 
   String? get currentUid => _useCase.currentUid;
 

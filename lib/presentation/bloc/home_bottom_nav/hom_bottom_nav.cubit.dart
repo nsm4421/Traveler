@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:module/shared/shared.export.dart';
 
-part 'state.dart';
+part 'home_bottom_nav.state.dart';
 
 @lazySingleton
 class HomeBottomNavCubit extends Cubit<HomeBottomNavState> with LoggerMixIn {

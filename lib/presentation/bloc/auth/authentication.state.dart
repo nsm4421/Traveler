@@ -1,4 +1,4 @@
-part of 'bloc.dart';
+part of 'authentication.bloc.dart';
 
 final class AuthenticationState extends BaseState {
   final bool isAuth;

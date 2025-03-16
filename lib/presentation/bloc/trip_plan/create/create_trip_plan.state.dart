@@ -1,4 +1,4 @@
-part of 'cubit.dart';
+part of 'create_trip_plan.cubit.dart';
 
 class CreateTripPlanState extends BaseState {
   final String title;

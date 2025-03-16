@@ -1,4 +1,4 @@
-part of 'cubit.dart';
+part of 'hom_bottom_nav.cubit.dart';
 
 enum HomeBottomNav {
   home(
