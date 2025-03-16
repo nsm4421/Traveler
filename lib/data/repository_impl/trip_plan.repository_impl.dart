@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:module/data/datasource/export.dart';
 import 'package:module/data/model/export.dart';
-import 'package:module/domain/entity/trip_plan/entity.dart';
+import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/repository/export.dart';
 import 'package:module/shared/shared.export.dart';
 

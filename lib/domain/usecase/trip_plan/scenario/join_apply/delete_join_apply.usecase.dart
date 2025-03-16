@@ -1,11 +1,11 @@
-part of '../usecase.dart';
+part of '../../trip_plan.usecase.dart';
 
-class DeleteTripPlanUseCase {
-  final TripPlanRepository _repository;
+class DeleteJoinApplyUseCase {
+  final JoinApplyRepository _repository;
   final Logger _logger;
 
-  DeleteTripPlanUseCase(
-      {required TripPlanRepository repository, required Logger logger})
+  DeleteJoinApplyUseCase(
+      {required JoinApplyRepository repository, required Logger logger})
       : _repository = repository,
         _logger = logger;
 
@@ -13,7 +13,7 @@ class DeleteTripPlanUseCase {
     try {
       return await _repository
           .delete(id)
-          .then((res) => const Success<void>())
+          .then((_) => const Success<void>())
           .then(Right.new);
     } catch (error) {
       _logger.e([LogTags.useCase, error]);

@@ -1,16 +1,15 @@
-part of '../usecase.dart';
+part of '../trip_plan.usecase.dart';
 
-class ModifyTripPlanUseCase {
+class CreateTripPlanUseCase {
   final TripPlanRepository _repository;
   final Logger _logger;
 
-  ModifyTripPlanUseCase(
+  CreateTripPlanUseCase(
       {required TripPlanRepository repository, required Logger logger})
       : _repository = repository,
         _logger = logger;
 
   Future<Either<Failure, Success<void>>> call({
-    required String id,
     required String title,
     required String content,
     required Country country,

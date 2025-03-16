@@ -1,4 +1,4 @@
-import 'creator.dart';
+import '../user/creator.dart';
 
 class BaseEntity {
   final String id;

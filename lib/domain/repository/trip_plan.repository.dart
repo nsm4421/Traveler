@@ -1,4 +1,4 @@
-import 'package:module/domain/entity/trip_plan/entity.dart';
+import 'package:module/domain/entity/export.dart';
 import 'package:module/shared/shared.export.dart';
 
 abstract interface class TripPlanRepository {

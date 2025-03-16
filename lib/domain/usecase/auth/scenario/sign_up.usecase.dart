@@ -1,4 +1,4 @@
-part of '../usecase.dart';
+part of '../auth.usecase.dart';
 
 class SignUpUseCase {
   final AuthRepository _repository;

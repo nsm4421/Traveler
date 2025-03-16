@@ -1,13 +1,10 @@
 import 'package:module/data/model/export.dart';
-import 'package:module/shared/shared.export.dart';
 
 import 'creator.dart';
 
 class UserEntity extends CreatorEntity {
   final String email;
   final String description;
-  final Sex sex;
-  final DateTime bornAt;
   final DateTime? createdAt;
 
   UserEntity(
@@ -15,8 +12,8 @@ class UserEntity extends CreatorEntity {
       required this.email,
       required super.username,
       required this.description,
-      required this.sex,
-      required this.bornAt,
+      super.sex,
+      super.bornAt,
       this.createdAt});
 
   factory UserEntity.from(UserModel model) => UserEntity(
