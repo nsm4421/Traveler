@@ -3,9 +3,22 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:module/shared/shared.export.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-part 'user.freezed.dart';
+part 'user.model.freezed.dart';
 
-part 'user.g.dart';
+part 'user.model.g.dart';
+
+@freezed
+class CreatorModel with _$CreatorModel {
+  const factory CreatorModel({
+    required String id,
+    required String username,
+    String? sex,
+    String? born_at,
+  }) = _CreatorModel;
+
+  factory CreatorModel.fromJson(Map<String, dynamic> json) =>
+      _$CreatorModelFromJson(json);
+}
 
 @freezed
 class UserModel with _$UserModel {

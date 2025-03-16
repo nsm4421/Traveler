@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'sign_in.freezed.dart';
+part 'sign_in.model.freezed.dart';
 
-part 'sign_in.g.dart';
+part 'sign_in.model.g.dart';
 
 @freezed
 class SignInResponseModel with _$SignInResponseModel {

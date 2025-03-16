@@ -1,4 +1,4 @@
-import 'package:module/data/model/export.dart';
+part of 'auth.remote_datasource_impl.dart';
 
 abstract interface class RemoteAuthDataSource {
   UserModel get currentUser;

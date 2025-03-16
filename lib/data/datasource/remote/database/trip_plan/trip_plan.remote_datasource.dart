@@ -1,4 +1,4 @@
-import 'package:module/data/model/export.dart';
+part of 'trip_plan.remote_datasource_impl.dart';
 
 abstract interface class RemoteTripPlanDataSource {
   Future<Iterable<FetchTripPlanModel>> fetch(

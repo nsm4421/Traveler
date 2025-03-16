@@ -3,20 +3,18 @@ import 'package:module/data/model/export.dart';
 import 'package:module/shared/shared.export.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'datasource.dart';
+part 'auth.remote_datasource.dart';
 
 class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
   final GoTrueClient _auth;
   final Logger _logger;
 
-  RemoteAuthDataSourceImpl(
-      {required GoTrueClient auth, required Logger logger})
+  RemoteAuthDataSourceImpl({required GoTrueClient auth, required Logger logger})
       : _auth = auth,
         _logger = logger;
 
   @override
-  UserModel get currentUser =>
-      UserModel.from(_auth.currentUser!);
+  UserModel get currentUser => UserModel.from(_auth.currentUser!);
 
   @override
   String get currentUid => currentUser.id;
@@ -53,8 +51,7 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
   @override
   Future<void> signIn({required String email, required String password}) async {
     _logger.t([LogTags.dataSource, "sign in email:$email"]);
-    await _auth
-        .signInWithPassword(email: email, password: password);
+    await _auth.signInWithPassword(email: email, password: password);
   }
 
   @override

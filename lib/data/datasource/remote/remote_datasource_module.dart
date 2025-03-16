@@ -3,10 +3,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:dio/dio.dart';
 
 import 'package:module/shared/shared.export.dart';
-import 'auth/datasource.dart';
-import 'auth/datasource_impl.dart';
-import 'database/trip_plan/datasource.dart';
-import 'database/trip_plan/datasource_impl.dart';
+
+import 'auth/auth.remote_datasource_impl.dart';
+import 'database/join_apply/join_apply.remote_datasource_impl.dart';
+import 'database/trip_plan/trip_plan.remote_datasource_impl.dart';
 
 @module
 abstract class RemoteDataSourceModule with LoggerMixIn {
@@ -23,6 +23,12 @@ abstract class RemoteDataSourceModule with LoggerMixIn {
   @lazySingleton
   RemoteTripPlanDataSource get tripPlan => RemoteTripPlanDataSourceImpl(
         queryBuilder: _supabaseClient.rest.from(Tables.tripPlan.name),
+        logger: logger,
+      );
+
+  @lazySingleton
+  RemoteJoinApplyDataSource get joinApply => RemoteJoinApplyDataSourceImpl(
+        queryBuilder: _supabaseClient.rest.from(Tables.joinApply.name),
         logger: logger,
       );
 }

@@ -4,7 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:module/shared/shared.export.dart';
 
-import 'datasource.dart';
+part 'auth.local_datasource.dart';
 
 class LocalStorageDataSourceImpl implements LocalStorageDataSource {
   final FlutterSecureStorage _storage;

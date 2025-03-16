@@ -3,7 +3,7 @@ import 'package:module/data/model/export.dart';
 import 'package:module/shared/shared.export.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'datasource.dart';
+part 'trip_plan.remote_datasource.dart';
 
 class RemoteTripPlanDataSourceImpl implements RemoteTripPlanDataSource {
   final PostgrestQueryBuilder _queryBuilder;
@@ -17,9 +17,8 @@ class RemoteTripPlanDataSourceImpl implements RemoteTripPlanDataSource {
   @override
   Future<Iterable<FetchTripPlanModel>> fetch(
       {DateTime? cursor, int limit = 20}) async {
-    // 테이블명 대문자, 컬럼명 소문자로!
     return await _queryBuilder
-        .select("*, creator:USERS(id, username, sex, born_at)")
+        .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
         .lt('created_at', (cursor ?? DateTime.now()).toUtc().toIso8601String())
         .order('created_at', ascending: false)
         .limit(limit)
@@ -34,9 +33,8 @@ class RemoteTripPlanDataSourceImpl implements RemoteTripPlanDataSource {
   @override
   Future<Iterable<FetchTripPlanModel>> fetchByUid(
       {required String uid, DateTime? cursor, int limit = 20}) async {
-    // 테이블명 대문자, 컬럼명 소문자로!
     return await _queryBuilder
-        .select("*, creator:USERS(id, username, sex, born_at)")
+        .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
         .eq("created_by", uid)
         .lt('created_at', (cursor ?? DateTime.now()).toUtc().toIso8601String())
         .order('created_at', ascending: false)

@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:module/shared/shared.export.dart';
 
-part 'sign_up.freezed.dart';
+part 'sign_up.model.freezed.dart';
 
-part 'sign_up.g.dart';
+part 'sign_up.model.g.dart';
 
 @freezed
 class SignUpRequestModel with _$SignUpRequestModel {

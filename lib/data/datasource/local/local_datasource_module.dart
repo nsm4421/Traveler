@@ -7,8 +7,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import 'package:module/shared/shared.export.dart';
-import 'auth/datasource.dart';
-import 'auth/datasource_impl.dart';
+import 'auth/auth.local_datasource_impl.dart';
 
 @module
 abstract class LocalDataSourceModule with LoggerMixIn {
