@@ -7,6 +7,7 @@ enum Routes {
   displayTrip('/trip', isHomeRoute: true),
   myTrip('/trip/my', isHomeRoute: true),
   createTrip('/trip/my/create', isHomeRoute: false),
+  createJoinApply('/trip/apply/create', isHomeRoute: false),
   setting('/setting', isHomeRoute: true);
 
   final String path;

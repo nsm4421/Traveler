@@ -3,20 +3,23 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:module/dependency_injection.dart';
 import 'package:module/domain/entity/export.dart';
+import 'package:module/presentation/bloc/export.dart';
 import 'package:module/shared/shared.export.dart';
 
-import '../../../bloc/base_state.dart';
-import '../../../bloc/trip_plan/display/bloc.dart';
-import '../../../router/router_config.dart';
-import '../../../widgets/loading_overlay.widget.dart';
+import '../../../../router/router_config.dart';
+import '../../../../widgets/loading_overlay.widget.dart';
+import '../join_apply/create/s_create_join_apply.dart';
 
 part 'f_list.dart';
 
 part 'w_item.dart';
 
-class MyTripScreen extends StatelessWidget {
-  const MyTripScreen({super.key});
+class DisplayTripPlanScreen extends StatelessWidget {
+  const DisplayTripPlanScreen(this.titleText, {super.key});
+
+  final String titleText;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +28,8 @@ class MyTripScreen extends StatelessWidget {
         if (state.status == Status.error) {
           Timer(1.durationInSec, () {
             if (context.mounted) {
-              context.read<DisplayTripPlanBloc>().add(InitDisplayTripPlanEvent(
-                  status: Status.initial, errorMessage: ''));
+              context.read<DisplayTripPlanBloc>().add(
+                  InitDisplayEvent(status: Status.initial, errorMessage: ''));
             }
           });
         }
@@ -37,7 +40,7 @@ class MyTripScreen extends StatelessWidget {
             isLoading: (state.status == Status.loading),
             child: Scaffold(
                 appBar: AppBar(
-                  title: const Text('My Trip'),
+                  title: Text(titleText),
                   actions: [
                     IconButton(
                       onPressed: () {
@@ -51,7 +54,7 @@ class MyTripScreen extends StatelessWidget {
                     onRefresh: () async {
                       context
                           .read<DisplayTripPlanBloc>()
-                          .add(RefreshDisplayTripPlanEvent());
+                          .add(RefreshDisplayEvent());
                     },
                     child: TripPlanListFragment(state.data))),
           );

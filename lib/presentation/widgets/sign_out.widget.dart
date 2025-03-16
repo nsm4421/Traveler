@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:module/shared/shared.export.dart';
 
-import '../bloc/auth/bloc.dart';
+import '../bloc/auth/authentication.bloc.dart';
 
 enum SignOutButtonType {
   icon;

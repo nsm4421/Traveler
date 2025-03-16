@@ -8,15 +8,12 @@ import 'package:module/dependency_injection.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/presentation/bloc/export.dart';
-import 'package:module/presentation/bloc/trip_plan/display/bloc.dart';
 
-import '../bloc/trip_plan/create/cubit.dart';
 import '../pages/auth/s_auth.dart';
 import '../pages/auth/sign_in/s_sign_in.dart';
 import '../pages/auth/sign_up/s_sign_up.dart';
-import '../pages/home/create_trip/s_create_trip.dart';
-import '../pages/home/display_trip/s_display_trip.dart';
-import '../pages/home/my_trip/s_my_trip.dart';
+import '../pages/home/trip_plan/create/s_create_trip_plan.dart';
+import '../pages/home/trip_plan/display/s_display_trip_plan.dart';
 import '../pages/home/s_home.dart';
 import '../pages/home/setting/s_setting.dart';
 
@@ -87,8 +84,11 @@ class CustomRouter {
                     routes: [
                       GoRoute(
                         path: Routes.displayTrip.path,
-                        pageBuilder: (context, state) =>
-                            const NoTransitionPage(child: DisplayTripScreen()),
+                        pageBuilder: (context, state) => NoTransitionPage(
+                            child: BlocProvider(
+                                create: (_) => getIt<DisplayTripPlanBloc>()
+                                  ..add(MountDisplayEvent()),
+                                child: DisplayTripPlanScreen('Trip Plans'))),
                       )
                     ],
                   ),
@@ -98,12 +98,12 @@ class CustomRouter {
                         path: Routes.myTrip.path,
                         pageBuilder: (context, state) => NoTransitionPage(
                             child: BlocProvider(
-                                create: (_) => getIt<DisplayTripPlanBloc>()
-                                  ..add(MountDisplayTripPlanEvent(
-                                      uid: context
-                                          .read<AuthenticationBloc>()
-                                          .currentUid!)),
-                                child: const MyTripScreen())),
+                                create: (_) => getIt<DisplayTripPlanBloc>(
+                                    param1: context
+                                        .read<AuthenticationBloc>()
+                                        .currentUid!)
+                                  ..add(MountDisplayEvent()),
+                                child: DisplayTripPlanScreen('My Trip Plans'))),
                       )
                     ],
                   ),
@@ -126,6 +126,6 @@ class CustomRouter {
               child: BlocProvider(
                   create: (_) => getIt<CreateTripPlanCubit>(),
                   child: const CreateTripScreen())),
-        )
+        ),
       ];
 }

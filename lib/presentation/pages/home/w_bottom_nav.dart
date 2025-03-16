@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../bloc/home_bottom_nav/cubit.dart';
+import '../../bloc/home_bottom_nav/hom_bottom_nav.cubit.dart';
 
 class HomeBottomNavWidget extends StatelessWidget {
   const HomeBottomNavWidget(this._navigationShell, {super.key});

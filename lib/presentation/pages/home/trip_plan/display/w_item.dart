@@ -1,4 +1,4 @@
-part of 's_my_trip.dart';
+part of 's_display_trip_plan.dart';
 
 class TripPlanItemWidget extends StatelessWidget {
   const TripPlanItemWidget(this._item, {super.key});
@@ -54,7 +54,17 @@ class TripPlanItemWidget extends StatelessWidget {
                         ),
                       ))
                   .toList(),
-            )
+            ),
+          ElevatedButton(
+            onPressed: () async {
+              await showModalBottomSheet(
+                  context: context,
+                  builder: (ctx) => BlocProvider(
+                      create: (_) => getIt<CreateJoinApplyCubit>(param1: _item),
+                      child: const CreateJoinApplyScreen()));
+            },
+            child: Text("참가신청"),
+          ),
         ],
       ),
     );

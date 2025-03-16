@@ -1,4 +1,4 @@
-part of 's_create_trip.dart';
+part of 's_create_trip_plan.dart';
 
 class SubmitButtonWidget extends StatelessWidget {
   const SubmitButtonWidget({super.key});

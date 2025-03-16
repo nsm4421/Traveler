@@ -1,4 +1,4 @@
-part of 's_create_trip.dart';
+part of 's_create_trip_plan.dart';
 
 class HashtagWidget extends StatefulWidget {
   const HashtagWidget({super.key});

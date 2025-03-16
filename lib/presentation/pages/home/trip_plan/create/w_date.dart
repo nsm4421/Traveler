@@ -1,4 +1,4 @@
-part of 's_create_trip.dart';
+part of 's_create_trip_plan.dart';
 
 class SelectDateWidget extends StatefulWidget {
   const SelectDateWidget({super.key});

@@ -1,4 +1,4 @@
-part of 's_my_trip.dart';
+part of 's_display_trip_plan.dart';
 
 class TripPlanListFragment extends StatelessWidget {
   const TripPlanListFragment(this._data, {super.key});
