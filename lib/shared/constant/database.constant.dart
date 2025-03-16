@@ -1,6 +1,8 @@
 enum Tables {
-  users("USERS"),
-  tripPlan("TRIP_PLAN");
+  users("users"),
+  tripPlan("trip_plan"),
+  joinApply("join_apply")
+  ;
 
   final String name;
 
