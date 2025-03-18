@@ -11,7 +11,7 @@ part 'fetch_trip_plan.model.g.dart';
 class FetchTripPlanModel with _$FetchTripPlanModel {
   const factory FetchTripPlanModel({
     @Default('') String id,
-    String? title,
+    @Default('') title,
     @Default('') String content,
     @Default(2) int min_head_count,
     @Default(8) int max_head_count,

@@ -7,66 +7,100 @@ class TripPlanItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: context.colorScheme.primaryContainer.withOpacity(0.3)),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (_item.title != null)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: context.colorScheme.primaryContainer),
-              child: Row(
+    return ExpansionTile(
+      title: Text('${_item.country.emoji} ${_item.title}',
+          style: context.textTheme.titleMedium),
+      subtitle: _item.createdAt == null
+          ? const SizedBox.shrink()
+          : Text(_item.createdAt!.ago, style: context.textTheme.labelMedium),
+      initiallyExpanded: false,
+      shape: const RoundedRectangleBorder(side: BorderSide.none),
+      children: [
+        Container(
+          margin: const EdgeInsets.only(bottom: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: context.colorScheme.primaryContainer.withOpacity(0.5)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.title),
-                  8.width,
-                  Text(_item.title!),
+                  Text(
+                    _item.content,
+                    overflow: TextOverflow.clip,
+                    style: context.textTheme.bodyLarge,
+                  ),
+                  8.height,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.calendar_today_outlined, size: 15),
+                      12.width,
+                      Text(
+                        '${_item.startDate.yyyymmdd}~${_item.endDate.yyyymmdd}',
+                        style: context.textTheme.labelMedium,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      )
+                    ],
+                  ),
+                  12.height,
+                  Row(
+                    children: [
+                      const Icon(Icons.people_alt_outlined, size: 15),
+                      12.width,
+                      Text(
+                        '${_item.minHeadCount}~${_item.maxHeadCount}명',
+                        style: context.textTheme.labelMedium,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      )
+                    ],
+                  ),
+                  6.height,
+                  if (_item.hashtags.isNotEmpty)
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Wrap(
+                        children: _item.hashtags
+                            .map(
+                              (text) => Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, right: 12),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.tag,
+                                        size: 15,
+                                        color: context.colorScheme.primary),
+                                    6.width,
+                                    Text(text,
+                                        style: context.textTheme.labelMedium
+                                            ?.copyWith(
+                                                color: context
+                                                    .colorScheme.primary)),
+                                  ],
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ),
                 ],
               ),
-            ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: context.colorScheme.primaryContainer),
-            child: Text(_item.content),
+              IconButton(
+                  onPressed: () {
+                    context.push(Routes.tripDetail.path, extra: _item);
+                  },
+                  icon: Icon(Icons.search, color: context.colorScheme.primary))
+            ],
           ),
-          Text(_item.startDate.toLocal().toString()),
-          Text(_item.endDate.toLocal().toString()),
-          Text(_item.minHeadCount.toString()),
-          Text(_item.maxHeadCount.toString()),
-          Text(_item.country.name),
-          if (_item.hashtags.isNotEmpty)
-            Wrap(
-              children: _item.hashtags
-                  .map((text) => Container(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [Icon(Icons.tag), 8.width, Text(text)],
-                        ),
-                      ))
-                  .toList(),
-            ),
-          ElevatedButton(
-            onPressed: () async {
-              await showModalBottomSheet(
-                  context: context,
-                  builder: (ctx) => BlocProvider(
-                      create: (_) => getIt<CreateJoinApplyCubit>(param1: _item),
-                      child: const CreateJoinApplyScreen()));
-            },
-            child: Text("참가신청"),
-          ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }

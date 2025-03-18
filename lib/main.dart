@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dependency_injection.dart';
 import 'presentation/bloc/export.dart';
@@ -10,6 +10,8 @@ import 'presentation/router/router_config.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  timeago.setLocaleMessages('ko', timeago.KoMessages());
 
   await Supabase.initialize(
       url: Env.supabaseUrl, anonKey: Env.supabaseKey, debug: true); // 슈파베이스 초기화

@@ -5,6 +5,7 @@ enum Routes {
   signIn('/auth/sign-in', isAuthRoute: true),
   signUp('/auth/sign-up', isAuthRoute: true),
   displayTrip('/trip', isHomeRoute: true),
+  tripDetail('/trip/detail', isHomeRoute: false),
   myTrip('/trip/my', isHomeRoute: true),
   createTrip('/trip/my/create', isHomeRoute: false),
   createJoinApply('/trip/apply/create', isHomeRoute: false),

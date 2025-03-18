@@ -37,6 +37,8 @@ dependencies:
   envied: ^1.1.1
   drift: ^2.14.1
   sqlite3_flutter_libs: ^0.5.31
+  timeago: ^3.6.0  # 최신 버전 확인
+
 
 dev_dependencies:
   flutter_test:

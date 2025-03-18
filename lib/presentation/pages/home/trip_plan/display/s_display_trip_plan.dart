@@ -3,14 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:module/dependency_injection.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/presentation/bloc/export.dart';
 import 'package:module/shared/shared.export.dart';
 
 import '../../../../router/router_config.dart';
 import '../../../../widgets/loading_overlay.widget.dart';
-import '../join_apply/create/s_create_join_apply.dart';
 
 part 'f_list.dart';
 
@@ -26,6 +24,7 @@ class DisplayTripPlanScreen extends StatelessWidget {
     return BlocListener<DisplayTripPlanBloc, DisplayState<TripPlanEntity>>(
       listener: (context, state) {
         if (state.status == Status.error) {
+          context.showSnackBar(state.errorMessage);
           Timer(1.durationInSec, () {
             if (context.mounted) {
               context.read<DisplayTripPlanBloc>().add(

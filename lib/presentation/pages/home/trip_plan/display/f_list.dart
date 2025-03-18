@@ -21,13 +21,11 @@ class TripPlanListFragment extends StatelessWidget {
         reverse: true,
         itemCount: _data.length,
         shrinkWrap: true,
-        itemBuilder: (context, index) => Column(
-              children: [
-                TripPlanItemWidget(_data[index]),
-                8.height,
-                const Divider(indent: 20, endIndent: 20),
-                8.height,
-              ],
-            ));
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: TripPlanItemWidget(_data[index]),
+          );
+        });
   }
 }

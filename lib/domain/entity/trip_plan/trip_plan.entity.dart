@@ -5,7 +5,7 @@ import '../base/base.entity.dart';
 import '../user/creator.dart';
 
 class TripPlanEntity extends BaseEntity {
-  final String? title;
+  final String title;
   final String content;
   final int minHeadCount;
   final int maxHeadCount;
@@ -17,7 +17,7 @@ class TripPlanEntity extends BaseEntity {
   TripPlanEntity({
     required super.id,
     super.createdAt,
-    this.title,
+    required this.title,
     required this.content,
     required this.minHeadCount,
     required this.maxHeadCount,

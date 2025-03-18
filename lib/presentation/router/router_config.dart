@@ -13,6 +13,7 @@ import '../pages/auth/s_auth.dart';
 import '../pages/auth/sign_in/s_sign_in.dart';
 import '../pages/auth/sign_up/s_sign_up.dart';
 import '../pages/home/trip_plan/create/s_create_trip_plan.dart';
+import '../pages/home/trip_plan/detail/s_detail.dart';
 import '../pages/home/trip_plan/display/s_display_trip_plan.dart';
 import '../pages/home/s_home.dart';
 import '../pages/home/setting/s_setting.dart';
@@ -127,5 +128,12 @@ class CustomRouter {
                   create: (_) => getIt<CreateTripPlanCubit>(),
                   child: const CreateTripScreen())),
         ),
+        GoRoute(
+          path: Routes.tripDetail.path,
+          pageBuilder: (context, state) {
+            final tripPlan = state.extra as TripPlanEntity;
+            return NoTransitionPage(child: TripPlanDetailScreen(tripPlan));
+          },
+        )
       ];
 }
