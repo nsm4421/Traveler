@@ -8,6 +8,7 @@ final class AuthenticationState extends BaseState {
       super.errorMessage = '',
       this.isAuth = false});
 
+  @override
   AuthenticationState copyWith(
       {Status? status, String? errorMessage, bool? isAuth}) {
     return AuthenticationState(

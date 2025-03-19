@@ -1,15 +1,27 @@
-part of 'create_join_apply.cubit.dart';
+part of 'create_join_apply.bloc.dart';
+
+enum ApplyStatus {
+  unMounted,
+  appliedBefore,
+  alreadyClosed,
+  canApply;
+}
 
 class CreateJoinApplyState extends BaseState {
-  final String content;
+  final ApplyStatus applyStatus; // 지원 가능여부
 
-  CreateJoinApplyState({super.status, super.errorMessage, this.content = ''});
+  CreateJoinApplyState({
+    this.applyStatus = ApplyStatus.unMounted,
+    super.status = Status.initial,
+    super.errorMessage = '',
+  });
 
+  @override
   CreateJoinApplyState copyWith(
-      {Status? status, String? errorMessage, String? content}) {
+      {ApplyStatus? applyStatus, Status? status, String? errorMessage}) {
     return CreateJoinApplyState(
+        applyStatus: applyStatus ?? this.applyStatus,
         status: status ?? this.status,
-        errorMessage: errorMessage ?? this.errorMessage,
-        content: content ?? this.content);
+        errorMessage: errorMessage ?? this.errorMessage);
   }
 }

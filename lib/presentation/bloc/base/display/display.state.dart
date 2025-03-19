@@ -9,6 +9,7 @@ class DisplayState<T extends BaseEntity> extends BaseState {
     this.isEnd = isEnd ?? false;
   }
 
+  @override
   DisplayState<T> copyWith(
       {Status? status, String? errorMessage, List<T>? data, bool? isEnd}) {
     return DisplayState(

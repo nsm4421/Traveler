@@ -30,6 +30,7 @@ class CreateTripPlanState extends BaseState {
     this.endDate = endDate ?? DateTime.now().add(5.durationInDays);
   }
 
+  @override
   CreateTripPlanState copyWith({
     Status? status,
     String? errorMessage,

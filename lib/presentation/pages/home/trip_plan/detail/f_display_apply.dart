@@ -24,11 +24,9 @@ class DisplayApplyFragment extends StatelessWidget {
                       builder: (_) {
                         return BlocProvider(
                             create: (_) =>
-                                getIt<CreateJoinApplyCubit>(param1: _entity),
-                            child: SizedBox(
-                              height: context.height * 0.8,
-                              child: const CreateApplyFragment(),
-                            ));
+                                getIt<CreateJoinApplyBloc>(param1: _entity)
+                                  ..add(MountJoinApplyEvent()),
+                            child: const CreateApplyFragment());
                       });
                 },
                 icon: const Icon(Icons.check))
