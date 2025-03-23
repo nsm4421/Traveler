@@ -8,10 +8,10 @@ import 'package:module/dependency_injection.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/presentation/bloc/export.dart';
-
 import '../pages/auth/s_auth.dart';
 import '../pages/auth/sign_in/s_sign_in.dart';
 import '../pages/auth/sign_up/s_sign_up.dart';
+import '../pages/home/search/s_search.dart';
 import '../pages/home/trip_plan/create/s_create_trip_plan.dart';
 import '../pages/home/trip_plan/detail/s_detail.dart';
 import '../pages/home/trip_plan/display/s_display_trip_plan.dart';
@@ -93,19 +93,12 @@ class CustomRouter {
                       )
                     ],
                   ),
-                HomeBottomNav.myTrip => StatefulShellBranch(
+                HomeBottomNav.search => StatefulShellBranch(
                     routes: [
                       GoRoute(
-                        path: Routes.myTrip.path,
-                        pageBuilder: (context, state) => NoTransitionPage(
-                            child: BlocProvider(
-                                create: (_) => getIt<DisplayTripPlanBloc>(
-                                    param1: context
-                                        .read<AuthenticationBloc>()
-                                        .currentUid!)
-                                  ..add(MountDisplayEvent()),
-                                child: DisplayTripPlanScreen('My Trip Plans'))),
-                      )
+                          path: Routes.search.path,
+                          pageBuilder: (context, state) =>
+                              NoTransitionPage(child: SearchScreen()))
                     ],
                   ),
                 HomeBottomNav.setting => StatefulShellBranch(

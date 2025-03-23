@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:module/presentation/pages/home/w_bottom_nav.dart';
+
+import 'w_bottom_nav.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen(this._navigationShell, {super.key});

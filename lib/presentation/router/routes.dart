@@ -1,15 +1,18 @@
 part of 'router_config.dart';
 
 enum Routes {
+  // auth routes
   auth('/auth', isAuthRoute: true),
   signIn('/auth/sign-in', isAuthRoute: true),
   signUp('/auth/sign-up', isAuthRoute: true),
+  // home routes
   displayTrip('/trip', isHomeRoute: true),
+  search('/search', isHomeRoute: true),
+  setting('/setting', isHomeRoute: true),
+  // etc
   tripDetail('/trip/detail', isHomeRoute: false),
-  myTrip('/trip/my', isHomeRoute: true),
   createTrip('/trip/my/create', isHomeRoute: false),
-  createJoinApply('/trip/apply/create', isHomeRoute: false),
-  setting('/setting', isHomeRoute: true);
+  createJoinApply('/trip/apply/create', isHomeRoute: false);
 
   final String path;
   final bool isAuthRoute; // 인증 전에 볼 수 있는 페이지 여부

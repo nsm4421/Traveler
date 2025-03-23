@@ -5,10 +5,10 @@ enum HomeBottomNav {
       label: "HOME",
       iconData: Icons.home_outlined,
       activeIconData: Icons.home_filled),
-  myTrip(
-      label: 'MyTrip',
-      iconData: Icons.airplane_ticket_outlined,
-      activeIconData: Icons.airplane_ticket),
+  search(
+      label: 'Search',
+      iconData: Icons.search_outlined,
+      activeIconData: Icons.search),
   setting(
       label: 'Setting',
       iconData: Icons.settings_outlined,
