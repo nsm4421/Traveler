@@ -14,6 +14,13 @@ class SettingScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Setting'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                context.read<AuthenticationBloc>().add(SignOutEvent());
+              },
+              icon: Icon(Icons.logout))
+        ],
       ),
       body: Column(
         children: [

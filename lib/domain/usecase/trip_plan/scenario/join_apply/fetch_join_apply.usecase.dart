@@ -14,7 +14,7 @@ class FetchJoinApplyUseCase {
     try {
       return await _repository
           .fetch(tripPlanId: tripPlanId, cursor: cursor, limit: limit)
-          .then((_) => const Success<List<JoinApplyEntity>>())
+          .then((data) => Success<List<JoinApplyEntity>>(data: data))
           .then(Right.new);
     } catch (error) {
       _logger.e([LogTags.useCase, error]);

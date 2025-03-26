@@ -13,16 +13,19 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          HeaderFragment(),
-          ListView.builder(
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-
-                return Text(
-                  "$index",
-                  style: context.textTheme.displayLarge,
-                );
-              })
+          const HeaderFragment(),
+          12.height,
+          Expanded(
+            child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: 1000,
+                itemBuilder: (context, index) {
+                  return Text(
+                    "$index",
+                    style: context.textTheme.displayLarge,
+                  );
+                }),
+          )
         ],
       ),
     );

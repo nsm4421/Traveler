@@ -38,6 +38,10 @@ class JoinApplyRepositoryImpl with LoggerMixIn implements JoinApplyRepository {
   @override
   Future<void> modify(
       {required String id, String? content, bool? isAccepted}) async {
+    logger.t([
+      LogTags.repository,
+      "modify apply|content:$content|isAccepted:$isAccepted"
+    ]);
     return await _remoteJoinApplyDataSource.modify(
         id: id, content: content, isAccepted: isAccepted);
   }

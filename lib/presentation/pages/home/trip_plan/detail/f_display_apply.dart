@@ -1,12 +1,15 @@
 part of 's_detail.dart';
 
 class DisplayApplyFragment extends StatelessWidget {
-  const DisplayApplyFragment(this._entity, {super.key});
+  const DisplayApplyFragment(
+      {super.key, required this.tripPlan, required this.applies});
 
-  final TripPlanEntity _entity;
+  final TripPlanEntity tripPlan;
+  final List<JoinApplyEntity> applies;
 
   @override
   Widget build(BuildContext context) {
+    final currentUid = context.read<AuthenticationBloc>().currentUid;
     return Column(
       children: [
         Row(
@@ -24,7 +27,7 @@ class DisplayApplyFragment extends StatelessWidget {
                       builder: (_) {
                         return BlocProvider(
                             create: (_) =>
-                                getIt<CreateJoinApplyBloc>(param1: _entity)
+                                getIt<CreateJoinApplyBloc>(param1: tripPlan)
                                   ..add(MountJoinApplyEvent()),
                             child: const CreateApplyFragment());
                       });
@@ -33,16 +36,58 @@ class DisplayApplyFragment extends StatelessWidget {
           ],
         ),
         12.height,
-        SizedBox(
-          width: context.width,
-          height: 200,
+        ConstrainedBox(
+          constraints: BoxConstraints(minHeight: context.height / 4),
           child: ListView.builder(
-              scrollDirection: Axis.horizontal,
               shrinkWrap: true,
-              itemCount: 30,
+              itemCount: applies.length,
               itemBuilder: (context, index) {
-                // TODO : 참가신청 보여주기
-                return Text("참가신청 $index");
+                final apply = applies[index];
+                final switchButtonVisible =
+                    (tripPlan.creator.id == currentUid) &&
+                        (apply.creator.id != currentUid);
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(apply.creator.sex?.iconData),
+                              8.width,
+                              Text(
+                                apply.creator.username,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                          Card(
+                            color: apply.isAccepted
+                                ? context.colorScheme.primaryContainer
+                                : context.colorScheme.tertiaryContainer
+                                    .withOpacity(0.5),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 6),
+                              child: Text(apply.content,
+                                  style: context.textTheme.bodyMedium),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      if (switchButtonVisible)
+                        BlocProvider(
+                            create: (_) =>
+                                getIt<JoinApplyApprovalCubit>(param1: apply),
+                            child: const SwitchApprovalButtonWidget())
+                    ],
+                  ),
+                );
               }),
         ),
       ],

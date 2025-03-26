@@ -125,7 +125,11 @@ class CustomRouter {
           path: Routes.tripDetail.path,
           pageBuilder: (context, state) {
             final tripPlan = state.extra as TripPlanEntity;
-            return NoTransitionPage(child: TripPlanDetailScreen(tripPlan));
+            return NoTransitionPage(
+                child: BlocProvider(
+                    create: (_) => getIt<DisplayJoinApplyBloc>(param1: tripPlan)
+                      ..add(MountDisplayEvent()),
+                    child: TripPlanDetailScreen(tripPlan)));
           },
         )
       ];
