@@ -7,6 +7,8 @@ import 'package:module/shared/shared.export.dart';
 
 import '../../../base/display/display.bloc.dart';
 
+part 'display_join_apply.event.dart';
+
 @injectable
 class DisplayJoinApplyBloc extends DisplayBloc<JoinApplyEntity> {
   final TripPlanUseCase _useCase;
@@ -16,7 +18,20 @@ class DisplayJoinApplyBloc extends DisplayBloc<JoinApplyEntity> {
       {required TripPlanUseCase useCase,
       @factoryParam required TripPlanEntity tripPlan})
       : _useCase = useCase,
-        _tripPlan = tripPlan;
+        _tripPlan = tripPlan {
+    on<UpdateJoinApplyApprovalEvent>(_onUpdateApproval);
+  }
+
+  void _onUpdateApproval(UpdateJoinApplyApprovalEvent event,
+      Emitter<DisplayState<JoinApplyEntity>> emit) {
+    emit(state.copyWith(
+        data: state.data
+            .map((item) => item.copyWith(
+                isAccepted: item.tripPlanId == event.tripPlanId
+                    ? event.isAccepted
+                    : null))
+            .toList()));
+  }
 
   @override
   Future<void> onFetch(FetchDisplayEvent event,

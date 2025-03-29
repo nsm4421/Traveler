@@ -13,12 +13,12 @@ part 'accept_join_apply.state.dart';
 class JoinApplyApprovalCubit extends Cubit<JoinApplyApprovalState>
     with LoggerMixIn {
   JoinApplyApprovalCubit(@factoryParam this._joinApply, this._useCase)
-      : super(JoinApplyApprovalState(isAccepted: _joinApply.isAccepted));
+      : super(JoinApplyApprovalState(
+            tripPlanId: _joinApply.tripPlanId,
+            isAccepted: _joinApply.isAccepted));
 
   final JoinApplyEntity _joinApply;
   final TripPlanUseCase _useCase;
-
-  JoinApplyEntity get joinApply => this._joinApply;
 
   void initState({Status? status, String? errorMessage, bool? isAccepted}) {
     emit(state.copyWith(
