@@ -7,6 +7,7 @@ import 'package:module/shared/shared.export.dart';
 import 'auth/auth.remote_datasource_impl.dart';
 import 'database/join_apply/join_apply.remote_datasource_impl.dart';
 import 'database/trip_plan/trip_plan.remote_datasource_impl.dart';
+import 'database/trip_plan/trip_plan_comment.remote_datasource_impl.dart';
 
 @module
 abstract class RemoteDataSourceModule with LoggerMixIn {
@@ -23,6 +24,13 @@ abstract class RemoteDataSourceModule with LoggerMixIn {
   @lazySingleton
   RemoteTripPlanDataSource get tripPlan => RemoteTripPlanDataSourceImpl(
         queryBuilder: _supabaseClient.rest.from(Tables.tripPlan.name),
+        logger: logger,
+      );
+
+  @lazySingleton
+  RemoteTripPlanCommentDataSource get tripPlanComment =>
+      RemoteTripPlanCommentDataSourceImpl(
+        queryBuilder: _supabaseClient.rest.from(Tables.tripPlanComment.name),
         logger: logger,
       );
 

@@ -5,9 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'join_apply.remote_datasource.dart';
 
-class RemoteJoinApplyDataSourceImpl
-    with LoggerMixIn
-    implements RemoteJoinApplyDataSource {
+class RemoteJoinApplyDataSourceImpl implements RemoteJoinApplyDataSource {
   final PostgrestQueryBuilder _queryBuilder;
   final Logger _logger;
 
@@ -43,7 +41,7 @@ class RemoteJoinApplyDataSourceImpl
   @override
   Future<void> modify(
       {required String id, bool? isAccepted, String? content}) async {
-    logger.t([
+    _logger.t([
       LogTags.dataSource,
       "modify apply|id:$id|content:$content|isAccepted:$isAccepted"
     ]);
