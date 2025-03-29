@@ -1,6 +1,6 @@
 import '../user/creator.dart';
 
-class BaseEntity {
+abstract class BaseEntity {
   final String id;
   final DateTime? createdAt;
   final CreatorEntity creator;

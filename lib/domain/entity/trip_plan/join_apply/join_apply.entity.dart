@@ -26,4 +26,13 @@ class JoinApplyEntity extends BaseEntity {
       isAccepted: model.is_accepted,
     );
   }
+
+  JoinApplyEntity copyWith({String? content, bool? isAccepted}) {
+    return JoinApplyEntity(
+        id: id,
+        creator: creator,
+        tripPlanId: tripPlanId,
+        content: content ?? this.content,
+        isAccepted: isAccepted ?? this.isAccepted);
+  }
 }
