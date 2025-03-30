@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:module/shared/shared.export.dart';
 
@@ -6,27 +5,41 @@ part 'sign_up.model.freezed.dart';
 
 part 'sign_up.model.g.dart';
 
+// ignore_for_file: annotate_overrides
+// ignore_for_file: non_constant_identifier_names
 @freezed
+@JsonSerializable()
 class SignUpRequestModel with _$SignUpRequestModel {
-  const factory SignUpRequestModel({
-    required String email,
-    required String password,
-    required SignUpRequestData data
-  }) = _SignUpRequestModel;
+  final String email;
+  final String password;
+  final SignUpRequestDataModel data;
 
   factory SignUpRequestModel.fromJson(Map<String, dynamic> json) =>
       _$SignUpRequestModelFromJson(json);
+
+  SignUpRequestModel(
+      {required this.email, required this.password, required this.data});
+
+  Map<String, Object?> toJson() => _$SignUpRequestModelToJson(this);
 }
 
 @freezed
-class SignUpRequestData with _$SignUpRequestData {
-  const factory SignUpRequestData({
-    required String username,
-    required String description,
-    required Sex sex,
-    required DateTime born_at,
-  }) = _SignUpRequestData;
+@JsonSerializable()
+class SignUpRequestDataModel with _$SignUpRequestDataModel {
+  final String username;
+  final String description;
+  final Sex sex;
+  final DateTime born_at;
 
-  factory SignUpRequestData.fromJson(Map<String, dynamic> json) =>
-      _$SignUpRequestDataFromJson(json);
+  SignUpRequestDataModel({
+    this.username = '',
+    this.description = '',
+    this.sex = Sex.male,
+    required this.born_at,
+  });
+
+  factory SignUpRequestDataModel.fromJson(Map<String, dynamic> json) =>
+      _$SignUpRequestDataModelFromJson(json);
+
+  Map<String, Object?> toJson() => _$SignUpRequestDataModelToJson(this);
 }

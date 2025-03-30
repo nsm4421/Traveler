@@ -1,15 +1,18 @@
-import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'create_join_apply.model.freezed.dart';
+
 part 'create_join_apply.model.g.dart';
 
+// ignore_for_file: annotate_overrides
+// ignore_for_file: non_constant_identifier_names
 @freezed
+@JsonSerializable()
 class CreateJoinApplyModel with _$CreateJoinApplyModel {
-  const factory CreateJoinApplyModel({
-    @Default('') String trip_plan_id,
-    @Default('') String content,
-  }) = _CreateJoinApplyModel;
+  final String trip_plan_id;
+  final String content;
+
+  CreateJoinApplyModel({required this.trip_plan_id, required this.content});
 
   factory CreateJoinApplyModel.fromJson(Map<String, dynamic> json) =>
       _$CreateJoinApplyModelFromJson(json);

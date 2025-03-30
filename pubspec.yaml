@@ -24,7 +24,8 @@ dependencies:
   logger: ^2.5.0
   json_annotation: ^4.9.0
   json_serializable: ^6.8.0
-  freezed: ^2.5.2
+  freezed: ^3.0.4
+  freezed_annotation: ^3.0.0
   either_dart: ^1.0.0
   image_picker: ^1.1.2
   flutter_image_compress: ^2.3.0
@@ -37,8 +38,7 @@ dependencies:
   envied: ^1.1.1
   drift: ^2.14.1
   sqlite3_flutter_libs: ^0.5.31
-  timeago: ^3.6.0  # 최신 버전 확인
-
+  timeago: ^3.6.0
 
 dev_dependencies:
   flutter_test:
