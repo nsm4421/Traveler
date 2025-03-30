@@ -1,7 +1,9 @@
 part of '../../trip_plan.usecase.dart';
 
-class FetchTripPlanChildCommentsUseCase extends AbsFetchChildCommentsUseCase {
-  FetchTripPlanChildCommentsUseCase(
-      {required TripCommentCommentRepository super.repository,
-      required super.logger});
+class FetchTripPlanChildCommentsUseCase
+    extends AbsFetchChildCommentsUseCase<TripPlanCommentEntity> {
+  FetchTripPlanChildCommentsUseCase({
+    required TripCommentCommentRepository super.repository,
+    required super.logger,
+  });
 }

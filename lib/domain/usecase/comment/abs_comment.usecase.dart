@@ -6,7 +6,7 @@ import 'package:module/shared/shared.export.dart';
 
 part 'scenario/abs_create_child_comment.usecase.dart';
 
-part 'scenario/abs_create_parents.usecase.dart';
+part 'scenario/abs_create_parent_comment.usecase.dart';
 
 part 'scenario/abs_delete_comment.usecase.dart';
 
@@ -14,14 +14,14 @@ part 'scenario/abs_fetch_children.usecase.dart';
 
 part 'scenario/abs_fetch_parents.usecase.dart';
 
-abstract class AbsCommentUseCase {
-  AbsCreateParentCommentUseCase get createParentComment;
+abstract class AbsCommentUseCase<T extends AbsCommentEntity> {
+  AbsCreateParentCommentUseCase<T> get createParentComment;
 
-  AbsCreateChildCommentUseCase get createChildComment;
+  AbsCreateChildCommentUseCase<T> get createChildComment;
 
-  AbsFetchParentCommentsUseCase get fetchParentComments;
+  AbsFetchParentCommentsUseCase<T> get fetchParentComments;
 
-  AbsFetchChildCommentsUseCase get fetchChildComments;
+  AbsFetchChildCommentsUseCase<T> get fetchChildComments;
 
   AbsDeleteCommentUseCase get deleteComment;
 }

@@ -25,7 +25,7 @@ part "scenario/join_apply/delete_join_apply.usecase.dart";
 
 part 'scenario/comment/create_parent_comment.usecase.dart';
 
-part 'scenario/comment/create_child_comment.usecase.dart';
+part 'scenario/comment/create_comment.usecase.dart';
 
 part 'scenario/comment/fetch_parent_comments.usecase.dart';
 

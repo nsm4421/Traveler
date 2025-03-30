@@ -5,7 +5,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'abs_comment.remote_datasource.dart';
 
-abstract class AbsRemoteCommentDataSourceImpl implements AbsRemoteCommentDataSource {
+abstract class AbsRemoteCommentDataSourceImpl<T extends AbsCommentModel>
+    implements AbsRemoteCommentDataSource<T> {
   final PostgrestQueryBuilder _queryBuilder;
   final Logger _logger;
 
@@ -16,51 +17,52 @@ abstract class AbsRemoteCommentDataSourceImpl implements AbsRemoteCommentDataSou
 
   String get _now => DateTime.now().toUtc().toIso8601String();
 
+  T fromJson(Map<String, dynamic> json);
+
   @override
-  Future<void> createChild(
+  Future<void> create(
       {required String refId,
-      required String parentId,
+      String? parentCommentId,
       required String content}) async {
-    return await _queryBuilder.insert(CreateChildCommentModel(
-        ref_id: refId, parentId: parentId, content: content));
+    final data = {
+      'ref_id': refId,
+      if (parentCommentId != null) 'parent_comment_id': parentCommentId,
+      'content': content
+    };
+    _logger.t([LogTags.dataSource, data.toString()]);
+    return await _queryBuilder.insert(data);
   }
 
   @override
-  Future<void> createParent(
-      {required String refId, required String content}) async {
-    return await _queryBuilder
-        .insert(CreateParentCommentModel(ref_id: refId, content: content));
-  }
-
-  @override
-  Future<void> softDelete(String commentId) async {
-    await _queryBuilder.update({'removed_at': _now}).eq("id", commentId);
-  }
-
-  @override
-  Future<Iterable<FetchChildCommentModel>> fetchChildren(
-      {required String parentCommentId,
-      DateTime? cursor,
-      int limit = 20}) async {
-    return await _queryBuilder
-        .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
-        .eq("parent_id", parentCommentId)
-        .lt('created_at', (cursor ?? _now))
-        .order('created_at', ascending: false)
-        .limit(limit)
-        .then((res) => res.map(FetchChildCommentModel.fromJson));
-  }
-
-  @override
-  Future<Iterable<FetchParentCommentModel>> fetchParents(
+  Future<Iterable<T>> fetchParents(
       {required String refId, DateTime? cursor, int limit = 20}) async {
     return await _queryBuilder
         .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
         .eq("ref_id", refId)
-        .isFilter("parent_id", null)
         .lt('created_at', (cursor ?? _now))
         .order('created_at', ascending: false)
         .limit(limit)
-        .then((res) => res.map(FetchParentCommentModel.fromJson));
+        .then((res) => res.map((fromJson)));
+  }
+
+  @override
+  Future<Iterable<T>> fetchChildren({
+    required String parentCommentId,
+    DateTime? cursor,
+    int limit = 20,
+  }) async {
+    return await _queryBuilder
+        .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
+        .eq("parent_comment_id", parentCommentId)
+        .lt('created_at', (cursor ?? _now))
+        .order('created_at', ascending: false)
+        .limit(limit)
+        .then((res) => res.map((fromJson)));
+  }
+
+  @override
+  Future<void> softDelete(String commentId) async {
+    return await _queryBuilder.update({'removed_at': _now}).eq("id", commentId);
+    ;
   }
 }

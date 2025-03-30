@@ -1,15 +1,15 @@
 part of '../abs_comment.usecase.dart';
 
-abstract class AbsFetchChildCommentsUseCase {
-  final AbsCommentRepository _repository;
+abstract class AbsFetchChildCommentsUseCase<T extends AbsCommentEntity> {
+  final AbsCommentRepository<T> _repository;
   final Logger _logger;
 
   AbsFetchChildCommentsUseCase(
-      {required AbsCommentRepository repository, required Logger logger})
+      {required AbsCommentRepository<T> repository, required Logger logger})
       : _repository = repository,
         _logger = logger;
 
-  Future<Either<Failure, Success<List<ChildCommentEntity>>>> call({
+  Future<Either<Failure, Success<List<T>>>> call({
     required String parentCommentId,
     DateTime? cursor,
     int limit = 20,
@@ -18,8 +18,7 @@ abstract class AbsFetchChildCommentsUseCase {
       return await _repository
           .fetchChildren(
               parentCommentId: parentCommentId, cursor: cursor, limit: limit)
-          .then((res) => res.map(ChildCommentEntity.fromEntity).toList())
-          .then((res) => Success<List<ChildCommentEntity>>(data: res))
+          .then((res) => Success<List<T>>(data: res))
           .then(Right.new);
     } catch (error) {
       _logger.e([LogTags.useCase, error]);

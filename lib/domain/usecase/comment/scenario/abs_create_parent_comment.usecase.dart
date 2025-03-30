@@ -1,23 +1,20 @@
 part of '../abs_comment.usecase.dart';
 
-abstract class AbsFetchParentCommentsUseCase<T extends AbsCommentEntity> {
+abstract class AbsCreateParentCommentUseCase<T extends AbsCommentEntity> {
   final AbsCommentRepository<T> _repository;
   final Logger _logger;
 
-  AbsFetchParentCommentsUseCase(
+  AbsCreateParentCommentUseCase(
       {required AbsCommentRepository<T> repository, required Logger logger})
       : _repository = repository,
         _logger = logger;
 
-  Future<Either<Failure, Success<List<T>>>> call({
-    required String refId,
-    DateTime? cursor,
-    int limit = 20,
-  }) async {
+  Future<Either<Failure, Success<void>>> call(
+      {required String refId, required String content}) async {
     try {
       return await _repository
-          .fetchParents(refId: refId, cursor: cursor, limit: limit)
-          .then((res) => Success<List<T>>(data: res))
+          .createParent(refId: refId, content: content)
+          .then((res) => const Success<void>())
           .then(Right.new);
     } catch (error) {
       _logger.e([LogTags.useCase, error]);
