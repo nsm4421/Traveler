@@ -1,6 +1,6 @@
 part of 'display_join_apply.bloc.dart';
 
-final class UpdateJoinApplyApprovalEvent extends DisplayEvent {
+final class UpdateJoinApplyApprovalEvent extends AbsDisplayEvent {
   final String tripPlanId;
   final bool isAccepted;
 

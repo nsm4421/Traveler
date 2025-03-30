@@ -1,40 +1,33 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
+import 'package:injectable/injectable.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/shared/shared.export.dart';
 
-import '../../base_state.dart';
+import '../../../base/comment/create/abs_create_child_comment.cubit.dart';
 
-part 'create_child_comment.state.dart';
+part 'create_trip_plan_child_comment.state.dart';
 
-class CreateChildCommentCubit<T extends BaseEntity>
-    extends Cubit<CreateChildCommentState> {
-  final AbsCommentUseCase _useCase;
-  final Logger _logger;
-  final T _ref;
-  final ParentCommentEntity _parentComment;
+@injectable
+class CreateTripPlanChildCommentCubit
+    extends AbsCreateChildCommentCubit<TripPlanCommentEntity> with LoggerMixIn {
+  final TripPlanCommentEntity _tripPlanParentComment;
+  final TripPlanUseCase _useCase;
 
-  ParentCommentEntity get parent => _parentComment;
-
-  CreateChildCommentCubit(
-      {required ParentCommentEntity parentComment,
-      required T ref,
-      required AbsCommentUseCase useCase,
-      required Logger logger})
-      : _parentComment = parentComment,
-        _ref = ref,
+  CreateTripPlanChildCommentCubit({
+    @factoryParam required TripPlanCommentEntity tripPlanParentComment,
+    required TripPlanUseCase useCase,
+  })  : _tripPlanParentComment = tripPlanParentComment,
         _useCase = useCase,
-        _logger = logger,
-        super(CreateChildCommentState(parentComment));
+        super(tripPlanParentComment);
 
+  @override
   Future<void> create(String content) async {
     try {
       emit(state.copyWith(status: Status.loading));
       await _useCase.createChildComment
           .call(
-              refId: _ref.id,
-              parentCommentId: _parentComment.id,
+              refId: _tripPlanParentComment.refId,
+              parentCommentId: _tripPlanParentComment.parentCommentId!,
               content: content)
           .then((res) => res.fold(
               (l) => emit(state.copyWith(
@@ -42,7 +35,7 @@ class CreateChildCommentCubit<T extends BaseEntity>
               (r) => emit(
                   state.copyWith(status: Status.success, errorMessage: ''))));
     } catch (error) {
-      _logger.e([LogTags.bloc, error]);
+      logger.e([LogTags.bloc, error]);
       emit(state.copyWith(status: Status.error, errorMessage: 'error occurs'));
     } finally {
       if (state.status == Status.loading) {

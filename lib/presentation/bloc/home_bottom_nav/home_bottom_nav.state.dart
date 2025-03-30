@@ -5,12 +5,16 @@ enum HomeBottomNav {
       label: "HOME",
       iconData: Icons.home_outlined,
       activeIconData: Icons.home_filled),
+  trip(
+      label: "TRIP",
+      iconData: Icons.map_outlined,
+      activeIconData: Icons.map),
   search(
-      label: 'Search',
+      label: 'SEARCH',
       iconData: Icons.search_outlined,
       activeIconData: Icons.search),
   setting(
-      label: 'Setting',
+      label: 'SETTING',
       iconData: Icons.settings_outlined,
       activeIconData: Icons.settings);
 
