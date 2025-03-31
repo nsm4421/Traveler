@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:module/shared/shared.export.dart';
-
-part 'f_header.dart';
-
-part 'search_option.enum.dart';
+part of 'p_search.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});

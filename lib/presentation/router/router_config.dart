@@ -1,22 +1,22 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:module/dependency_injection.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/presentation/bloc/export.dart';
-import '../pages/auth/s_auth.dart';
-import '../pages/auth/sign_in/s_sign_in.dart';
-import '../pages/auth/sign_up/s_sign_up.dart';
-import '../pages/home/search/s_search.dart';
-import '../pages/home/trip_plan/create/s_create_trip_plan.dart';
-import '../pages/home/trip_plan/detail/s_detail.dart';
-import '../pages/home/trip_plan/display/s_display_trip_plan.dart';
-import '../pages/home/s_home.dart';
-import '../pages/home/setting/s_setting.dart';
+
+import '../pages/auth/index/p_auth.dart';
+import '../pages/auth/sign_in/p_sign_in.dart';
+import '../pages/auth/sign_up/p_sign_up.dart';
+import '../pages/home/index/p_home.dart';
+import '../pages/home/review/p_display_review.dart';
+import '../pages/home/search/p_search.dart';
+import '../pages/trip_plan/create/p_create_trip_plan.dart';
+import '../pages/trip_plan/detail/p_trip_plan_detail.dart';
+import '../pages/home/trip_plan/p_display_trip_plan.dart';
+import '../pages/home/setting/p_setting.dart';
 
 part 'routes.dart';
 
@@ -59,78 +59,51 @@ class CustomRouter {
         }
       };
 
-  RouteBase get _authRoutes => GoRoute(
-          path: Routes.auth.path,
-          pageBuilder: (context, state) =>
-              const NoTransitionPage(child: AuthScreen()),
-          routes: [
-            GoRoute(
-                path: Routes.signUp.path.split('/').last,
-                builder: (context, state) => const SignUpScreen()),
-            GoRoute(
-                path: Routes.signIn.path.split('/').last,
-                builder: (context, state) => const SignInScreen())
-          ]);
+  RouteBase get _authRoutes =>
+      GoRoute(path: Routes.auth.path, pageBuilder: authPageBuilder, routes: [
+        GoRoute(
+            path: Routes.signUp.path.split('/').last,
+            pageBuilder: signUpPageBuilder),
+        GoRoute(
+            path: Routes.signIn.path.split('/').last,
+            pageBuilder: signInPageBuilder)
+      ]);
 
   StatefulShellRoute get _homeRouter => StatefulShellRoute.indexedStack(
       parentNavigatorKey: _rootNavigatorKey,
-      pageBuilder: (context, state, navigationShell) => NoTransitionPage(
-              child: BlocProvider(
-            create: (_) => getIt<HomeBottomNavCubit>(),
-            child: HomeScreen(navigationShell),
-          )),
+      pageBuilder: homePageBuilder,
       branches: HomeBottomNav.values
           .map((item) => switch (item) {
-                HomeBottomNav.home => StatefulShellBranch(
-                    routes: [
-                      GoRoute(
+                HomeBottomNav.displayReview => StatefulShellBranch(routes: [
+                    GoRoute(
+                        path: Routes.displayReview.path,
+                        pageBuilder: displayReviewPageBuilder)
+                  ]),
+                HomeBottomNav.displayTripPlan => StatefulShellBranch(routes: [
+                    GoRoute(
                         path: Routes.displayTrip.path,
-                        pageBuilder: (context, state) => NoTransitionPage(
-                            child: BlocProvider(
-                                create: (_) => getIt<DisplayTripPlanBloc>()
-                                  ..add(MountDisplayEvent()),
-                                child: DisplayTripPlanScreen('Trip Plans'))),
-                      )
-                    ],
-                  ),
-                HomeBottomNav.search => StatefulShellBranch(
-                    routes: [
-                      GoRoute(
-                          path: Routes.search.path,
-                          pageBuilder: (context, state) =>
-                              NoTransitionPage(child: SearchScreen()))
-                    ],
-                  ),
-                HomeBottomNav.setting => StatefulShellBranch(
-                    routes: [
-                      GoRoute(
+                        pageBuilder: displayDisplayTripPlanPageBuilder)
+                  ]),
+                HomeBottomNav.search => StatefulShellBranch(routes: [
+                    GoRoute(
+                        path: Routes.search.path,
+                        pageBuilder: searchPagePageBuilder)
+                  ]),
+                HomeBottomNav.setting => StatefulShellBranch(routes: [
+                    GoRoute(
                         path: Routes.setting.path,
-                        pageBuilder: (context, state) =>
-                            const NoTransitionPage(child: SettingScreen()),
-                      )
-                    ],
-                  ),
+                        pageBuilder: settingPageBuilder)
+                  ])
               })
           .toList());
 
   List<RouteBase> get _routes => [
         GoRoute(
-          path: Routes.createTrip.path,
-          pageBuilder: (context, state) => NoTransitionPage(
-              child: BlocProvider(
-                  create: (_) => getIt<CreateTripPlanCubit>(),
-                  child: const CreateTripScreen())),
-        ),
+            path: Routes.createTripPlan.path,
+            pageBuilder: createTripPlanPageBuilder),
         GoRoute(
-          path: Routes.tripDetail.path,
-          pageBuilder: (context, state) {
-            final tripPlan = state.extra as TripPlanEntity;
-            return NoTransitionPage(
-                child: BlocProvider(
-                    create: (_) => getIt<DisplayJoinApplyBloc>(param1: tripPlan)
-                      ..add(MountDisplayEvent()),
-                    child: TripPlanDetailScreen(tripPlan)));
-          },
+          path: Routes.tripPlanDetail.path,
+          pageBuilder: tripPlanDetailPageBuilder,
         )
       ];
 }

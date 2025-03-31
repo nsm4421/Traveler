@@ -1,4 +1,4 @@
-part of 's_search.dart';
+part of 'p_search.dart';
 
 class HeaderFragment extends StatefulWidget {
   const HeaderFragment({super.key});

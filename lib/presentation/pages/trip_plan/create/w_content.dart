@@ -1,4 +1,4 @@
-part of 's_create_trip_plan.dart';
+part of 'p_create_trip_plan.dart';
 
 class ContentWidget extends StatefulWidget {
   const ContentWidget(this._formKey, {super.key});

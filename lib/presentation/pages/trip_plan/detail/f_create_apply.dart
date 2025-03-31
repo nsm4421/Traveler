@@ -1,4 +1,4 @@
-part of 's_detail.dart';
+part of 'p_trip_plan_detail.dart';
 
 class CreateApplyFragment extends StatefulWidget {
   const CreateApplyFragment({super.key});

@@ -1,4 +1,4 @@
-part of 's_setting.dart';
+part of 'p_setting.dart';
 
 class ProfileWidget extends StatefulWidget {
   const ProfileWidget({super.key});

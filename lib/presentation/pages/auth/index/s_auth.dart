@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:module/shared/shared.export.dart';
-
-import '../../router/router_config.dart';
+part of 'p_auth.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});

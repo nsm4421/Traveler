@@ -1,4 +1,10 @@
-part of 's_search.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:module/shared/shared.export.dart';
+
+part 's_search.dart';
+
+part 'f_header.dart';
 
 enum SearchOptionEnum {
   all(label: 'ALL', iconData: Icons.square_outlined),
@@ -11,3 +17,9 @@ enum SearchOptionEnum {
 
   const SearchOptionEnum({required this.label, required this.iconData});
 }
+
+Page Function(BuildContext, GoRouterState) searchPagePageBuilder =
+    (context, state) {
+  const view = SearchScreen();
+  return const NoTransitionPage(child: view);
+};

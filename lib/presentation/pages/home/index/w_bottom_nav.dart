@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../bloc/home_bottom_nav/hom_bottom_nav.cubit.dart';
+part of 'p_home.dart';
 
 class HomeBottomNavWidget extends StatelessWidget {
   const HomeBottomNavWidget(this._navigationShell, {super.key});
@@ -28,6 +24,8 @@ class HomeBottomNavWidget extends StatelessWidget {
               elevation: 0,
               showSelectedLabels: true,
               showUnselectedLabels: false,
+              selectedItemColor: context.colorScheme.primary,
+              unselectedItemColor: Colors.blueGrey,
               items: HomeBottomNav.values
                   .map(
                     (item) => BottomNavigationBarItem(

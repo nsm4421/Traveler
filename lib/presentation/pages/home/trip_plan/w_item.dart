@@ -1,4 +1,4 @@
-part of 's_display_trip_plan.dart';
+part of 'p_display_trip_plan.dart';
 
 class TripPlanItemWidget extends StatelessWidget {
   const TripPlanItemWidget(this._item, {super.key});
@@ -94,7 +94,7 @@ class TripPlanItemWidget extends StatelessWidget {
               ),
               IconButton(
                   onPressed: () {
-                    context.push(Routes.tripDetail.path, extra: _item);
+                    context.push(Routes.tripPlanDetail.path, extra: _item);
                   },
                   icon: Icon(Icons.search, color: context.colorScheme.primary))
             ],

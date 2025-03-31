@@ -1,18 +1,4 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:module/domain/entity/export.dart';
-import 'package:module/presentation/bloc/export.dart';
-import 'package:module/shared/shared.export.dart';
-
-import '../../../../router/router_config.dart';
-import '../../../../widgets/loading_overlay.widget.dart';
-
-part 'f_list.dart';
-
-part 'w_item.dart';
+part of 'p_display_trip_plan.dart';
 
 class DisplayTripPlanScreen extends StatelessWidget {
   const DisplayTripPlanScreen(this.titleText, {super.key});
@@ -21,7 +7,7 @@ class DisplayTripPlanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<DisplayTripPlanBloc, DisplayState<TripPlanEntity>>(
+    return BlocListener<DisplayTripPlanBloc, AbsDisplayState<TripPlanEntity>>(
       listener: (context, state) {
         if (state.status == Status.error) {
           context.showSnackBar(state.errorMessage);
@@ -33,7 +19,7 @@ class DisplayTripPlanScreen extends StatelessWidget {
           });
         }
       },
-      child: BlocBuilder<DisplayTripPlanBloc, DisplayState<TripPlanEntity>>(
+      child: BlocBuilder<DisplayTripPlanBloc, AbsDisplayState<TripPlanEntity>>(
         builder: (context, state) {
           return LoadingOverLayWidget(
             isLoading: (state.status == Status.loading),
@@ -43,7 +29,7 @@ class DisplayTripPlanScreen extends StatelessWidget {
                   actions: [
                     IconButton(
                       onPressed: () {
-                        context.push(Routes.createTrip.path);
+                        context.push(Routes.createTripPlan.path);
                       },
                       icon: const Icon(Icons.add_box_outlined),
                     )

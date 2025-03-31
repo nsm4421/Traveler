@@ -1,4 +1,4 @@
-part of 's_detail.dart';
+part of 'p_trip_plan_detail.dart';
 
 class DisplayApplyFragment extends StatelessWidget {
   const DisplayApplyFragment(
@@ -18,21 +18,22 @@ class DisplayApplyFragment extends StatelessWidget {
                 style: context.textTheme.titleMedium
                     ?.copyWith(fontWeight: FontWeight.bold)),
             const Spacer(),
-            IconButton(
-                onPressed: () async {
-                  await showModalBottomSheet(
-                      context: context,
-                      showDragHandle: true,
-                      isScrollControlled: true,
-                      builder: (_) {
-                        return BlocProvider(
-                            create: (_) =>
-                                getIt<CreateJoinApplyBloc>(param1: tripPlan)
-                                  ..add(MountJoinApplyEvent()),
-                            child: const CreateApplyFragment());
-                      });
-                },
-                icon: const Icon(Icons.check))
+            if (currentUid != tripPlan.creator.id)
+              IconButton(
+                  onPressed: () async {
+                    await showModalBottomSheet(
+                        context: context,
+                        showDragHandle: true,
+                        isScrollControlled: true,
+                        builder: (_) {
+                          return BlocProvider(
+                              create: (_) =>
+                                  getIt<CreateJoinApplyBloc>(param1: tripPlan)
+                                    ..add(MountJoinApplyEvent()),
+                              child: const CreateApplyFragment());
+                        });
+                  },
+                  icon: const Icon(Icons.check))
           ],
         ),
         12.height,

@@ -1,14 +1,11 @@
 part of 'hom_bottom_nav.cubit.dart';
 
 enum HomeBottomNav {
-  home(
+  displayReview(
       label: "HOME",
       iconData: Icons.home_outlined,
       activeIconData: Icons.home_filled),
-  trip(
-      label: "TRIP",
-      iconData: Icons.map_outlined,
-      activeIconData: Icons.map),
+  displayTripPlan(label: "TRIP", iconData: Icons.map_outlined, activeIconData: Icons.map),
   search(
       label: 'SEARCH',
       iconData: Icons.search_outlined,
@@ -32,7 +29,8 @@ class HomeBottomNavState {
   final HomeBottomNav nav;
   final bool isVisible;
 
-  HomeBottomNavState({this.nav = HomeBottomNav.home, this.isVisible = true});
+  HomeBottomNavState(
+      {this.nav = HomeBottomNav.displayReview, this.isVisible = true});
 
   HomeBottomNavState copyWith({HomeBottomNav? nav, bool? isVisible}) {
     return HomeBottomNavState(
