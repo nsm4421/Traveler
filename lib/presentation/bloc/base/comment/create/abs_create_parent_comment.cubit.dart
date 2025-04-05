@@ -6,12 +6,12 @@ import 'package:module/shared/shared.export.dart';
 part 'abs_create_parent_comment.state.dart';
 
 abstract class AbsCreateParentCommentCubit<T extends BaseEntity>
-    extends Cubit<CreateParentCommentState> {
+    extends Cubit<AbsCreateParentCommentState<T>> {
   final T _ref;
 
   T get ref => _ref;
 
-  AbsCreateParentCommentCubit(T this._ref) : super(CreateParentCommentState(_ref));
+  AbsCreateParentCommentCubit(T this._ref) : super(AbsCreateParentCommentState<T>(_ref));
 
   void updateState({Status? status, String? errorMessage}) {
     emit(state.copyWith(status: status, errorMessage: errorMessage));

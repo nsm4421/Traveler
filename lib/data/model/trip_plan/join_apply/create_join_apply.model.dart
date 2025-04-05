@@ -16,4 +16,6 @@ class CreateJoinApplyModel with _$CreateJoinApplyModel {
 
   factory CreateJoinApplyModel.fromJson(Map<String, dynamic> json) =>
       _$CreateJoinApplyModelFromJson(json);
+
+  Map<String, Object?> toJson() => _$CreateJoinApplyModelToJson(this);
 }

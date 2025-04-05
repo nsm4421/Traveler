@@ -12,7 +12,8 @@ class RemoteTripPlanCommentDataSourceImpl
 
   RemoteTripPlanCommentDataSourceImpl(
       {required super.queryBuilder, required super.logger})
-      : _queryBuilder = queryBuilder;
+      : _queryBuilder = queryBuilder,
+        super(refIdKey: 'trip_plan_id');
 
   @override
   TripPlanCommentModel fromJson(Map<String, dynamic> json) =>

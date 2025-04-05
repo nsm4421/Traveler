@@ -1,9 +1,9 @@
 import 'package:module/domain/entity/export.dart';
 
 abstract class AbsCommentRepository<T extends AbsCommentEntity> {
-  Future<void> createParent({required String refId, required String content});
+  Future<T> createParent({required String refId, required String content});
 
-  Future<void> createChild(
+  Future<T> createChild(
       {required String refId,
       required String parentCommentId,
       required String content});
