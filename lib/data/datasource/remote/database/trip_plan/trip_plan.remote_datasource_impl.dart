@@ -5,7 +5,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'trip_plan.remote_datasource.dart';
 
-class RemoteTripPlanDataSourceImpl implements RemoteTripPlanDataSource {
+class RemoteTripPlanDataSourceImpl
+    with UtcMixIn
+    implements RemoteTripPlanDataSource {
   final PostgrestQueryBuilder _queryBuilder;
   final Logger _logger;
 
@@ -19,7 +21,7 @@ class RemoteTripPlanDataSourceImpl implements RemoteTripPlanDataSource {
       {DateTime? cursor, int limit = 20}) async {
     return await _queryBuilder
         .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
-        .lt('created_at', (cursor ?? DateTime.now()).toUtc().toIso8601String())
+        .lt('created_at', cursor?.utcString ?? now)
         .order('created_at', ascending: false)
         .limit(limit)
         .then((res) {
@@ -36,7 +38,7 @@ class RemoteTripPlanDataSourceImpl implements RemoteTripPlanDataSource {
     return await _queryBuilder
         .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
         .eq("created_by", uid)
-        .lt('created_at', (cursor ?? DateTime.now()).toUtc().toIso8601String())
+        .lt('created_at', cursor?.utcString ?? now)
         .order('created_at', ascending: false)
         .limit(limit)
         .then((res) {

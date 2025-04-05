@@ -18,12 +18,13 @@ abstract class AbsDisplayBloc<T extends BaseEntity>
     on<FetchDisplayEvent>(onFetch);
   }
 
-  DateTime? get cursor {
-    final createdAtList =
-        state.data.map((item) => item.createdAt).where((item) => item != null);
+  DateTime get cursor {
+    final createdAtList = state.data
+        .map((item) => item.createdAt?.toUtc())
+        .where((item) => item != null);
     return createdAtList.isEmpty
-        ? null
-        : createdAtList.reduce((v, e) => v!.isBefore(e!) ? v : e);
+        ? DateTime.now().toUtc()
+        : createdAtList.reduce((v, e) => v!.isBefore(e!) ? v : e)!;
   }
 
   Future<void> onInit(
@@ -55,7 +56,7 @@ abstract class AbsDisplayBloc<T extends BaseEntity>
             logger.d([LogTags.bloc, l.message]);
             emit(state.copyWith(status: Status.error, errorMessage: l.message));
           }, (r) {
-            logger.t([LogTags.bloc, 'init display state success', r.data]);
+            logger.t([LogTags.bloc, 'init display state success(${r.data?.length})']);
             emit(state.copyWith(
                 status: Status.success,
                 data: (r.data ?? []).reversed.toList(),

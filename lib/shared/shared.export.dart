@@ -8,4 +8,5 @@ export 'constant/error_code.constant.dart';
 export 'constant/status.constant.dart';
 export 'utils/env/env.dart';
 export 'utils/logger/logger.dart';
+export 'utils/timezone/utc.dart';
 export 'response/response_wrapper.dart';
