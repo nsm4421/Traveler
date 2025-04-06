@@ -1,13 +1,12 @@
 part of 'p_trip_plan_detail.dart';
 
 class TripPlanDetailScreen extends StatelessWidget {
-  const TripPlanDetailScreen(this._entity, {super.key});
+  const TripPlanDetailScreen(this._tripPlan, {super.key});
 
-  final TripPlanEntity _entity;
+  final TripPlanEntity _tripPlan;
 
   @override
   Widget build(BuildContext context) {
-    final currentUid = context.read<AuthenticationBloc>().currentUid;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -18,26 +17,29 @@ class TripPlanDetailScreen extends StatelessWidget {
               }
             },
             icon: const Icon(Icons.clear)),
-        title: const Text('상세 페이지', overflow: TextOverflow.ellipsis),
-        centerTitle: true,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          InfoFragment(_entity),
-          BlocBuilder<DisplayJoinApplyBloc, AbsDisplayState<JoinApplyEntity>>(
-            builder: (context, state) {
-              final applies =
-                  state.data.where((item) => item.creator.id != currentUid);
-              return applies.isEmpty
-                  ? Center(
-                      child: Text(
-                        "아직 지원자가 없습니다.\n첫번째 지원자가 되어보세요",
-                        style: context.textTheme.labelLarge,
-                      ),
-                    )
-                  : DisplayApplyFragment(
-                      tripPlan: _entity, applies: applies.toList());
-            },
+          /// 여행정보
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: InfoFragment(_tripPlan),
+          ),
+
+          /// 지원신청
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: BlocBuilder<DisplayJoinApplyBloc,
+                  AbsDisplayState<JoinApplyEntity>>(builder: (context, state) {
+                return DisplayApplyFragment(
+                    tripPlan: _tripPlan, applies: state.data);
+              })),
+
+          /// 댓글
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: CommentButtonWidget(_tripPlan),
           ),
         ],
       ),

@@ -31,7 +31,7 @@ class InfoFragment extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           margin: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
-              color: context.colorScheme.tertiaryContainer.withOpacity(0.3),
+              color: context.colorScheme.tertiaryContainer.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(16)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

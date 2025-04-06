@@ -30,67 +30,77 @@ class DisplayApplyFragment extends StatelessWidget {
                               create: (_) =>
                                   getIt<CreateJoinApplyBloc>(param1: tripPlan)
                                     ..add(MountJoinApplyEvent()),
-                              child: const CreateApplyFragment());
+                              child: SizedBox(
+                                  height: context.height*0.8,
+                                  child: const CreateApplyFragment()));
                         });
                   },
                   icon: const Icon(Icons.check))
           ],
         ),
-        12.height,
-        ConstrainedBox(
-          constraints: BoxConstraints(minHeight: context.height / 4),
-          child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: applies.length,
-              itemBuilder: (context, index) {
-                final apply = applies[index];
-                final switchButtonVisible =
-                    (tripPlan.creator.id == currentUid) &&
-                        (apply.creator.id != currentUid);
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+        if (applies.isNotEmpty)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            margin: const EdgeInsets.only(top: 12, bottom: 8),
+            decoration: BoxDecoration(
+                color: context.colorScheme.tertiaryContainer
+                    .withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(16)),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: context.height / 4),
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: applies.length,
+                  itemBuilder: (context, index) {
+                    final apply = applies[index];
+                    final switchButtonVisible =
+                        (tripPlan.creator.id == currentUid) &&
+                            (apply.creator.id != currentUid);
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 6),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Row(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(apply.creator.sex?.iconData),
-                              8.width,
-                              Text(
-                                apply.creator.username,
-                                overflow: TextOverflow.ellipsis,
+                              Row(
+                                children: [
+                                  Icon(apply.creator.sex?.iconData),
+                                  8.width,
+                                  Text(
+                                    apply.creator.username,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                              Card(
+                                color: apply.isAccepted
+                                    ? context.colorScheme.primaryContainer
+                                    : context.colorScheme.tertiaryContainer
+                                        .withOpacity(0.5),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 6),
+                                  child: Text(apply.content,
+                                      style: context.textTheme.bodyMedium),
+                                ),
                               ),
                             ],
                           ),
-                          Card(
-                            color: apply.isAccepted
-                                ? context.colorScheme.primaryContainer
-                                : context.colorScheme.tertiaryContainer
-                                    .withOpacity(0.5),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 6),
-                              child: Text(apply.content,
-                                  style: context.textTheme.bodyMedium),
-                            ),
-                          ),
+                          const Spacer(),
+                          if (switchButtonVisible)
+                            BlocProvider(
+                                create: (_) => getIt<JoinApplyApprovalCubit>(
+                                    param1: apply),
+                                child: const SwitchApprovalButtonWidget())
                         ],
                       ),
-                      const Spacer(),
-                      if (switchButtonVisible)
-                        BlocProvider(
-                            create: (_) =>
-                                getIt<JoinApplyApprovalCubit>(param1: apply),
-                            child: const SwitchApprovalButtonWidget())
-                    ],
-                  ),
-                );
-              }),
-        ),
+                    );
+                  }),
+            ),
+          ),
       ],
     );
   }
