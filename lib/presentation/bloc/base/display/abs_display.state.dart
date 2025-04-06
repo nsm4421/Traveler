@@ -17,6 +17,6 @@ class AbsDisplayState<T extends BaseEntity> extends BaseState {
         status: status ?? this.status,
         errorMessage: errorMessage ?? this.errorMessage,
         data: data ?? this.data,
-        isEnd: this.isEnd);
+        isEnd: isEnd ?? this.isEnd);
   }
 }

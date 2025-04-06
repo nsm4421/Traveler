@@ -16,8 +16,8 @@ class EditTripPlanModel with _$EditTripPlanModel {
   final int max_head_count;
   late final List<String> hashtags;
   late final String country_code;
-  final String start_date;
-  final String end_date;
+  final DateTime start_date;
+  final DateTime end_date;
 
   EditTripPlanModel({
     this.title = '',

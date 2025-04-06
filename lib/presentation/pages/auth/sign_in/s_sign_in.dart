@@ -64,6 +64,7 @@ class _SignInScreenState extends State<SignInScreen> {
       listener: (context, state) {
         if (state.status == Status.error) {
           Timer(1.durationInSec, () {
+            context.showSnackBar(state.errorMessage, duration: 2.durationInSec);
             context
                 .read<AuthenticationBloc>()
                 .add(InitAuthenticationStateEvent(status: Status.initial));

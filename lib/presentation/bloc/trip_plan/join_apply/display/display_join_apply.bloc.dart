@@ -38,17 +38,17 @@ class DisplayJoinApplyBloc extends AbsDisplayBloc<JoinApplyEntity> {
   Future<Either<Failure, Success<List<JoinApplyEntity>>>> handleFetchEvent(
           FetchDisplayEvent event) async =>
       await _useCase.fetchJoinApplies
-          .call(tripPlanId: _tripPlan.id, limit: event.limit, cursor: cursor);
+          .call(tripPlan: _tripPlan, limit: event.limit, cursor: cursor);
 
   @override
   Future<Either<Failure, Success<List<JoinApplyEntity>>>> handleMountEvent(
           MountDisplayEvent event) async =>
       await _useCase.fetchJoinApplies
-          .call(tripPlanId: _tripPlan.id, limit: event.limit);
+          .call(tripPlan: _tripPlan, limit: event.limit);
 
   @override
   Future<Either<Failure, Success<List<JoinApplyEntity>>>> handleRefreshEvent(
           RefreshDisplayEvent event) async =>
       await _useCase.fetchJoinApplies
-          .call(tripPlanId: _tripPlan.id, limit: event.limit);
+          .call(tripPlan: _tripPlan, limit: event.limit);
 }

@@ -7,10 +7,11 @@ import '../base_state.dart';
 
 part 'abs_display.state.dart';
 
-part 'display.event.dart';
+part 'abs_display.event.dart';
 
 abstract class AbsDisplayBloc<T extends BaseEntity>
-    extends Bloc<AbsDisplayEvent, AbsDisplayState<T>> with LoggerMixIn {
+    extends Bloc<AbsDisplayEvent, AbsDisplayState<T>>
+    with LoggerMixIn, UtcMixIn {
   AbsDisplayBloc() : super(AbsDisplayState<T>()) {
     on<InitDisplayEvent>(onInit);
     on<MountDisplayEvent>(onMount);
@@ -18,12 +19,14 @@ abstract class AbsDisplayBloc<T extends BaseEntity>
     on<FetchDisplayEvent>(onFetch);
   }
 
-  DateTime? get cursor {
-    final createdAtList =
-        state.data.map((item) => item.createdAt).where((item) => item != null);
+  DateTime get cursor {
+    final createdAtList = state.data
+        .map((item) => item.createdAt)
+        .where((item) => item != null)
+        .map((item) => item!);
     return createdAtList.isEmpty
-        ? null
-        : createdAtList.reduce((v, e) => v!.isBefore(e!) ? v : e);
+        ? nowDt
+        : createdAtList.reduce((v, e) => v.isBefore(e) ? v : e);
   }
 
   Future<void> onInit(
@@ -55,12 +58,14 @@ abstract class AbsDisplayBloc<T extends BaseEntity>
             logger.d([LogTags.bloc, l.message]);
             emit(state.copyWith(status: Status.error, errorMessage: l.message));
           }, (r) {
-            logger.t([LogTags.bloc, 'init display state success', r.data]);
+            final data = (event.reverse ? r.data?.reversed : r.data) ?? [];
+            logger.t(
+                [LogTags.bloc, 'init display state success(${data.length})']);
             emit(state.copyWith(
                 status: Status.success,
-                data: (r.data ?? []).reversed.toList(),
+                data: data.toList(),
                 errorMessage: '',
-                isEnd: (r.data?.length ?? 0) < event.limit));
+                isEnd: data.length < event.limit));
           }));
     } catch (error) {
       logger.e([LogTags.bloc, error]);
@@ -77,12 +82,13 @@ abstract class AbsDisplayBloc<T extends BaseEntity>
             logger.d([LogTags.bloc, l.message]);
             emit(state.copyWith(status: Status.error, errorMessage: l.message));
           }, (r) {
-            logger.t([LogTags.bloc, 'refresh success']);
+            final data = (event.reverse ? r.data?.reversed : r.data) ?? [];
+            logger.t([LogTags.bloc, 'refresh success(${data.length})']);
             emit(state.copyWith(
                 status: Status.success,
-                data: (r.data ?? []).reversed.toList(),
+                data: data.toList(),
                 errorMessage: '',
-                isEnd: (r.data?.length ?? 0) < event.limit));
+                isEnd: data.length < event.limit));
           }));
     } catch (error) {
       logger.e([LogTags.bloc, error]);
@@ -99,12 +105,19 @@ abstract class AbsDisplayBloc<T extends BaseEntity>
             logger.d([LogTags.bloc, l.message]);
             emit(state.copyWith(status: Status.error, errorMessage: l.message));
           }, (r) {
-            logger.t([LogTags.bloc, 'fetching success']);
+            final data = (event.reverse ? r.data?.reversed : r.data) ?? [];
+            logger.t([
+              LogTags.bloc,
+              'fetching success(${data.length})',
+              data
+            ]);
             emit(state.copyWith(
                 status: Status.success,
-                data: [...(r.data ?? []).reversed, ...state.data],
+                data: event.insertOnHead
+                    ? [...data, ...state.data]
+                    : [...state.data, ...data],
                 errorMessage: '',
-                isEnd: (r.data?.length ?? 0) < event.limit));
+                isEnd: data.length < event.limit));
           }));
     } catch (error) {
       logger.e([LogTags.bloc, error]);

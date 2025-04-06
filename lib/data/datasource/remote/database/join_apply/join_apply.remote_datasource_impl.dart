@@ -5,7 +5,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'join_apply.remote_datasource.dart';
 
-class RemoteJoinApplyDataSourceImpl implements RemoteJoinApplyDataSource {
+class RemoteJoinApplyDataSourceImpl
+    with UtcMixIn
+    implements RemoteJoinApplyDataSource {
   final PostgrestQueryBuilder _queryBuilder;
   final Logger _logger;
 
@@ -20,8 +22,8 @@ class RemoteJoinApplyDataSourceImpl implements RemoteJoinApplyDataSource {
     return await _queryBuilder
         .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
         .eq("trip_plan_id", tripPlanId)
-        .lt('created_at', (cursor ?? DateTime.now()).toUtc().toIso8601String())
-        .order('created_at', ascending: false)
+        .lt('created_at', cursor ?? nowDt)
+        .order('created_at', ascending: true) // 최신순
         .limit(limit)
         .then((res) {
       if (res.isNotEmpty) {
@@ -35,7 +37,8 @@ class RemoteJoinApplyDataSourceImpl implements RemoteJoinApplyDataSource {
   Future<void> create(
       {required String tripPlanId, required String content}) async {
     await _queryBuilder.insert(
-        CreateJoinApplyModel(trip_plan_id: tripPlanId, content: content));
+        CreateJoinApplyModel(trip_plan_id: tripPlanId, content: content)
+            .toJson());
   }
 
   @override

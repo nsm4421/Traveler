@@ -3,11 +3,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:dio/dio.dart';
 
 import 'package:module/shared/shared.export.dart';
-import 'package:module/data/model/export.dart';
 
 import 'auth/auth.remote_datasource_impl.dart';
-import 'database/comment/abs_comment.remote_datasource_impl.dart';
 import 'database/join_apply/join_apply.remote_datasource_impl.dart';
+import 'database/review/review.remote_datasource_impl.dart';
 import 'database/trip_plan/trip_plan.remote_datasource_impl.dart';
 import 'database/trip_plan/trip_plan_comment.remote_datasource_impl.dart';
 
@@ -22,6 +21,12 @@ abstract class RemoteDataSourceModule with LoggerMixIn {
   @lazySingleton
   RemoteAuthDataSource get auth =>
       RemoteAuthDataSourceImpl(auth: _supabaseClient.auth, logger: logger);
+
+  @lazySingleton
+  RemoteReviewDataSource get review => RemoteReviewDataSourceImpl(
+        queryBuilder: _supabaseClient.rest.from(Tables.review.name),
+        logger: logger,
+      );
 
   @lazySingleton
   RemoteTripPlanDataSource get tripPlan => RemoteTripPlanDataSourceImpl(
