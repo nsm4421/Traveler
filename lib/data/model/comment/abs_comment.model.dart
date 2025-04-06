@@ -1,22 +1,18 @@
-import '../user/user.model.dart';
+import '../base/base.model.dart';
 
 // ignore_for_file: non_constant_identifier_names
-abstract class AbsCommentModel {
-  final String id;
+abstract class AbsCommentModel extends BaseModel{
   final String ref_id;
   final String? parent_comment_id; // 부모댓글인 경우 Null
   final String content;
-  final CreatorModel creator;
-  final String created_at;
-  final String? removed_at;
 
   AbsCommentModel({
-    required this.id,
+    required super.id,
     required this.ref_id,
     this.parent_comment_id,
     this.content = '',
-    required this.creator,
-    required this.created_at,
-    this.removed_at,
+    required super.creator,
+    required super.created_at,
+    super.removed_at,
   });
 }

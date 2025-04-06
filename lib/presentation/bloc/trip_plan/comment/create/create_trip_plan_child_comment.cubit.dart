@@ -5,8 +5,6 @@ import 'package:module/shared/shared.export.dart';
 
 import '../../../base/comment/create/abs_create_child_comment.cubit.dart';
 
-part 'create_trip_plan_child_comment.state.dart';
-
 @injectable
 class CreateTripPlanChildCommentCubit
     extends AbsCreateChildCommentCubit<TripPlanCommentEntity> with LoggerMixIn {
@@ -21,7 +19,8 @@ class CreateTripPlanChildCommentCubit
         super(tripPlanParentComment);
 
   @override
-  Future<void> create(String content) async {
+  Future<void> create(String content,
+      {void Function(TripPlanCommentEntity e)? onSuccess}) async {
     try {
       emit(state.copyWith(status: Status.loading));
       await _useCase.createChildComment
@@ -30,10 +29,13 @@ class CreateTripPlanChildCommentCubit
               parentCommentId: _tripPlanParentComment.parentCommentId!,
               content: content)
           .then((res) => res.fold(
-              (l) => emit(state.copyWith(
-                  status: Status.error, errorMessage: l.message)),
-              (r) => emit(
-                  state.copyWith(status: Status.success, errorMessage: ''))));
+                  (l) => emit(state.copyWith(
+                      status: Status.error, errorMessage: l.message)), (r) {
+                emit(state.copyWith(status: Status.success, errorMessage: ''));
+                if (onSuccess != null && r.data != null) {
+                  onSuccess(r.data!);
+                }
+              }));
     } catch (error) {
       logger.e([LogTags.bloc, error]);
       emit(state.copyWith(status: Status.error, errorMessage: 'error occurs'));

@@ -4,6 +4,7 @@ import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/repository/export.dart';
 import 'package:module/shared/shared.export.dart';
 
+/// T : 댓글 DTO / S : 댓글 Entity
 abstract class AbsCommentRepositoryImpl<T extends AbsCommentModel,
         S extends AbsCommentEntity>
     with LoggerMixIn
@@ -12,22 +13,26 @@ abstract class AbsCommentRepositoryImpl<T extends AbsCommentModel,
 
   AbsCommentRepositoryImpl(this._remoteCommentDataSource);
 
+  /// DTO -> Entity 변환
   S fromModel(T model);
 
   @override
-  Future<void> createParent(
+  Future<S> createParent(
       {required String refId, required String content}) async {
-    return await _remoteCommentDataSource.create(
-        refId: refId, content: content);
+    return await _remoteCommentDataSource
+        .create(refId: refId, content: content)
+        .then(fromModel);
   }
 
   @override
-  Future<void> createChild(
+  Future<S> createChild(
       {required String refId,
       required String parentCommentId,
       required String content}) async {
-    return await _remoteCommentDataSource.create(
-        refId: refId, parentCommentId: parentCommentId, content: content);
+    return await _remoteCommentDataSource
+        .create(
+            refId: refId, parentCommentId: parentCommentId, content: content)
+        .then(fromModel);
   }
 
   @override

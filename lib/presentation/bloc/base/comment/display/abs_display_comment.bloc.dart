@@ -39,7 +39,7 @@ abstract class $AbsDisplayCommentBloc<T extends AbsCommentEntity>
 }
 
 /// 부모 댓글 조회 Bloc
-/// T : 부모 Type / S : 참조하는 대상 Type
+/// T : 참조하는 대상 Type / S : 부모댓글 Type
 abstract class AbsDisplayParentCommentBloc<T extends BaseEntity,
     S extends AbsCommentEntity> extends $AbsDisplayCommentBloc<S> {
   final T _ref;

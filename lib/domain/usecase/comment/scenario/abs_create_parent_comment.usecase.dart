@@ -9,12 +9,12 @@ abstract class AbsCreateParentCommentUseCase<T extends AbsCommentEntity> {
       : _repository = repository,
         _logger = logger;
 
-  Future<Either<Failure, Success<void>>> call(
+  Future<Either<Failure, Success<T>>> call(
       {required String refId, required String content}) async {
     try {
       return await _repository
           .createParent(refId: refId, content: content)
-          .then((res) => const Success<void>())
+          .then((res) => Success<T>(data: res))
           .then(Right.new);
     } catch (error) {
       _logger.e([LogTags.useCase, error]);

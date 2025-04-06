@@ -9,8 +9,8 @@ class AbsCreateChildCommentState<T extends AbsCommentEntity> extends BaseState {
       {super.status, super.errorMessage});
 
   @override
-  AbsCreateChildCommentState copyWith({Status? status, String? errorMessage}) {
-    return AbsCreateChildCommentState(
+  AbsCreateChildCommentState<T> copyWith({Status? status, String? errorMessage}) {
+    return AbsCreateChildCommentState<T>(
       this._parentComment,
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,

@@ -9,6 +9,7 @@ class TripPlanCommentEntity extends AbsCommentEntity {
   TripPlanCommentEntity(
       {required super.id,
       required super.creator,
+      required super.createdAt,
       required super.refId,
       super.parentCommentId,
       required super.content,
@@ -21,6 +22,7 @@ class TripPlanCommentEntity extends AbsCommentEntity {
     return TripPlanCommentEntity(
         id: model.id,
         creator: CreatorEntity.from(model.creator),
+        createdAt: DateTime.parse(model.created_at),
         parentCommentId: model.parent_comment_id,
         refId: model.ref_id,
         content: model.removed_at == null ? model.content : "삭제된 댓글입니다",
@@ -34,6 +36,7 @@ class TripPlanCommentEntity extends AbsCommentEntity {
     return TripPlanCommentEntity(
       id: this.id,
       creator: this.creator,
+      createdAt: this.createdAt,
       parentCommentId: this.parentCommentId,
       refId: this.refId,
       content: this.content,
