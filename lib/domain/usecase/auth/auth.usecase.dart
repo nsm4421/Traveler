@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
@@ -10,6 +12,8 @@ part 'scenario/sign_in.usecase.dart';
 part 'scenario/sign_up.usecase.dart';
 
 part 'scenario/sign_out.usecase.dart';
+
+part 'scenario/edit_profile.usecase.dart';
 
 @lazySingleton
 class AuthUseCase with LoggerMixIn {
@@ -31,4 +35,7 @@ class AuthUseCase with LoggerMixIn {
 
   SignOutUseCase get signOut =>
       SignOutUseCase(repository: _repository, logger: logger);
+
+  EditProfileUseCase get editProfile =>
+      EditProfileUseCase(repository: _repository, logger: logger);
 }

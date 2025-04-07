@@ -12,7 +12,7 @@ part 'sign_up.model.g.dart';
 class SignUpRequestModel with _$SignUpRequestModel {
   final String email;
   final String password;
-  final SignUpRequestDataModel data;
+  final RawUserMetaDataModel data;
 
   factory SignUpRequestModel.fromJson(Map<String, dynamic> json) =>
       _$SignUpRequestModelFromJson(json);
@@ -25,21 +25,23 @@ class SignUpRequestModel with _$SignUpRequestModel {
 
 @freezed
 @JsonSerializable()
-class SignUpRequestDataModel with _$SignUpRequestDataModel {
+class RawUserMetaDataModel with _$RawUserMetaDataModel {
   final String username;
   final String description;
   final Sex sex;
   final DateTime born_at;
+  final String profile_image;
 
-  SignUpRequestDataModel({
+  RawUserMetaDataModel({
     this.username = '',
     this.description = '',
     this.sex = Sex.male,
     required this.born_at,
+    this.profile_image = '',
   });
 
-  factory SignUpRequestDataModel.fromJson(Map<String, dynamic> json) =>
-      _$SignUpRequestDataModelFromJson(json);
+  factory RawUserMetaDataModel.fromJson(Map<String, dynamic> json) =>
+      _$RawUserMetaDataModelFromJson(json);
 
-  Map<String, Object?> toJson() => _$SignUpRequestDataModelToJson(this);
+  Map<String, Object?> toJson() => _$RawUserMetaDataModelToJson(this);
 }

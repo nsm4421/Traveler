@@ -59,7 +59,7 @@ class UserMetaData with _$UserMetaData {
     this.username = '',
     this.description = '',
     this.sex = Sex.male,
-    required this.born_at,
+    this.born_at = '',
   });
 
   final String username;

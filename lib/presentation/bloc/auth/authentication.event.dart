@@ -26,15 +26,26 @@ final class SignUpWithEmailAndPasswordEvent
   final String description;
   final Sex sex;
   final DateTime bornAt;
+  final File profileImage;
 
-  SignUpWithEmailAndPasswordEvent({
-    required super.email,
-    required super.password,
-    required this.username,
-    required this.description,
-    required this.sex,
-    required this.bornAt,
-  });
+  SignUpWithEmailAndPasswordEvent(
+      {required super.email,
+      required super.password,
+      required this.username,
+      required this.description,
+      required this.sex,
+      required this.bornAt,
+      required this.profileImage});
 }
 
 final class SignOutEvent extends AuthenticationEvent {}
+
+final class EditProfileEvent extends AuthenticationEvent {
+  final String? description;
+  final Sex? sex;
+  final DateTime? bornAt;
+  final File? profileImage;
+
+  EditProfileEvent(
+      {this.description, this.sex, this.bornAt, this.profileImage});
+}

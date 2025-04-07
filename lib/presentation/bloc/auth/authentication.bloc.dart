@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:injectable/injectable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +33,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState>
     on<SignInWithEmailAndPasswordEvent>(_onSignInWithEmailAndPassword);
     on<SignUpWithEmailAndPasswordEvent>(_onSignUpWithEmailAndPassword);
     on<SignOutEvent>(_onSignOut);
+    on<EditProfileEvent>(_onEditProfile);
     _authStream = _useCase.authStream;
   }
 
@@ -80,6 +82,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState>
             description: event.description,
             sex: event.sex,
             bornAt: event.bornAt,
+            profileImage: event.profileImage,
           )
           .then((res) => res.fold((l) {
                 logger.e([LogTags.bloc, l.message]);
@@ -110,6 +113,32 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState>
       logger.e(error);
       emit(
           state.copyWith(status: Status.error, errorMessage: 'Sign Out Fails'));
+    }
+  }
+
+  Future<void> _onEditProfile(
+      EditProfileEvent event, Emitter<AuthenticationState> emit) async {
+    try {
+      emit(state.copyWith(status: Status.loading));
+      await _useCase.editProfile
+          .call(
+            description: event.description,
+            sex: event.sex,
+            bornAt: event.bornAt,
+            profileImage: event.profileImage,
+          )
+          .then((res) => res.fold((l) {
+                logger.e([LogTags.bloc, l.message]);
+                emit(state.copyWith(
+                    status: Status.error, errorMessage: l.message));
+              }, (r) {
+                logger.t([LogTags.bloc, 'edit profile success']);
+                emit(state.copyWith(status: Status.initial, errorMessage: ''));
+              }));
+    } catch (error) {
+      logger.e(error);
+      emit(state.copyWith(
+          status: Status.error, errorMessage: 'Editing Profile Fails'));
     }
   }
 }
