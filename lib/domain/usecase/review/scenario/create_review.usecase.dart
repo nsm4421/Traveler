@@ -12,9 +12,8 @@ class CreateReviewUseCase {
   Future<Either<Failure, Success<void>>> call(
       {required String content, required List<File> assets}) async {
     try {
-      // TODO : 이미지 업로드 기능
       return await _repository
-          .create(content: content, images: [])
+          .create(content: content, imageFiles: assets)
           .then((res) => const Success<void>())
           .then(Right.new);
     } catch (error) {

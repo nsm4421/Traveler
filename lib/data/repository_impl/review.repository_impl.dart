@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:injectable/injectable.dart';
 import 'package:module/data/datasource/export.dart';
 import 'package:module/data/model/export.dart';
@@ -9,18 +11,24 @@ import 'package:module/shared/shared.export.dart';
 class ReviewRepositoryImpl with LoggerMixIn implements ReviewRepository {
   final LocalStorageDataSource _localStorageDataSource;
   final RemoteReviewDataSource _remoteReviewDataSource;
+  final ReviewStorageDataSource _reviewStorageDataSource;
 
   ReviewRepositoryImpl(
       {required LocalStorageDataSource localStorageDataSource,
-      required RemoteReviewDataSource remoteReviewDataSource})
+      required RemoteReviewDataSource remoteReviewDataSource,
+      required ReviewStorageDataSource reviewStorageDataSource})
       : _localStorageDataSource = localStorageDataSource,
-        _remoteReviewDataSource = remoteReviewDataSource;
+        _remoteReviewDataSource = remoteReviewDataSource,
+        _reviewStorageDataSource = reviewStorageDataSource;
 
   @override
   Future<void> create(
-      {required String content, required List<String> images}) async {
-    return _remoteReviewDataSource
-        .create(CreateReviewModel(content: content, images: images));
+      {required String content, required List<File> imageFiles}) async {
+    return _remoteReviewDataSource.create(CreateReviewModel(
+        content: content,
+        images: imageFiles.isEmpty
+            ? <String>[]
+            : await _reviewStorageDataSource.uploadImages(imageFiles)));
   }
 
   @override
