@@ -6,6 +6,10 @@ import 'package:photo_manager/photo_manager.dart';
 
 @lazySingleton
 mixin class AssetMixIn {
+  Future<File> xFile2File(XFile xFile) async {
+    return File(xFile.path);
+  }
+
   Future<File> asset2File(AssetEntity asset) async {
     final data = await asset.originBytes;
     final dir = await Directory.systemTemp.createTemp();
