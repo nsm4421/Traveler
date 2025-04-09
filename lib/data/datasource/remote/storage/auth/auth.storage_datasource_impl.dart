@@ -1,32 +1,29 @@
 import 'dart:io';
 
 import 'package:http_parser/http_parser.dart';
+import 'package:logger/logger.dart';
 import 'package:module/shared/shared.export.dart';
-
-import '../base/abs_storage_datasource_impl.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'auth.storage_datasource.dart';
 
-class AuthStorageDataSourceImpl extends BaseStorageDataSourceImpl
-    implements AuthStorageDataSource {
+class AuthStorageDataSourceImpl implements AuthStorageDataSource {
+  final StorageFileApi _storage;
+  final Logger _logger;
+
   AuthStorageDataSourceImpl(
-      {required super.storage, required super.dio, required super.logger})
-      : super(bucketName: Buckets.review.name);
+      {required StorageFileApi storage, required Logger logger})
+      : _storage = storage,
+        _logger = logger;
 
   @override
-  Future<String> uploadProfileImage({
-    required String filename,
-    required File profileImage,
-    bool upsert = false,
-    void Function(double progress)? onProgress,
-  }) async {
+  Future<String> uploadProfileImage(
+      {required String filename,
+      required File profileImage,
+      bool upsert = false}) async {
     final pathInBucket = 'image/$filename.jpg';
-    await super.uploadFile(
-        file: profileImage,
-        pathInBucket: pathInBucket,
-        upsert: upsert,
-        defaultMediaType: MediaType('image', 'jpeg'),
-        onProgress: onProgress);
-    return super.getPublicUrl(pathInBucket);
+    await _storage.upload(pathInBucket, profileImage,
+        fileOptions: const FileOptions(contentType: 'image/jpg'));
+    return _storage.getPublicUrl(pathInBucket);
   }
 }

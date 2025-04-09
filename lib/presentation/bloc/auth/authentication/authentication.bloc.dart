@@ -8,7 +8,7 @@ import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/shared/shared.export.dart';
 
-import '../base/base_state.dart';
+import '../../base/base_state.dart';
 
 part 'authentication.state.dart';
 
@@ -31,7 +31,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState>
     on<InitialSessionEvent>(_onInitialSession);
     on<InitAuthenticationStateEvent>(_onInitAuthState);
     on<SignInWithEmailAndPasswordEvent>(_onSignInWithEmailAndPassword);
-    on<SignUpWithEmailAndPasswordEvent>(_onSignUpWithEmailAndPassword);
     on<SignOutEvent>(_onSignOut);
     on<EditProfileEvent>(_onEditProfile);
     _authStream = _useCase.authStream;
@@ -61,35 +60,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState>
                     status: Status.error, errorMessage: l.message));
               }, (r) {
                 logger.t([LogTags.bloc, 'sign in success']);
-                emit(state.copyWith(status: Status.success, errorMessage: ''));
-              }));
-    } catch (error) {
-      logger.e([LogTags.bloc, error]);
-      emit(state.copyWith(status: Status.error, errorMessage: 'Sign In Fails'));
-    }
-  }
-
-  Future<void> _onSignUpWithEmailAndPassword(
-      SignUpWithEmailAndPasswordEvent event,
-      Emitter<AuthenticationState> emit) async {
-    try {
-      emit(state.copyWith(status: Status.loading));
-      await _useCase.signUp
-          .call(
-            email: event.email,
-            password: event.password,
-            username: event.username,
-            description: event.description,
-            sex: event.sex,
-            bornAt: event.bornAt,
-            profileImage: event.profileImage,
-          )
-          .then((res) => res.fold((l) {
-                logger.e([LogTags.bloc, l.message]);
-                emit(state.copyWith(
-                    status: Status.error, errorMessage: l.message));
-              }, (r) {
-                logger.t([LogTags.bloc, 'sign up success']);
                 emit(state.copyWith(status: Status.success, errorMessage: ''));
               }));
     } catch (error) {

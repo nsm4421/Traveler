@@ -51,13 +51,11 @@ class AuthRepositoryImpl with LoggerMixIn implements AuthRepository {
     required DateTime bornAt,
     required String password,
     required File profileImage,
-    void Function(double progress)? onProgress,
   }) async {
     final imageUrl = await _authStorageDataSource.uploadProfileImage(
         filename: username, // 프로필 이미지 파일명을 유저명 지정
         profileImage: profileImage,
-        upsert: false,
-        onProgress: onProgress);
+        upsert: false);
     final data = SignUpRequestModel(
         email: email,
         password: password,
@@ -83,8 +81,7 @@ class AuthRepositoryImpl with LoggerMixIn implements AuthRepository {
         : await _authStorageDataSource.uploadProfileImage(
             filename: currentUser.username,
             profileImage: profileImage,
-            upsert: true,
-            onProgress: onProgress);
+            upsert: true);
     // AUTH.USERS.RAW_USER_META_DATA 필드 업데이트
     // 트리거에 의해서 PUBLIC.USERS 테이블도 업데이트 됨
     await _remoteAuthDataSource.editUserMetaData(EditProfileModel(

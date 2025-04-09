@@ -52,7 +52,6 @@ abstract class RemoteDataSourceModule with LoggerMixIn {
   @lazySingleton
   AuthStorageDataSource get authStorage => AuthStorageDataSourceImpl(
         storage: _supabaseClient.storage.from(Buckets.auth.name),
-        dio: _dio,
         logger: logger,
       );
 

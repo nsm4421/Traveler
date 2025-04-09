@@ -4,6 +4,5 @@ abstract interface class AuthStorageDataSource {
   Future<String> uploadProfileImage(
       {required String filename,
       required File profileImage,
-      bool upsert = false,
-      void Function(double progress)? onProgress});
+      bool upsert = false});
 }
