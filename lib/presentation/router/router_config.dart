@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/presentation/bloc/export.dart';
+import 'package:module/presentation/pages/home/review/create/p_create_review.dart';
 
 import '../pages/auth/index/p_auth.dart';
 import '../pages/auth/sign_in/p_sign_in.dart';
@@ -98,6 +99,9 @@ class CustomRouter {
           .toList());
 
   List<RouteBase> get _routes => [
+        GoRoute(
+            path: Routes.createReview.path,
+            pageBuilder: createReviewPageBuilder),
         GoRoute(
             path: Routes.createTripPlan.path,
             pageBuilder: createTripPlanPageBuilder),

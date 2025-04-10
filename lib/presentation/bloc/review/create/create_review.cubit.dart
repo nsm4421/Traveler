@@ -25,32 +25,19 @@ class CreateReviewCubit extends Cubit<CreateReviewState>
             errorMessage: isAuth ? '' : '권한이 허용되지 않았습니다')));
   }
 
-  Future<void> loadAssets() async {
-    final albums = await PhotoManager.getAssetPathList(
-      type: RequestType.image | RequestType.video,
-      onlyAll: true,
-    );
-    if (albums.isEmpty) {
-      emit(state.copyWith(
-          status: Status.error, errorMessage: '선택할 수 있는 앨범이 없습니다'));
-      return;
-    }
-    final assets = await albums.first.getAssetListPaged(page: 0, size: 20);
-    emit(state.copyWith(assets: assets));
-  }
-
-  void toggleAsset(AssetEntity asset) {
-    final isSelected = state.selected.contains(asset);
-    if (isSelected) {
-      emit(state.copyWith(
-          selected: state.selected.where((item) => item != asset).toList()));
-    } else {
-      emit(state.copyWith(selected: [...state.selected, asset]));
-    }
-  }
-
   void updateContent(String content) {
     emit(state.copyWith(content: content));
+  }
+
+  void toggleImage(AssetEntity entity) {
+    final temp = [...state.assets];
+    final isContained = temp.contains(entity);
+    if (isContained) {
+      temp.removeWhere((item) => item.id == entity.id);
+    } else {
+      temp.add(entity);
+    }
+    emit(state.copyWith(assets: temp));
   }
 
   void submit() async {
@@ -59,7 +46,7 @@ class CreateReviewCubit extends Cubit<CreateReviewState>
 
       // 이미지 압축
       List<File> compressedFiles = [];
-      for (final asset in state.selected) {
+      for (final asset in state.assets) {
         final file = await asset2File(asset);
         final compressed = await compressFile(file);
         compressedFiles.add(compressed);

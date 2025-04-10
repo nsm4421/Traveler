@@ -4,7 +4,6 @@ class CreateReviewState extends BaseState {
   final bool isAuth;
   final String content;
   late final List<AssetEntity> assets;
-  late final List<AssetEntity> selected;
 
   CreateReviewState({
     super.status,
@@ -12,15 +11,15 @@ class CreateReviewState extends BaseState {
     this.isAuth = false,
     this.content = '',
     List<AssetEntity>? assets,
-    List<AssetEntity>? selected,
   }) {
-    this.assets = assets ?? this.assets;
-    this.selected = selected ?? this.selected;
+    this.assets = assets ?? [];
   }
 
   @override
   CreateReviewState copyWith(
       {bool? isAuth,
+      int? currentAlbumIndex,
+      List<AssetPathEntity>? albums,
       List<AssetEntity>? assets,
       List<AssetEntity>? selected,
       String? content,
@@ -29,7 +28,6 @@ class CreateReviewState extends BaseState {
     return CreateReviewState(
       isAuth: isAuth ?? this.isAuth,
       assets: assets ?? this.assets,
-      selected: selected ?? this.selected,
       content: content ?? this.content,
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,

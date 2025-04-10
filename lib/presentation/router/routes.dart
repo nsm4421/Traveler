@@ -12,6 +12,7 @@ enum Routes {
   setting('/home/setting', isHomeRoute: true),
   // etc
   tripPlanDetail('/trip-plan/detail', isHomeRoute: false),
+  createReview('/review/create', isHomeRoute: false),
   createTripPlan('/trip-plan/create', isHomeRoute: false),
   createJoinApply('/trip-plan/apply/create', isHomeRoute: false);
 
