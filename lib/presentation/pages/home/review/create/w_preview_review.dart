@@ -85,7 +85,7 @@ class _PreviewReviewWidgetState extends State<PreviewReviewWidget>
                           if (state.assets.length > 1)
                             Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 4),
+                                  const EdgeInsets.symmetric(vertical: 4),
                               child: Center(
                                 child: SmoothPageIndicator(
                                   controller: _controller,

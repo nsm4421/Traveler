@@ -1,49 +1,28 @@
 part of 'p_setting.dart';
 
-class ProfileWidget extends StatefulWidget {
+class ProfileWidget extends StatelessWidget {
   const ProfileWidget({super.key});
 
   @override
-  State<ProfileWidget> createState() => _ProfileWidgetState();
-}
-
-class _ProfileWidgetState extends State<ProfileWidget> {
-  late UserEntity? _user;
-
-  @override
-  void initState() {
-    super.initState();
-    _user = context.read<AuthenticationBloc>().currentUser;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return _user == null
-        ? SizedBox.shrink()
-        : ListTile(
+    return ConditionalRenderWidget<UserEntity>(
+        data: context.read<AuthenticationBloc>().currentUser,
+        builder: (user) {
+          return ListTile(
+            leading: ConditionalRenderWidget<String>(
+                data: user.avatarUrl,
+                builder: (url) => CircleAvatar(
+                    backgroundImage:
+                        CachedNetworkImageProvider(user.avatarUrl!))),
             title: Row(
               children: [
-                Text(
-                  _user!.username,
-                  style: context.textTheme.titleLarge,
-                ),
-                8.width,
-                Icon(_user!.sex!.iconData),
+                Text(user.username, style: context.textTheme.titleLarge),
               ],
             ),
-            subtitle: _user?.description != null
-                ? Text(
-                    _user!.description!,
-                    softWrap: true,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                : const SizedBox.shrink(),
-            trailing: IconButton(
-              icon: Icon(Icons.edit_outlined),
-              onPressed: () {
-                // TODO : 프로필 수정 페이지로 라우팅
-              },
-            ),
+            subtitle: ConditionalRenderWidget<String>(
+                data: user.description, builder: (text) => Text(text)),
+            trailing: const SignOutWidget(),
           );
+        });
   }
 }

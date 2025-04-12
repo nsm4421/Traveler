@@ -11,10 +11,10 @@ enum Routes {
   search('/home/search', isHomeRoute: true),
   setting('/home/setting', isHomeRoute: true),
   // etc
-  tripPlanDetail('/trip-plan/detail', isHomeRoute: false),
-  createReview('/review/create', isHomeRoute: false),
-  createTripPlan('/trip-plan/create', isHomeRoute: false),
-  createJoinApply('/trip-plan/apply/create', isHomeRoute: false);
+  tripPlanDetail('/trip-plan/detail'),
+  createReview('/review/create'),
+  createTripPlan('/trip-plan/create'),
+  createJoinApply('/trip-plan/apply/create');
 
   final String path;
   final bool isAuthRoute; // 인증 전에 볼 수 있는 페이지 여부

@@ -5,7 +5,7 @@ import 'package:module/domain/usecase/export.dart';
 import 'package:module/presentation/bloc/export.dart';
 import 'package:module/shared/shared.export.dart';
 
-@lazySingleton
+@injectable
 class DisplayReviewBloc extends AbsDisplayBloc<ReviewEntity> {
   final ReviewUseCase _useCase;
 

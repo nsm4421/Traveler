@@ -6,13 +6,13 @@ import 'package:injectable/injectable.dart';
 import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/presentation/bloc/export.dart';
-import 'package:module/presentation/pages/home/review/create/p_create_review.dart';
 
 import '../pages/auth/index/p_auth.dart';
 import '../pages/auth/sign_in/p_sign_in.dart';
 import '../pages/auth/sign_up/p_sign_up.dart';
 import '../pages/home/index/p_home.dart';
-import '../pages/home/review/p_display_review.dart';
+import '../pages/home/review/create/p_create_review.dart';
+import '../pages/home/review/index/p_display_review.dart';
 import '../pages/home/search/p_search.dart';
 import '../pages/trip_plan/create/p_create_trip_plan.dart';
 import '../pages/trip_plan/detail/p_trip_plan_detail.dart';

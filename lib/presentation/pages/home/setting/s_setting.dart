@@ -6,16 +6,7 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Setting'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                context.read<AuthenticationBloc>().add(SignOutEvent());
-              },
-              icon: Icon(Icons.logout))
-        ],
-      ),
+      appBar: AppBar(title: const Text('Setting')),
       body: Column(
         children: [
           ProfileWidget(),

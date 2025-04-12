@@ -34,7 +34,6 @@ class RemoteReviewDataSourceImpl
     return await _queryBuilder
         .select(joinCreatorQueryTemplateOnSelect)
         .lt('created_at', cursor ?? nowDt)
-        .filter('removed_at', 'is', null)
         .order('created_at', ascending: true) // 최신순
         .limit(limit)
         .then((res) => res.map(FetchReviewModel.fromJson));
