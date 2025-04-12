@@ -11,12 +11,12 @@ import 'package:module/shared/shared.export.dart';
 class AuthRepositoryImpl with LoggerMixIn implements AuthRepository {
   final LocalStorageDataSource _localStorageDataSource;
   final RemoteAuthDataSource _remoteAuthDataSource;
-  final AuthStorageDataSource _authStorageDataSource;
+  final AvatarStorageDataSource _authStorageDataSource;
 
   AuthRepositoryImpl(
       {required LocalStorageDataSource localStorageDataSource,
       required RemoteAuthDataSource remoteAuthDataSource,
-      required AuthStorageDataSource authStorageDataSource})
+      required AvatarStorageDataSource authStorageDataSource})
       : _localStorageDataSource = localStorageDataSource,
         _remoteAuthDataSource = remoteAuthDataSource,
         _authStorageDataSource = authStorageDataSource;
@@ -52,10 +52,7 @@ class AuthRepositoryImpl with LoggerMixIn implements AuthRepository {
     required String password,
     required File profileImage,
   }) async {
-    final imageUrl = await _authStorageDataSource.uploadProfileImage(
-        filename: username, // 프로필 이미지 파일명을 유저명 지정
-        profileImage: profileImage,
-        upsert: false);
+    // 회원가입
     final data = SignUpRequestModel(
         email: email,
         password: password,
@@ -63,9 +60,15 @@ class AuthRepositoryImpl with LoggerMixIn implements AuthRepository {
             username: username,
             description: description,
             sex: sex,
-            born_at: bornAt,
-            profile_image: imageUrl));
-    await _remoteAuthDataSource.signUp(data);
+            born_at: bornAt));
+    // 유저id 얻기
+    final uid = await _remoteAuthDataSource.signUp(data);
+    // 프로필사진 업로드
+    final imageUrl = await _authStorageDataSource.uploadProfileImage(
+        uid: uid!, profileImage: profileImage, upsert: true);
+    // 프로필사진 경로 업데이트
+    await _remoteAuthDataSource
+        .editUserMetaData(EditProfileModel(avatar_url: imageUrl));
   }
 
   @override
@@ -79,7 +82,7 @@ class AuthRepositoryImpl with LoggerMixIn implements AuthRepository {
     final imageUrl = profileImage == null
         ? null
         : await _authStorageDataSource.uploadProfileImage(
-            filename: currentUser.username,
+            uid: _remoteAuthDataSource.currentUid,
             profileImage: profileImage,
             upsert: true);
     // AUTH.USERS.RAW_USER_META_DATA 필드 업데이트
@@ -88,6 +91,6 @@ class AuthRepositoryImpl with LoggerMixIn implements AuthRepository {
         description: description,
         sex: sex,
         born_at: bornAt,
-        profile_image: imageUrl));
+        avatar_url: imageUrl));
   }
 }

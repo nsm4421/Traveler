@@ -13,13 +13,13 @@ class EditProfileModel with _$EditProfileModel {
   final String? description;
   final Sex? sex;
   final DateTime? born_at;
-  final String? profile_image;
+  final String? avatar_url;
 
   factory EditProfileModel.fromJson(Map<String, dynamic> json) =>
       _$EditProfileModelFromJson(json);
 
   EditProfileModel(
-      {this.description, this.sex, this.born_at, this.profile_image});
+      {this.description, this.sex, this.born_at, this.avatar_url});
 
   Map<String, Object?> toJson() => _$EditProfileModelToJson(this);
 }

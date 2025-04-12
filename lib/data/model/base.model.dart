@@ -1,5 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
-import '../user/user.model.dart';
+import 'user/creator.model.dart';
 
 abstract class BaseModel {
   final String id;

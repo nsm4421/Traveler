@@ -30,14 +30,12 @@ class RawUserMetaDataModel with _$RawUserMetaDataModel {
   final String description;
   final Sex sex;
   final DateTime born_at;
-  final String profile_image;
 
   RawUserMetaDataModel({
     this.username = '',
     this.description = '',
     this.sex = Sex.male,
     required this.born_at,
-    this.profile_image = '',
   });
 
   factory RawUserMetaDataModel.fromJson(Map<String, dynamic> json) =>
