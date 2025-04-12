@@ -2,7 +2,7 @@ import 'package:module/data/model/export.dart';
 import 'package:module/shared/shared.export.dart';
 
 import '../base/base.entity.dart';
-import '../user/creator.dart';
+import '../user/creator.entity.dart';
 
 class TripPlanEntity extends BaseEntity {
   final String title;

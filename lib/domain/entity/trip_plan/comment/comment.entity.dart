@@ -1,7 +1,7 @@
 import 'package:module/data/model/export.dart';
 
 import '../../base/abs_comment.entity.dart';
-import '../../user/creator.dart';
+import '../../user/creator.entity.dart';
 
 class TripPlanCommentEntity extends AbsCommentEntity {
   late final List<TripPlanCommentEntity> children;

@@ -1,7 +1,7 @@
 import 'package:module/data/model/export.dart';
 
 import '../../base/base.entity.dart';
-import '../../user/creator.dart';
+import '../../user/creator.entity.dart';
 
 class JoinApplyEntity extends BaseEntity {
   final String tripPlanId;

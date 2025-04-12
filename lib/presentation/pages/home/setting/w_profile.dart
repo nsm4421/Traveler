@@ -31,11 +31,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 Icon(_user!.sex!.iconData),
               ],
             ),
-            subtitle: Text(
-              _user!.description,
-              softWrap: true,
-              overflow: TextOverflow.ellipsis,
-            ),
+            subtitle: _user?.description != null
+                ? Text(
+                    _user!.description!,
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                : const SizedBox.shrink(),
             trailing: IconButton(
               icon: Icon(Icons.edit_outlined),
               onPressed: () {

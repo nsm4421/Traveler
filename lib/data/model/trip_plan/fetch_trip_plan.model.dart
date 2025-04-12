@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:module/shared/shared.export.dart';
 
-import '../user/user.model.dart';
+import '../user/creator.model.dart';
 
 part 'fetch_trip_plan.model.freezed.dart';
 
