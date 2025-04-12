@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:module/dependency_injection.dart';
@@ -6,6 +9,7 @@ import 'package:module/presentation/bloc/export.dart';
 import 'package:module/shared/shared.export.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../widgets/loading_overlay.widget.dart';
 
@@ -21,18 +25,36 @@ part 'f_upload_review.dart';
 
 part 'w_step_bar.dart';
 
+part 'w_preview_review.dart';
+
 Page Function(BuildContext, GoRouterState) createReviewPageBuilder =
     (context, state) {
   final view = BlocProvider(
       create: (_) => getIt<CreateReviewCubit>()..checkPermission(),
-      child: BlocBuilder<CreateReviewCubit, CreateReviewState>(
-          builder: (context, state) {
-        return (!state.isAuth && state.status == Status.error)
-            ? const PermissionDeniedScreen()
-            : LoadingOverLayWidget(
-                isLoading: state.status == Status.loading,
-                child: const CreateReviewScreen());
-      }));
+      child: BlocListener<CreateReviewCubit, CreateReviewState>(
+        listener: (context, state) {
+          if (state.status == Status.success && context.mounted) {
+            context
+              ..showSnackBar('리뷰 등록이 완료되었습니다')
+              ..pop();
+          } else if (state.status == Status.error) {
+            context.showSnackBar(state.errorMessage);
+            Timer(1.durationInSec, () {
+              context
+                  .read<CreateReviewCubit>()
+                  .updateStatus(status: Status.initial, errorMessage: '');
+            });
+          }
+        },
+        child: BlocBuilder<CreateReviewCubit, CreateReviewState>(
+            builder: (context, state) {
+          return (!state.isAuth && state.status == Status.error)
+              ? const PermissionDeniedScreen()
+              : LoadingOverLayWidget(
+                  isLoading: state.status == Status.loading,
+                  child: const CreateReviewScreen());
+        }),
+      ));
   return NoTransitionPage(child: view);
 };
 

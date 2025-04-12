@@ -6,7 +6,17 @@ class DisplayReviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("REVIEW"),),
+      appBar: AppBar(
+        title: Text("리뷰"),
+        elevation: 0,
+        actions: [
+          IconButton(
+              onPressed: () {
+                context.push(Routes.createReview.path);
+              },
+              icon: const Icon(Icons.add_box_outlined))
+        ],
+      ),
     );
   }
 }

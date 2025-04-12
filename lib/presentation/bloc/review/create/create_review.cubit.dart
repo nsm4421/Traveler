@@ -10,7 +10,7 @@ import '../../base/base_state.dart';
 
 part 'create_review.state.dart';
 
-@lazySingleton
+@injectable
 class CreateReviewCubit extends Cubit<CreateReviewState>
     with LoggerMixIn, AssetMixIn {
   CreateReviewCubit(this._useCase) : super(CreateReviewState());
@@ -23,6 +23,14 @@ class CreateReviewCubit extends Cubit<CreateReviewState>
             isAuth: isAuth,
             status: isAuth ? Status.initial : Status.error,
             errorMessage: isAuth ? '' : '권한이 허용되지 않았습니다')));
+  }
+
+  void updateStatus({Status? status, String? errorMessage}) {
+    emit(state.copyWith(status: status, errorMessage: errorMessage));
+  }
+
+  void updateTitle(String title) {
+    emit(state.copyWith(title: title));
   }
 
   void updateContent(String content) {
@@ -40,7 +48,7 @@ class CreateReviewCubit extends Cubit<CreateReviewState>
     emit(state.copyWith(assets: temp));
   }
 
-  void submit() async {
+  Future<void> submit() async {
     try {
       emit(state.copyWith(status: Status.loading));
 
@@ -54,7 +62,10 @@ class CreateReviewCubit extends Cubit<CreateReviewState>
 
       // 제출
       await _useCase
-          .createReview(content: state.content, assets: compressedFiles)
+          .createReview(
+              title: state.title.isEmpty ? null : state.title,
+              content: state.content,
+              assets: compressedFiles)
           .then((res) => res.fold(
               (l) => emit(state.copyWith(
                   status: Status.error, errorMessage: l.message)),

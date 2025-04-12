@@ -11,3 +11,4 @@ export 'utils/logger/logger.dart';
 export 'utils/timezone/utc.dart';
 export 'utils/media/asset.dart';
 export 'response/response_wrapper.dart';
+export 'utils/debounce/debounce.dart';

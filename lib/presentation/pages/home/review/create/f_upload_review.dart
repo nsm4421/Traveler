@@ -5,6 +5,14 @@ class UploadReviewFragment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("UPLOAD", style: context.textTheme.displayLarge,);
+    return Scaffold(
+      body: const SingleChildScrollView(child: PreviewReviewWidget()),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton.small(
+          child: const Icon(Icons.chevron_right),
+          onPressed: () async {
+            await context.read<CreateReviewCubit>().submit();
+          }),
+    );
   }
 }

@@ -11,10 +11,12 @@ enum Tables {
 }
 
 enum Buckets {
-  auth("auth"),
-  review("review");
+  avatar(id: "avatar", name: "avatar", public: false),
+  review(id: "review", name: "review", public: false);
 
+  final String id;
   final String name;
+  final bool public;
 
-  const Buckets(this.name);
+  const Buckets({required this.id, required this.name, this.public = false});
 }

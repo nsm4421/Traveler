@@ -12,7 +12,7 @@ class DeleteReviewUseCase {
   Future<Either<Failure, Success<void>>> call(String id) async {
     try {
       return await _repository
-          .softDelete(id)
+          .delete(id)
           .then((res) => const Success<void>())
           .then(Right.new);
     } catch (error) {

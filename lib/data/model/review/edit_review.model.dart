@@ -11,8 +11,9 @@ part 'edit_review.model.g.dart';
 class CreateReviewModel with _$CreateReviewModel {
   final List<String> images;
   final String content;
+  final String? title;
 
-  CreateReviewModel({required this.images, this.content = ''});
+  CreateReviewModel({required this.images, this.content = '', this.title});
 
   Map<String, Object?> toJson() => _$CreateReviewModelToJson(this);
 }

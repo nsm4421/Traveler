@@ -10,41 +10,49 @@ import 'package:module/shared/shared.export.dart';
 @LazySingleton(as: ReviewRepository)
 class ReviewRepositoryImpl with LoggerMixIn implements ReviewRepository {
   final LocalStorageDataSource _localStorageDataSource;
+  final RemoteAuthDataSource _remoteAuthDataSource;
   final RemoteReviewDataSource _remoteReviewDataSource;
   final ReviewStorageDataSource _reviewStorageDataSource;
 
   ReviewRepositoryImpl(
       {required LocalStorageDataSource localStorageDataSource,
+      required RemoteAuthDataSource remoteAuthDataSource,
       required RemoteReviewDataSource remoteReviewDataSource,
       required ReviewStorageDataSource reviewStorageDataSource})
       : _localStorageDataSource = localStorageDataSource,
+        _remoteAuthDataSource = remoteAuthDataSource,
         _remoteReviewDataSource = remoteReviewDataSource,
         _reviewStorageDataSource = reviewStorageDataSource;
 
   @override
   Future<void> create(
-      {required String content, required List<File> imageFiles}) async {
-    return _remoteReviewDataSource.create(CreateReviewModel(
-        content: content,
-        images: imageFiles.isEmpty
-            ? <String>[]
-            : await _reviewStorageDataSource.uploadImages(imageFiles)));
+      {String? title,
+      required String content,
+      required List<File> imageFiles}) async {
+    final imageUrls = imageFiles.isEmpty
+        ? <String>[]
+        : await _reviewStorageDataSource.uploadImages(
+            uid: _remoteAuthDataSource.currentUid, images: imageFiles);
+    return await _remoteReviewDataSource.create(
+        CreateReviewModel(title: title, content: content, images: imageUrls));
   }
 
   @override
-  Future<void> softDelete(String id) async {
-    return _remoteReviewDataSource.softDelete(id);
+  Future<void> delete(String id) async {
+    return await _remoteReviewDataSource.delete(id);
   }
 
   @override
   Future<List<ReviewEntity>> fetch({DateTime? cursor, int limit = 20}) async {
-    return _remoteReviewDataSource
+    return await _remoteReviewDataSource
         .fetch(cursor: cursor, limit: limit)
         .then((res) => res.map(ReviewEntity.fromModel).toList());
   }
 
   @override
   Future<ReviewEntity> findById(String id) async {
-    return _remoteReviewDataSource.findById(id).then(ReviewEntity.fromModel);
+    return await _remoteReviewDataSource
+        .findById(id)
+        .then(ReviewEntity.fromModel);
   }
 }

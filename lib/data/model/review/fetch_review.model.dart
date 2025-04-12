@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../base/base.model.dart';
-import '../user/user.model.dart';
+import '../base.model.dart';
+
+import '../user/creator.model.dart';
 
 part 'fetch_review.model.freezed.dart';
 
@@ -11,6 +12,7 @@ part 'fetch_review.model.g.dart';
 @freezed
 @JsonSerializable()
 class FetchReviewModel extends BaseModel with _$FetchReviewModel {
+  final String? title;
   final String content;
   final List<String> images;
 
@@ -19,6 +21,7 @@ class FetchReviewModel extends BaseModel with _$FetchReviewModel {
     required super.created_at,
     required super.creator,
     required super.removed_at,
+    this.title,
     this.content = '',
     required this.images,
   });

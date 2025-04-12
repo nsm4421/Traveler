@@ -7,7 +7,8 @@ class CreateReviewScreen extends StatefulWidget {
   State<CreateReviewScreen> createState() => _CreateReviewScreenState();
 }
 
-class _CreateReviewScreenState extends State<CreateReviewScreen> {
+class _CreateReviewScreenState extends State<CreateReviewScreen>
+    with DebounceMixin {
   int _currentIndex = 0;
   late PageController _pageController;
 
@@ -29,46 +30,47 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
     });
   }
 
-  Future<void> _handleJumpPage(int index) async {
-    await _pageController.animateToPage(
-      index,
-      duration: 300.durationInMilli,
-      curve: Curves.easeInOut,
-    );
-  }
+  Future<void> _handleJumpPage(int index) async => await debounce(() async {
+        FocusScope.of(context).unfocus();
+        final step = CreateReviewStep.values[index];
+        if (step == CreateReviewStep.submit &&
+            context.read<CreateReviewCubit>().state.content.isEmpty) {
+          if (context.mounted) {
+            context.showSnackBar('본문을 입력해주세요');
+          }
+          return;
+        }
+        await _pageController.animateToPage(
+          index,
+          duration: 300.durationInMilli,
+          curve: Curves.easeInOut,
+        );
+      });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-      AppBar(title: Text(CreateReviewStep.values[_currentIndex].title)),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: StepBarWidget(
-                currentIndex: _currentIndex,
-                handleJumpPage: _handleJumpPage),
-          ),
-          Expanded(
-              child: PageView.builder(
-                  controller: _pageController,
-                  onPageChanged: _onPageChanged,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: CreateReviewStep.values.length,
-                  itemBuilder: (context, index) {
-                    final step = CreateReviewStep.values[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 18),
-                      child: switch (step) {
-                        CreateReviewStep.selectMedia => SelectImageFragment(),
-                        CreateReviewStep.editDetail => EditDetailFragment(),
-                        CreateReviewStep.submit => UploadReviewFragment(),
-                      },
-                    );
-                  }))
-        ],
+      appBar: AppBar(
+        title: Text(CreateReviewStep.values[_currentIndex].title),
+        bottom: StepBarWidget(
+            currentStepIndex: _currentIndex, handleJumpPage: _handleJumpPage),
       ),
+      body: PageView.builder(
+          controller: _pageController,
+          onPageChanged: _onPageChanged,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: CreateReviewStep.values.length,
+          itemBuilder: (context, index) {
+            final step = CreateReviewStep.values[index];
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 18),
+              child: switch (step) {
+                CreateReviewStep.selectMedia => SelectImageFragment(),
+                CreateReviewStep.editDetail => EditDetailFragment(),
+                CreateReviewStep.submit => UploadReviewFragment(),
+              },
+            );
+          }),
     );
   }
 }
