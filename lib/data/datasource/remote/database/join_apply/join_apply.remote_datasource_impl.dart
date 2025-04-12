@@ -3,10 +3,12 @@ import 'package:module/data/model/export.dart';
 import 'package:module/shared/shared.export.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../query_template.dart';
+
 part 'join_apply.remote_datasource.dart';
 
 class RemoteJoinApplyDataSourceImpl
-    with UtcMixIn
+    with UtcMixIn, QueryTemplateMixIn
     implements RemoteJoinApplyDataSource {
   final PostgrestQueryBuilder _queryBuilder;
   final Logger _logger;
@@ -20,7 +22,7 @@ class RemoteJoinApplyDataSourceImpl
   Future<Iterable<FetchJoinApplyModel>> fetch(
       {required String tripPlanId, DateTime? cursor, int limit = 20}) async {
     return await _queryBuilder
-        .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
+        .select(joinCreatorQueryTemplateOnSelect)
         .eq("trip_plan_id", tripPlanId)
         .lt('created_at', cursor ?? nowDt)
         .order('created_at', ascending: true) // 최신순
@@ -36,7 +38,7 @@ class RemoteJoinApplyDataSourceImpl
   @override
   Future<void> create(
       {required String tripPlanId, required String content}) async {
-    await _queryBuilder.insert(
+    return await _queryBuilder.insert(
         CreateJoinApplyModel(trip_plan_id: tripPlanId, content: content)
             .toJson());
   }
@@ -59,6 +61,6 @@ class RemoteJoinApplyDataSourceImpl
 
   @override
   Future<void> delete(String id) async {
-    await _queryBuilder.delete().eq("id", id);
+    return await _queryBuilder.delete().eq("id", id);
   }
 }

@@ -5,25 +5,25 @@ import 'package:logger/logger.dart';
 import 'package:module/shared/shared.export.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-part 'auth.storage_datasource.dart';
+part 'avatar.storage_datasource.dart';
 
-class AuthStorageDataSourceImpl implements AuthStorageDataSource {
+class AvatarStorageDataSourceImpl implements AvatarStorageDataSource {
   final StorageFileApi _storage;
   final Logger _logger;
 
-  AuthStorageDataSourceImpl(
+  AvatarStorageDataSourceImpl(
       {required StorageFileApi storage, required Logger logger})
       : _storage = storage,
         _logger = logger;
 
   @override
   Future<String> uploadProfileImage(
-      {required String filename,
+      {required String uid,
       required File profileImage,
-      bool upsert = false}) async {
-    final pathInBucket = 'image/$filename.jpg';
+      bool upsert = true}) async {
+    final pathInBucket = '$uid/avatar.jpg';
     await _storage.upload(pathInBucket, profileImage,
-        fileOptions: const FileOptions(contentType: 'image/jpg'));
+        fileOptions: FileOptions(contentType: 'image/jpg', upsert: upsert));
     return _storage.getPublicUrl(pathInBucket);
   }
 }

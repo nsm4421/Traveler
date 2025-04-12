@@ -1,4 +1,5 @@
 import 'package:logger/logger.dart';
+import 'package:module/data/datasource/remote/database/query_template.dart';
 import 'package:module/data/model/export.dart';
 import 'package:module/shared/shared.export.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -6,7 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 part 'trip_plan.remote_datasource.dart';
 
 class RemoteTripPlanDataSourceImpl
-    with UtcMixIn
+    with UtcMixIn, QueryTemplateMixIn
     implements RemoteTripPlanDataSource {
   final PostgrestQueryBuilder _queryBuilder;
   final Logger _logger;
@@ -20,7 +21,7 @@ class RemoteTripPlanDataSourceImpl
   Future<Iterable<FetchTripPlanModel>> fetch(
       {DateTime? cursor, int limit = 20}) async {
     return await _queryBuilder
-        .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
+        .select(joinCreatorQueryTemplateOnSelect)
         .lt('created_at', cursor ?? nowDt)
         .order('created_at', ascending: true) // 최신순
         .limit(limit)
@@ -31,7 +32,7 @@ class RemoteTripPlanDataSourceImpl
   Future<Iterable<FetchTripPlanModel>> fetchByUid(
       {required String uid, DateTime? cursor, int limit = 20}) async {
     return await _queryBuilder
-        .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
+        .select(joinCreatorQueryTemplateOnSelect)
         .eq("created_by", uid)
         .lt('created_at', cursor ?? nowDt)
         .order('created_at', ascending: true) // 최신순

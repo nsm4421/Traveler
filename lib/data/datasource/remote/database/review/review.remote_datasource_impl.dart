@@ -3,10 +3,12 @@ import 'package:module/data/model/export.dart';
 import 'package:module/shared/shared.export.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../query_template.dart';
+
 part 'review.remote_datasource.dart';
 
 class RemoteReviewDataSourceImpl
-    with UtcMixIn
+    with UtcMixIn, QueryTemplateMixIn
     implements RemoteReviewDataSource {
   final PostgrestQueryBuilder _queryBuilder;
   final Logger _logger;
@@ -22,16 +24,15 @@ class RemoteReviewDataSourceImpl
   }
 
   @override
-  Future<void> softDelete(String id) async {
-    return await _queryBuilder
-        .update({'removed_at': nowDt, 'updated_at': nowDt}).eq('id', id);
+  Future<void> delete(String id) async {
+    return await _queryBuilder.delete().eq("id", id);
   }
 
   @override
   Future<Iterable<FetchReviewModel>> fetch(
       {DateTime? cursor, int limit = 20}) async {
     return await _queryBuilder
-        .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
+        .select(joinCreatorQueryTemplateOnSelect)
         .lt('created_at', cursor ?? nowDt)
         .filter('removed_at', 'is', null)
         .order('created_at', ascending: true) // 최신순
@@ -42,7 +43,7 @@ class RemoteReviewDataSourceImpl
   @override
   Future<FetchReviewModel> findById(String id) async {
     return await _queryBuilder
-        .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
+        .select(joinCreatorQueryTemplateOnSelect)
         .eq('id', id)
         .filter('removed_at', 'is', null)
         .then((res) => res.first)

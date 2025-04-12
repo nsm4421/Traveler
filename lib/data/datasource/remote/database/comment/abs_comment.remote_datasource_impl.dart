@@ -3,10 +3,12 @@ import 'package:module/data/model/export.dart';
 import 'package:module/shared/shared.export.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../query_template.dart';
+
 part 'abs_comment.remote_datasource.dart';
 
 abstract class AbsRemoteCommentDataSourceImpl<T extends AbsCommentModel>
-    with UtcMixIn
+    with UtcMixIn, QueryTemplateMixIn
     implements AbsRemoteCommentDataSource<T> {
   /// 참조하고 있는 대상 id 컬럼명
   /// 예를 들어 여행계획에 댓글을 단다고 하면 ref_id는 여행계획 테이블의 id
@@ -37,7 +39,7 @@ abstract class AbsRemoteCommentDataSourceImpl<T extends AbsCommentModel>
     };
     return await _queryBuilder
         .insert(data)
-        .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
+        .select(joinCreatorQueryTemplateOnSelect)
         .then((res) => fromJson(res.first));
   }
 
@@ -45,7 +47,7 @@ abstract class AbsRemoteCommentDataSourceImpl<T extends AbsCommentModel>
   Future<Iterable<T>> fetchParents(
       {required String refId, DateTime? cursor, int limit = 20}) async {
     return await _queryBuilder
-        .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
+        .select(joinCreatorQueryTemplateOnSelect)
         .eq(_refIdKey, refId)
         .lt('created_at', cursor ?? nowDt)
         .filter('removed_at', 'is', null)
@@ -61,10 +63,10 @@ abstract class AbsRemoteCommentDataSourceImpl<T extends AbsCommentModel>
     int limit = 20,
   }) async {
     return await _queryBuilder
-        .select("*, creator:${Tables.users.name}(id, username, sex, born_at)")
+        .select(joinCreatorQueryTemplateOnSelect)
         .eq("parent_comment_id", parentCommentId)
         .filter('removed_at', 'is', null)
-        .lt('created_at', cursor?? nowDt)
+        .lt('created_at', cursor ?? nowDt)
         .order('created_at', ascending: false)
         .limit(limit)
         .then((res) => res.map((fromJson)));

@@ -7,5 +7,5 @@ abstract interface class RemoteReviewDataSource {
 
   Future<void> create(CreateReviewModel model);
 
-  Future<void> softDelete(String id);
+  Future<void> delete(String id);
 }
