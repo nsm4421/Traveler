@@ -9,8 +9,8 @@ import 'package:module/presentation/bloc/export.dart';
 import 'package:module/shared/shared.export.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-import '../../../widgets/loading_overlay.widget.dart';
-import '../../../widgets/text_field.widget.dart';
+import '../../../../widgets/loading_overlay.widget.dart';
+import '../../../../widgets/text_field.widget.dart';
 
 part 's_create_trip_plan.dart';
 

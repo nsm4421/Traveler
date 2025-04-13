@@ -8,8 +8,8 @@ import 'package:module/domain/entity/export.dart';
 import 'package:module/presentation/bloc/export.dart';
 import 'package:module/shared/shared.export.dart';
 
-import '../../../router/router_config.dart';
-import '../../../widgets/loading_overlay.widget.dart';
+import '../../../../router/router_config.dart';
+import '../../../../widgets/loading_overlay.widget.dart';
 
 part 's_display_trip_plan.dart';
 

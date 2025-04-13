@@ -8,8 +8,8 @@ import 'package:module/presentation/bloc/export.dart';
 import 'package:module/presentation/widgets/sign_out.widget.dart';
 import 'package:module/shared/shared.export.dart';
 
-import '../../../router/router_config.dart';
-import '../../../widgets/conditional.widget.dart';
+import '../../../../router/router_config.dart';
+import '../../../../widgets/conditional.widget.dart';
 
 part 's_setting.dart';
 

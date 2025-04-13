@@ -7,17 +7,17 @@ import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/presentation/bloc/export.dart';
 
-import '../pages/auth/index/p_auth.dart';
-import '../pages/auth/sign_in/p_sign_in.dart';
-import '../pages/auth/sign_up/p_sign_up.dart';
-import '../pages/home/index/p_home.dart';
-import '../pages/home/review/create/p_create_review.dart';
-import '../pages/home/review/index/p_display_review.dart';
-import '../pages/home/search/p_search.dart';
-import '../pages/trip_plan/create/p_create_trip_plan.dart';
-import '../pages/trip_plan/detail/p_trip_plan_detail.dart';
-import '../pages/home/trip_plan/p_display_trip_plan.dart';
-import '../pages/home/setting/p_setting.dart';
+import '../pages/un_authenticated//index/p_auth.dart';
+import '../pages/un_authenticated/sign_in/p_sign_in.dart';
+import '../pages/un_authenticated/sign_up/p_sign_up.dart';
+import '../pages/authenticated/index/p_home.dart';
+import '../pages/authenticated/review/create/p_create_review.dart';
+import '../pages/authenticated/review/home/p_display_review.dart';
+import '../pages/authenticated/search/home/p_search.dart';
+import '../pages/authenticated/trip_plan/create/p_create_trip_plan.dart';
+import '../pages/authenticated/trip_plan/detail/p_trip_plan_detail.dart';
+import '../pages/authenticated/trip_plan/home/p_display_trip_plan.dart';
+import '../pages/authenticated/setting/home/p_setting.dart';
 
 part 'routes.dart';
 
