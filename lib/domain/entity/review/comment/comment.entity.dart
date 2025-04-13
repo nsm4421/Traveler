@@ -3,23 +3,23 @@ import 'package:module/data/model/export.dart';
 import '../../base/abs_comment.entity.dart';
 import '../../user/creator.entity.dart';
 
-class TripPlanCommentEntity extends AbsCommentEntity {
-  late final List<TripPlanCommentEntity> children;
+class ReviewCommentEntity extends AbsCommentEntity {
+  late final List<ReviewCommentEntity> children;
 
-  TripPlanCommentEntity(
+  ReviewCommentEntity(
       {required super.id,
       required super.creator,
       required super.createdAt,
-      required super.refId,
+      required super.refId, // review id
       super.parentCommentId,
       required super.content,
       super.removedAt,
-      List<TripPlanCommentEntity>? children}) {
+      List<ReviewCommentEntity>? children}) {
     this.children = children ?? [];
   }
 
-  factory TripPlanCommentEntity.from(TripPlanCommentModel model) {
-    return TripPlanCommentEntity(
+  factory ReviewCommentEntity.from(ReviewCommentModel model) {
+    return ReviewCommentEntity(
         id: model.id,
         creator: CreatorEntity.from(model.creator),
         createdAt: DateTime.parse(model.created_at),
@@ -32,9 +32,9 @@ class TripPlanCommentEntity extends AbsCommentEntity {
   }
 
   @override
-  TripPlanCommentEntity copyWith(
-      {List<TripPlanCommentEntity>? children, DateTime? removedAt}) {
-    return TripPlanCommentEntity(
+  ReviewCommentEntity copyWith(
+      {List<ReviewCommentEntity>? children, DateTime? removedAt}) {
+    return ReviewCommentEntity(
       id: this.id,
       creator: this.creator,
       createdAt: this.createdAt,

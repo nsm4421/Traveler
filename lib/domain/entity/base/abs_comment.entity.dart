@@ -15,4 +15,6 @@ abstract class AbsCommentEntity extends BaseEntity {
     this.removedAt,
     this.parentCommentId,
   });
+
+  AbsCommentEntity copyWith();
 }

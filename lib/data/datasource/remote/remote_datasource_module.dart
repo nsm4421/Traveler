@@ -4,6 +4,7 @@ import 'package:module/shared/shared.export.dart';
 import 'auth/auth.remote_datasource_impl.dart';
 import 'database/join_apply/join_apply.remote_datasource_impl.dart';
 import 'database/review/review.remote_datasource_impl.dart';
+import 'database/review/review_comment.remote_datasource_impl.dart';
 import 'database/trip_plan/trip_plan.remote_datasource_impl.dart';
 import 'database/trip_plan/trip_plan_comment.remote_datasource_impl.dart';
 import 'storage/avatar/avatar.storage_datasource_impl.dart';
@@ -20,6 +21,13 @@ abstract class RemoteDataSourceModule with LoggerMixIn {
   @lazySingleton
   RemoteReviewDataSource get review => RemoteReviewDataSourceImpl(
         queryBuilder: _supabaseClient.rest.from(Tables.review.name),
+        logger: logger,
+      );
+
+  @lazySingleton
+  RemoteReviewCommentDataSource get reviewComment =>
+      RemoteReviewCommentDataSourceImpl(
+        queryBuilder: _supabaseClient.rest.from(Tables.reviewComment.name),
         logger: logger,
       );
 
