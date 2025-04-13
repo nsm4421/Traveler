@@ -28,13 +28,17 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
               color: context.colorScheme.primary, fontWeight: FontWeight.w700),
         ),
         const Spacer(),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
+        IconButton(
+            onPressed: () async => await context.push(Routes.reviewDetail.path,
+                extra: widget._review),
+            icon: const Icon(Icons.chevron_right)),
         12.width,
       ]),
       if (widget._review.images.isNotEmpty)
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
-          child: NetworkImageCarouselWidget(widget._review.images),
+          child: CarouselWidget(widget._review.images
+              .map((url) => CachedNetworkImageProvider(url)).toList()),
         ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -47,15 +51,6 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ConditionalRenderWidget<String>(
-                      data: widget._review.title,
-                      builder: (title) => Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
-                            child: Text(
-                              title,
-                              style: context.textTheme.titleLarge,
-                            ),
-                          )),
                   Text(widget._review.content,
                       style: context.textTheme.bodyLarge),
                 ],

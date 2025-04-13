@@ -1,50 +1,16 @@
 part of 'p_create_review.dart';
 
-class EditDetailFragment extends StatefulWidget {
-  const EditDetailFragment({super.key});
+class EditDetailFragment extends StatelessWidget {
+  const EditDetailFragment(
+      {super.key,
+      required this.titleController,
+      required this.contentController});
 
-  @override
-  State<EditDetailFragment> createState() => _EditDetailFragmentState();
-}
-
-class _EditDetailFragmentState extends State<EditDetailFragment> {
-  late TextEditingController _titleController;
-  late TextEditingController _contentController;
+  final TextEditingController titleController;
+  final TextEditingController contentController;
 
   static const int _maxTitleLength = 30;
   static const int _maxContentLength = 3000;
-
-  @override
-  void initState() {
-    super.initState();
-    _titleController = TextEditingController()
-      ..addListener(_onChangeTitle)
-      ..text = context.read<CreateReviewCubit>().state.title;
-    _contentController = TextEditingController()
-      ..addListener(_onChangeContent)
-      ..text = context.read<CreateReviewCubit>().state.content;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _titleController
-      ..removeListener(_onChangeTitle)
-      ..dispose();
-    _contentController
-      ..removeListener(_onChangeContent)
-      ..dispose();
-  }
-
-  _onChangeTitle() {
-    context.read<CreateReviewCubit>().updateTitle(_titleController.text.trim());
-  }
-
-  _onChangeContent() {
-    context
-        .read<CreateReviewCubit>()
-        .updateContent(_contentController.text.trim());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +19,7 @@ class _EditDetailFragmentState extends State<EditDetailFragment> {
         children: [
           12.height,
           TextField(
-            controller: _titleController,
+            controller: titleController,
             maxLines: 1,
             maxLength: _maxTitleLength,
             decoration: const InputDecoration(
@@ -63,7 +29,7 @@ class _EditDetailFragmentState extends State<EditDetailFragment> {
           const Divider(),
           8.height,
           TextField(
-            controller: _contentController,
+            controller: contentController,
             minLines: 3,
             maxLines: 10,
             maxLength: _maxContentLength,

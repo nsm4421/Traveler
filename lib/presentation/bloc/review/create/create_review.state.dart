@@ -5,25 +5,26 @@ class CreateReviewState extends BaseState {
   final String title;
   final String content;
   late final List<AssetEntity> assets;
+  late final List<String> captions;
 
-  CreateReviewState({
-    super.status,
-    super.errorMessage,
-    this.isAuth = false,
-    this.title = '',
-    this.content = '',
-    List<AssetEntity>? assets,
-  }) {
+  CreateReviewState(
+      {super.status,
+      super.errorMessage,
+      this.isAuth = false,
+      this.title = '',
+      this.content = '',
+      List<AssetEntity>? assets,
+      List<String>? captions}) {
     this.assets = assets ?? [];
+    this.captions = captions ?? [];
   }
 
   @override
   CreateReviewState copyWith(
       {bool? isAuth,
       int? currentAlbumIndex,
-      List<AssetPathEntity>? albums,
       List<AssetEntity>? assets,
-      List<AssetEntity>? selected,
+      List<String>? captions,
       String? title,
       String? content,
       Status? status,
@@ -31,6 +32,7 @@ class CreateReviewState extends BaseState {
     return CreateReviewState(
       isAuth: isAuth ?? this.isAuth,
       assets: assets ?? this.assets,
+      captions: captions ?? this.captions,
       title: title ?? this.title,
       content: content ?? this.content,
       status: status ?? this.status,

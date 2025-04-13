@@ -11,11 +11,27 @@ class _CreateReviewScreenState extends State<CreateReviewScreen>
     with DebounceMixin {
   int _currentIndex = 0;
   late PageController _pageController;
+  late TextEditingController _titleController;
+  late TextEditingController _contentController;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
+    _titleController = TextEditingController()
+      ..addListener(() {
+        context
+            .read<CreateReviewCubit>()
+            .updateTitle(_titleController.text.trim());
+      })
+      ..text = context.read<CreateReviewCubit>().state.title;
+    _contentController = TextEditingController()
+      ..addListener(() {
+        context
+            .read<CreateReviewCubit>()
+            .updateContent(_contentController.text.trim());
+      })
+      ..text = context.read<CreateReviewCubit>().state.content;
   }
 
   @override
@@ -65,9 +81,12 @@ class _CreateReviewScreenState extends State<CreateReviewScreen>
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 18),
               child: switch (step) {
-                CreateReviewStep.selectMedia => SelectImageFragment(),
-                CreateReviewStep.editDetail => EditDetailFragment(),
-                CreateReviewStep.submit => UploadReviewFragment(),
+                CreateReviewStep.selectMedia => const SelectImageFragment(),
+                CreateReviewStep.editDetail => EditDetailFragment(
+                    titleController: _titleController,
+                    contentController: _contentController,
+                  ),
+                CreateReviewStep.submit => const UploadReviewFragment(),
               },
             );
           }),

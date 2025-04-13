@@ -11,11 +11,16 @@ class CreateReviewUseCase {
 
   Future<Either<Failure, Success<void>>> call(
       {String? title,
+      required List<String> captions,
       required String content,
       required List<File> assets}) async {
     try {
       return await _repository
-          .create(title: title, content: content, imageFiles: assets)
+          .create(
+              title: title,
+              captions: captions,
+              content: content,
+              imageFiles: assets)
           .then((res) => const Success<void>())
           .then(Right.new);
     } catch (error) {

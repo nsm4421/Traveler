@@ -74,6 +74,18 @@ class _SelectImageFragmentState extends State<SelectImageFragment> {
         context.read<CreateReviewCubit>().toggleImage(asset);
       };
 
+  _handleShowCaptionEditor() async {
+    await showModalBottomSheet(
+        context: context,
+        showDragHandle: true,
+        isScrollControlled: true,
+        builder: (_) {
+          return ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: context.height * 0.8),
+              child: EditCaptionWidget(superContext: context));
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CreateReviewCubit, CreateReviewState>(
@@ -88,19 +100,35 @@ class _SelectImageFragmentState extends State<SelectImageFragment> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DropdownButton<AssetPathEntity>(
-              value: _currentAlbum,
-              underline: const SizedBox(),
-              onChanged: _handleChangeAlbum,
-              items: _albums.map((album) {
-                return DropdownMenuItem(
-                  value: album,
-                  child: Text(
-                    album.name,
-                    overflow: TextOverflow.ellipsis,
+            Row(
+              children: [
+                DropdownButton<AssetPathEntity>(
+                  value: _currentAlbum,
+                  underline: const SizedBox(),
+                  onChanged: _handleChangeAlbum,
+                  items: _albums.map((album) {
+                    return DropdownMenuItem(
+                      value: album,
+                      child: Text(
+                        album.name,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    );
+                  }).toList(),
+                ),
+                const Spacer(),
+                if (state.assets.isNotEmpty)
+                  GestureDetector(
+                    onTap: _handleShowCaptionEditor,
+                    child: Row(
+                      children: [
+                        const Icon(Icons.abc_outlined),
+                        6.width,
+                        const Text("캡션")
+                      ],
+                    ),
                   ),
-                );
-              }).toList(),
+              ],
             ),
             _assets.isEmpty
                 ? const Center(child: CircularProgressIndicator())

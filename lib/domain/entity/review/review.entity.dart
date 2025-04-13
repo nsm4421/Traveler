@@ -7,6 +7,7 @@ class ReviewEntity extends BaseEntity {
   final String? title;
   final String content;
   late final List<String> images;
+  late final List<String?> captions;
 
   ReviewEntity(
       {required super.id,
@@ -15,8 +16,10 @@ class ReviewEntity extends BaseEntity {
       required super.creator,
       this.title,
       this.content = '',
+      List<String?>? captions,
       List<String>? images}) {
     this.images = images ?? [];
+    this.captions = captions ?? [];
   }
 
   factory ReviewEntity.fromModel(FetchReviewModel model) {
@@ -27,9 +30,12 @@ class ReviewEntity extends BaseEntity {
       removedAt: model.removed_at == null
           ? null
           : DateTime.tryParse(model.removed_at!),
-      title: model.title,
+      title: (model.title == null || model.title!.isEmpty) ? null : model.title,
       content: model.content,
       images: model.images,
+      captions: model.captions
+          .map((item) => (item == null || item.isEmpty) ? null : item)
+          .toList(),
     );
   }
 }

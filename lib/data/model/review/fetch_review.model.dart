@@ -15,6 +15,7 @@ class FetchReviewModel extends BaseModel with _$FetchReviewModel {
   final String? title;
   final String content;
   final List<String> images;
+  final List<String?> captions;
 
   FetchReviewModel({
     required super.id,
@@ -24,6 +25,7 @@ class FetchReviewModel extends BaseModel with _$FetchReviewModel {
     this.title,
     this.content = '',
     required this.images,
+    required this.captions,
   });
 
   factory FetchReviewModel.fromJson(Map<String, dynamic> json) =>

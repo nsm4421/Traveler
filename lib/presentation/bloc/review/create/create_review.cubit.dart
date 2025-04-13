@@ -33,19 +33,29 @@ class CreateReviewCubit extends Cubit<CreateReviewState>
     emit(state.copyWith(title: title));
   }
 
+  void updateCaption({required int index, required String text}) {
+    final temp = [...state.captions];
+    temp[index] = text;
+    emit(state.copyWith(captions: temp));
+  }
+
   void updateContent(String content) {
     emit(state.copyWith(content: content));
   }
 
   void toggleImage(AssetEntity entity) {
-    final temp = [...state.assets];
-    final isContained = temp.contains(entity);
-    if (isContained) {
-      temp.removeWhere((item) => item.id == entity.id);
+    if (state.assets.contains(entity)) {
+      final index = state.assets.indexWhere((item) => item == entity);
+      final tempCaptions = [...state.captions];
+      final tempAssets = [...state.assets];
+      tempCaptions.removeAt(index);
+      tempAssets.removeAt(index);
+      emit(state.copyWith(captions: tempCaptions, assets: tempAssets));
     } else {
-      temp.add(entity);
+      emit(state.copyWith(
+          assets: [...state.assets, entity],
+          captions: [...state.captions, '']));
     }
-    emit(state.copyWith(assets: temp));
   }
 
   Future<void> submit() async {
@@ -63,9 +73,9 @@ class CreateReviewCubit extends Cubit<CreateReviewState>
       // 제출
       await _useCase
           .createReview(
-              title: state.title.isEmpty ? null : state.title,
               content: state.content,
-              assets: compressedFiles)
+              assets: compressedFiles,
+              captions: state.captions)
           .then((res) => res.fold(
               (l) => emit(state.copyWith(
                   status: Status.error, errorMessage: l.message)),

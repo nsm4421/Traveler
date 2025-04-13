@@ -28,13 +28,14 @@ class ReviewRepositoryImpl with LoggerMixIn implements ReviewRepository {
   Future<void> create(
       {String? title,
       required String content,
+      required List<String> captions,
       required List<File> imageFiles}) async {
     final imageUrls = imageFiles.isEmpty
         ? <String>[]
         : await _reviewStorageDataSource.uploadImages(
             uid: _remoteAuthDataSource.currentUid, images: imageFiles);
-    return await _remoteReviewDataSource.create(
-        CreateReviewModel(title: title, content: content, images: imageUrls));
+    return await _remoteReviewDataSource.create(CreateReviewModel(
+        content: content, images: imageUrls, captions: captions));
   }
 
   @override
