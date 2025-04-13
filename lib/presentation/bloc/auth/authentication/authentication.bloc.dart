@@ -30,7 +30,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState>
   AuthenticationBloc(this._useCase) : super(AuthenticationState()) {
     on<InitialSessionEvent>(_onInitialSession);
     on<InitAuthenticationStateEvent>(_onInitAuthState);
-    on<SignInWithEmailAndPasswordEvent>(_onSignInWithEmailAndPassword);
     on<SignOutEvent>(_onSignOut);
     on<EditProfileEvent>(_onEditProfile);
     _authStream = _useCase.authStream;
@@ -45,27 +44,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState>
         status: event.status,
         errorMessage: event.errorMessage,
         isAuth: event.isAuth));
-  }
-
-  Future<void> _onSignInWithEmailAndPassword(
-      SignInWithEmailAndPasswordEvent event,
-      Emitter<AuthenticationState> emit) async {
-    try {
-      emit(state.copyWith(status: Status.loading));
-      await _useCase.signIn
-          .call(email: event.email, password: event.password)
-          .then((res) => res.fold((l) {
-                logger.d([LogTags.bloc, l.message]);
-                emit(state.copyWith(
-                    status: Status.error, errorMessage: l.message));
-              }, (r) {
-                logger.t([LogTags.bloc, 'sign in success']);
-                emit(state.copyWith(status: Status.success, errorMessage: ''));
-              }));
-    } catch (error) {
-      logger.e([LogTags.bloc, error]);
-      emit(state.copyWith(status: Status.error, errorMessage: 'Sign In Fails'));
-    }
   }
 
   Future<void> _onSignOut(

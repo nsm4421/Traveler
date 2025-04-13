@@ -27,8 +27,8 @@ class _DisplayReviewScreenState extends State<DisplayReviewScreen>
 
   _handleScroll() async => await debounce(() async {
         if (_scrollController.position.pixels <
-                _scrollController.position.maxScrollExtent - 100 &&
-            !context.read<DisplayReviewBloc>().state.isEnd) {
+                _scrollController.position.maxScrollExtent - 100 ||
+            context.read<DisplayReviewBloc>().state.isEnd) {
           return;
         }
         context.read<DisplayReviewBloc>().add(FetchDisplayEvent());

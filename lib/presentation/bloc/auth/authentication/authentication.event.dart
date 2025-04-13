@@ -12,14 +12,6 @@ final class InitAuthenticationStateEvent extends AuthenticationEvent {
   InitAuthenticationStateEvent({this.status, this.errorMessage, this.isAuth});
 }
 
-final class SignInWithEmailAndPasswordEvent extends AuthenticationEvent {
-  final String email;
-  final String password;
-
-  SignInWithEmailAndPasswordEvent(
-      {required this.email, required this.password});
-}
-
 final class SignOutEvent extends AuthenticationEvent {}
 
 final class EditProfileEvent extends AuthenticationEvent {
