@@ -7,6 +7,8 @@ pubspec.lock
 **.freezed.dart
 supabase/
 .env
+web/
+test/
 
 lib/data/model/export.dart
 lib/data/repository_impl/export.dart
@@ -15,6 +17,7 @@ lib/domain/entity/export.dart
 lib/domain/usecase/export.dart
 lib/domain/repository/export.dart
 lib/presentation/bloc/export.dart
+lib/shared/export.dart
 
 # Miscellaneous
 *.class
