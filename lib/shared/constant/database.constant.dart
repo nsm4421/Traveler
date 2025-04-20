@@ -1,6 +1,7 @@
 enum Tables {
   users("users"),
   review("review"),
+  reviewComment("review_comment"),
   tripPlan("trip_plan"),
   tripPlanComment("trip_plan_comment"),
   joinApply("join_apply");

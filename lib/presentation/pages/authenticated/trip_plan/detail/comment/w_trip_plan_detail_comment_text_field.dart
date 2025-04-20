@@ -46,7 +46,9 @@ class TripPlanDetailCommentTextFieldWidget extends StatelessWidget {
                               .create(text, onSuccess: (e) {
                             context
                                 .read<DisplayTripPlanParentCommentBloc>()
-                                .add(WriteNewCommentEvent(e));
+                                .add(
+                                    WriteNewCommentEvent<TripPlanCommentEntity>(
+                                        e));
                           });
                         },
                         icon: Icon(

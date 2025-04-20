@@ -7,12 +7,14 @@ import 'package:module/domain/entity/export.dart';
 import 'package:module/domain/usecase/export.dart';
 import 'package:module/presentation/bloc/export.dart';
 
-import '../pages/un_authenticated//index/p_auth.dart';
+import '../pages/authenticated/review/detail/comment/p_review_comment.dart';
+import '../pages/authenticated/review/detail/index/p_review_detail.dart';
+import '../pages/un_authenticated/index/p_auth.dart';
 import '../pages/un_authenticated/sign_in/p_sign_in.dart';
 import '../pages/un_authenticated/sign_up/p_sign_up.dart';
 import '../pages/authenticated/index/p_home.dart';
 import '../pages/authenticated/review/create/p_create_review.dart';
-import '../pages/authenticated/review/home/p_display_review.dart';
+import '../pages/authenticated/review/index/p_display_review.dart';
 import '../pages/authenticated/search/home/p_search.dart';
 import '../pages/authenticated/trip_plan/create/p_create_trip_plan.dart';
 import '../pages/authenticated/trip_plan/detail/p_trip_plan_detail.dart';
@@ -103,11 +105,23 @@ class CustomRouter {
             path: Routes.createReview.path,
             pageBuilder: createReviewPageBuilder),
         GoRoute(
+            path: Routes.reviewDetail.path,
+            pageBuilder: (context, state) {
+              final review = state.extra as ReviewEntity;
+              return reviewDetailPageBuilder(context, state, review);
+            }),
+        GoRoute(
+            path: Routes.reviewComment.path,
+            pageBuilder: (context, state) {
+              final review = state.extra as ReviewEntity;
+              return reviewCommentPageBuilder(context, state, review);
+            }),
+        GoRoute(
             path: Routes.createTripPlan.path,
             pageBuilder: createTripPlanPageBuilder),
         GoRoute(
           path: Routes.tripPlanDetail.path,
           pageBuilder: tripPlanDetailPageBuilder,
-        )
+        ),
       ];
 }

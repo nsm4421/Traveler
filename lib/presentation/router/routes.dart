@@ -13,6 +13,8 @@ enum Routes {
   // etc
   tripPlanDetail('/trip-plan/detail'),
   createReview('/review/create'),
+  reviewDetail('/review/detail'),
+  reviewComment('/review/detail/comment'),
   createTripPlan('/trip-plan/create'),
   createJoinApply('/trip-plan/apply/create');
 

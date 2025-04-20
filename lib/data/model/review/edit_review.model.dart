@@ -9,16 +9,20 @@ part 'edit_review.model.g.dart';
 @freezed
 @JsonSerializable()
 class CreateReviewModel with _$CreateReviewModel {
+  final String country_code;
   final String? title;
   final List<String> images;
   final List<String> captions;
+  final List<String> hashtags;
   final String content;
 
   CreateReviewModel(
-      {this.title,
+      {required this.country_code,
+      this.title,
       required this.images,
       required this.captions,
-      this.content = ''});
+      this.content = '',
+      required this.hashtags});
 
   Map<String, Object?> toJson() => _$CreateReviewModelToJson(this);
 }

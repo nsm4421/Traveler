@@ -29,6 +29,10 @@ class CreateReviewCubit extends Cubit<CreateReviewState>
     emit(state.copyWith(status: status, errorMessage: errorMessage));
   }
 
+  void updateCountry(Country country) {
+    emit(state.copyWith(country: country));
+  }
+
   void updateTitle(String title) {
     emit(state.copyWith(title: title));
   }
@@ -73,9 +77,11 @@ class CreateReviewCubit extends Cubit<CreateReviewState>
       // 제출
       await _useCase
           .createReview(
+              country: state.country,
               content: state.content,
               assets: compressedFiles,
-              captions: state.captions)
+              captions: state.captions,
+              hashtags: state.hashtags)
           .then((res) => res.fold(
               (l) => emit(state.copyWith(
                   status: Status.error, errorMessage: l.message)),

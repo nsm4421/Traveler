@@ -18,6 +18,18 @@ class EditDetailFragment extends StatelessWidget {
       child: Column(
         children: [
           12.height,
+          Row(
+            children: [
+              const Icon(Icons.flag_circle_outlined),
+              8.width,
+              Text("여행국가", style: context.textTheme.titleMedium),
+              const Spacer(),
+              const SelectCountryWidget(),
+            ],
+          ),
+          8.height,
+          const Divider(),
+          8.height,
           TextField(
             controller: titleController,
             maxLines: 1,
@@ -35,7 +47,12 @@ class EditDetailFragment extends StatelessWidget {
             maxLength: _maxContentLength,
             decoration: const InputDecoration(
                 border: OutlineInputBorder(), hintText: '여행지에 대해 리뷰를 남겨보세요'),
-          )
+          ),
+          8.height,
+          const Divider(),
+          8.height,
+          const EditHashtagWidget(),
+          12.height,
         ],
       ),
     );

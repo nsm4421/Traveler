@@ -5,8 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:module/dependency_injection.dart';
 import 'package:module/presentation/bloc/export.dart';
-import 'package:module/presentation/widgets/carousel.widget.dart';
-import 'package:module/presentation/widgets/conditional.widget.dart';
 import 'package:module/shared/shared.export.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
@@ -28,6 +26,10 @@ part 'f_upload_review.dart';
 part 'w_step_bar.dart';
 
 part 'w_preview_review.dart';
+
+part 'w_select_country.dart';
+
+part 'w_hashtag.dart';
 
 Page Function(BuildContext, GoRouterState) createReviewPageBuilder =
     (context, state) {
