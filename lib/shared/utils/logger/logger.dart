@@ -1,13 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 
-enum LogTags {
-  dataSource,
-  repository,
-  useCase,
-  bloc;
-}
-
 @lazySingleton
 mixin class LoggerMixIn {
   final Logger logger = Logger(

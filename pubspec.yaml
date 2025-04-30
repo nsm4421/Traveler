@@ -5,7 +5,7 @@ description: "flutter app for traveler"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.1 <4.0.0'
+  sdk: ">=3.4.1 <4.0.0"
 
 dependencies:
   flutter:
@@ -13,7 +13,6 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_animate: ^4.5.2
   go_router: ^14.8.1
-  syncfusion_flutter_datepicker: ^22.1.2
   dio: ^5.7.0
   build_runner: ^2.4.11
   injectable: ^2.5.0
@@ -34,12 +33,16 @@ dependencies:
   cached_network_image: ^3.4.1
   supabase_flutter: ^2.8.4
   envied: ^1.1.1
-  drift: ^2.14.1
+  drift: ^2.20.3
   sqlite3_flutter_libs: ^0.5.31
   timeago: ^3.6.0
   mime: ^1.0.4
   http_parser: ^4.0.2
   uuid: ^4.0.0
+  timeline_tile: ^2.0.0
+  flutter_localizations:
+    sdk: flutter
+  pluto_grid: ^8.0.0
 
 dev_dependencies:
   flutter_test:
@@ -47,7 +50,7 @@ dev_dependencies:
   injectable_generator: ^2.6.2
   flutter_lints: ^3.0.0
   envied_generator: ^1.1.1
-  drift_dev: ^2.14.1
+  drift_dev: ^2.20.3
   json_annotation: ^4.9.0
   json_serializable: ^6.8.0
 
