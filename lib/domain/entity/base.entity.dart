@@ -1,10 +1,14 @@
+import 'package:uuid/uuid.dart';
+
 abstract class BaseEntity {
-  final String? id;
+  late final String id;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final DateTime? removedAt;
 
-  BaseEntity({this.id, this.createdAt, this.updatedAt, this.removedAt});
+  BaseEntity({String? id, this.createdAt, this.updatedAt, this.removedAt}) {
+    this.id = id ?? const Uuid().v4();
+  }
 
   BaseEntity copyWith();
 }

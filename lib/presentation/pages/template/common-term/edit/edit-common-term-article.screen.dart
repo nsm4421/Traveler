@@ -7,7 +7,8 @@ class EditCommonTermArticleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('조항 수정페이지'),
+        title: Text(
+            '제 ${context.read<EditCommonTermTemplateCubit>().state.article.index}조'),
         actions: [
           IconButton(
               onPressed: () {

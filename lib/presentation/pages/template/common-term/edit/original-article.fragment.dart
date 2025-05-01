@@ -14,11 +14,12 @@ class OriginalArticleFragment extends StatelessWidget {
         Text(article.title,
             style: context.textTheme.bodyLarge
                 ?.copyWith(fontWeight: FontWeight.w700)),
-        if (article.content.isNotEmpty)
+        if (article.content != null)
           // 조 본문
           Padding(
             padding: const EdgeInsets.only(top: 12),
-            child: Text(article.content, style: context.textTheme.bodyMedium),
+            child: Text(article.content ?? '',
+                style: context.textTheme.bodyMedium),
           ),
         if (article.paragraphs.isNotEmpty)
           // 항 list

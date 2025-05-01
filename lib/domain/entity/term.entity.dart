@@ -19,13 +19,12 @@ class SectionEntity extends BaseEntity {
 
   @override
   SectionEntity copyWith(
-      {String? id,
-      DateTime? createdAt,
+      {DateTime? createdAt,
       int? index,
       String? title,
       List<SubSectionEntity>? subsections}) {
     return SectionEntity(
-        id: id ?? this.id,
+        id: this.id,
         createdAt: createdAt ?? this.createdAt,
         index: index ?? this.index,
         title: title ?? this.title,
@@ -52,13 +51,12 @@ class SubSectionEntity extends BaseEntity {
 
   @override
   SubSectionEntity copyWith(
-      {String? id,
-      DateTime? createdAt,
+      {DateTime? createdAt,
       int? index,
       String? title,
       List<ArticleEntity>? articles}) {
     return SubSectionEntity(
-        id: id ?? this.id,
+        id: this.id,
         createdAt: createdAt ?? this.createdAt,
         index: index ?? this.index,
         title: title ?? this.title,
@@ -70,7 +68,7 @@ class SubSectionEntity extends BaseEntity {
 class ArticleEntity extends BaseEntity {
   final int? index;
   final String title;
-  final String content;
+  final String? content;
   late final List<ParagraphEntity> paragraphs;
 
   ArticleEntity(
@@ -80,26 +78,35 @@ class ArticleEntity extends BaseEntity {
       super.removedAt,
       this.index,
       required this.title,
-      this.content = '',
+      this.content,
       List<ParagraphEntity>? paragraphs}) {
     this.paragraphs = paragraphs ?? [];
   }
 
   @override
   ArticleEntity copyWith(
-      {String? id,
-      DateTime? createdAt,
+      {DateTime? createdAt,
       int? index,
       String? title,
-      String? content,
       List<ParagraphEntity>? paragraphs}) {
     return ArticleEntity(
-        id: id ?? this.id,
+        id: this.id,
         createdAt: createdAt ?? this.createdAt,
         index: index ?? this.index,
         title: title ?? this.title,
-        content: content ?? this.content,
+        content: content,
         paragraphs: paragraphs ?? this.paragraphs);
+  }
+
+  // content필드는 nullable이라서 copyWith를 따로 뺌
+  ArticleEntity copyWithContent(String? content) {
+    return ArticleEntity(
+        id: id,
+        createdAt: createdAt,
+        index: index,
+        title: title,
+        content: content,
+        paragraphs: paragraphs);
   }
 }
 
@@ -122,15 +129,14 @@ class ParagraphEntity extends BaseEntity {
 
   @override
   ParagraphEntity copyWith(
-      {String? id,
-      DateTime? createdAt,
+      {DateTime? createdAt,
       DateTime? updatedAt,
       DateTime? removedAt,
       int? index,
       String? content,
       List<SubparagraphEntity>? subparagraphs}) {
     return ParagraphEntity(
-        id: id ?? this.id,
+        id: this.id,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         removedAt: removedAt ?? this.removedAt,
@@ -159,15 +165,14 @@ class SubparagraphEntity extends BaseEntity {
 
   @override
   SubparagraphEntity copyWith(
-      {String? id,
-      DateTime? createdAt,
+      {DateTime? createdAt,
       DateTime? updatedAt,
       DateTime? removedAt,
       int? index,
       String? content,
       List<ItemEntity>? items}) {
     return SubparagraphEntity(
-        id: id ?? this.id,
+        id: this.id,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         removedAt: removedAt ?? this.removedAt,
@@ -192,14 +197,13 @@ class ItemEntity extends BaseEntity {
 
   @override
   ItemEntity copyWith(
-      {String? id,
-      DateTime? createdAt,
+      {DateTime? createdAt,
       DateTime? updatedAt,
       DateTime? removedAt,
       int? index,
       String? content}) {
     return ItemEntity(
-      id: id ?? this.id,
+      id: this.id,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       removedAt: removedAt ?? this.removedAt,
