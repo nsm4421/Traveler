@@ -1,15 +1,16 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
-import 'package:module/domain/entity/term.entity.dart';
-import 'package:module/presentation/pages/template/common-term/common-term-template.page.dart';
-import 'package:module/presentation/pages/template/common-term/edit/edit-common-term-article.page.dart';
+import 'package:module/presentation/pages/entry.page.dart';
+import 'package:module/presentation/pages/not-found.page.dart';
+import 'package:module/presentation/pages/repr-coverage/create/create-repr-coverage.page.dart';
+import 'package:module/presentation/pages/repr-coverage/repr-coverage.page.dart';
+import 'package:module/shared/export.dart';
+
 part 'routes.dart';
 
 @lazySingleton
-class CustomRouter {
+class CustomRouter with LoggerMixIn {
   late final GlobalKey<NavigatorState> _rootNavigatorKey;
 
   CustomRouter() {
@@ -18,23 +19,33 @@ class CustomRouter {
 
   @lazySingleton
   GoRouter get routerConfig => GoRouter(
-        initialLocation: Routes.displayCommonTermTemplate.path,
+        initialLocation: Routes.entry.path,
         navigatorKey: _rootNavigatorKey,
         routes: [
           GoRoute(
-              path: Routes.displayCommonTermTemplate.path,
-              builder: (_, __) => CommonTermTemplatePage()),
+            // 시작 페이지
+            path: Routes.entry.path,
+            builder: (_, __) => const EntryPage(),
+          ),
           GoRoute(
-              path: Routes.editCommonTermTemplate.path,
-              builder: (_, state) {
-                try {
-                  return EditCommonTermArticlePage(
-                      state.extra as ArticleEntity);
-                } catch (error) {
-                  log(error.toString());
-                  return Text("NOT FOUND");
-                }
-              }),
+              // 대표담보 페이지
+              path: Routes.reprCoverage.path,
+              builder: (_, __) => const ReprCoveragePage(),
+              routes: [
+                GoRoute(
+                  // 대표담보 생성 페이지
+                  path: Routes.createReprCoverage.path.split('/').last,
+                  builder: (_, state) {
+                    try {
+                      final coverageType = state.extra as CoverageType;
+                      return CreateReprCoveragePage(coverageType);
+                    } catch (error) {
+                      logger.logErrorOnPresentation(error);
+                      return const NotFoundPage();
+                    }
+                  },
+                ),
+              ]),
         ],
       );
 }

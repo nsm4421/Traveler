@@ -1,12 +1,9 @@
 part of 'router_config.dart';
 
 enum Routes {
-  // auth routes
-  home('/index'),
-
-  displayCommonTermTemplate('/template/common-term'),
-  editCommonTermTemplate('/template/common-term/edit'),
-  ;
+  entry('/entry'),
+  reprCoverage('/repr-coverage'),
+  createReprCoverage('/repr-coverage/create');
 
   final String path;
 

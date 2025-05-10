@@ -21,7 +21,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-        title: 'WorkFlow',
+        title: 'SOL2.0',
         routerConfig: getIt<CustomRouter>().routerConfig,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
