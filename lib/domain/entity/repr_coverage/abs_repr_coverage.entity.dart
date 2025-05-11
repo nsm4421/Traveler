@@ -6,17 +6,17 @@ import '../benefit/benefit.entity.dart';
 import '../detailed_coverage/detail_coverage.entity.dart';
 
 part 'single_benefit_repr_coverage.entity.dart';
-part 'multiple_benefit_repr_coverage.entity.dart';
-part 'multiple_detailed_coverage_repr_coverage.entity.dart';
+part 'multi_benefit_repr_coverage.entity.dart';
+part 'multi_detailed_coverage_repr_coverage.entity.dart';
 
 /// 대표담보코드
-abstract class AbsBaseReprCoverageEntity extends BaseEntity {
+abstract class AbsReprCoverageEntity extends BaseEntity {
   final String code;
   final String name;
   final CoverageType type; // 담보유형(급부1, 급부N, 세부보장N)
   final CoverageCategory category; // 담보분류(상해, 질병, 상해및질병 등)
 
-  AbsBaseReprCoverageEntity({
+  AbsReprCoverageEntity({
     required super.id,
     super.createdAt,
     super.updatedAt,

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:module/shared/export.dart';
 import '../meta_data.model.dart';
 
 part 'res_fetch_benefit.model.freezed.dart';
@@ -16,10 +17,12 @@ class FetchBenefitResponseModel extends MetaDataModel
     super.created_by,
     super.updated_by,
     this.risk_unit_code,
+    required this.category,
     required this.name,
   });
 
   final String? risk_unit_code; // 위험단위코드
+  final BenefitCategory category; // 급부분류
   final String name; // 급부명
 
   factory FetchBenefitResponseModel.fromJson(Map<String, dynamic> json) =>

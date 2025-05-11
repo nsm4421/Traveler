@@ -1,10 +1,9 @@
 part of 'abs_repr_coverage.entity.dart';
 
-class MultipleDetailedCoverageReprCoverageEntity
-    extends AbsBaseReprCoverageEntity {
+class MultiDetailedCoverageReprCoverageEntity extends AbsReprCoverageEntity {
   late final List<DetailedCoverageEntity> detailCoverages;
 
-  MultipleDetailedCoverageReprCoverageEntity(
+  MultiDetailedCoverageReprCoverageEntity(
       {required super.id,
       required super.code,
       required super.name,
@@ -15,12 +14,12 @@ class MultipleDetailedCoverageReprCoverageEntity
   }
 
   @override
-  MultipleDetailedCoverageReprCoverageEntity copyWith(
+  MultiDetailedCoverageReprCoverageEntity copyWith(
       {String? code,
       String? name,
       CoverageCategory? category,
       List<DetailedCoverageEntity>? detailCoverages}) {
-    return MultipleDetailedCoverageReprCoverageEntity(
+    return MultiDetailedCoverageReprCoverageEntity(
       id: id,
       code: code ?? this.code,
       name: name ?? this.name,
@@ -29,10 +28,10 @@ class MultipleDetailedCoverageReprCoverageEntity
     );
   }
 
-  factory MultipleDetailedCoverageReprCoverageEntity.fromResModel(
+  factory MultiDetailedCoverageReprCoverageEntity.fromResModel(
       FetchReprCoverageResponseModel model) {
     assert(model.details.length == 1);
-    return MultipleDetailedCoverageReprCoverageEntity(
+    return MultiDetailedCoverageReprCoverageEntity(
         id: model.id,
         code: model.code,
         name: model.name,

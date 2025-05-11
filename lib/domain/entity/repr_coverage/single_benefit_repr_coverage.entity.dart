@@ -1,6 +1,6 @@
 part of 'abs_repr_coverage.entity.dart';
 
-class SingleBenefitReprCoverageEntity extends AbsBaseReprCoverageEntity {
+class SingleBenefitReprCoverageEntity extends AbsReprCoverageEntity {
   final BenefitEntity benefit;
 
   SingleBenefitReprCoverageEntity(

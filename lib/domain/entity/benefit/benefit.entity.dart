@@ -1,11 +1,12 @@
+import 'package:module/shared/export.dart';
 import 'package:module/data/model/benefit/res_fetch_benefit.model.dart';
-
 import '../../../data/model/repr_coverage/res_fetch_repr_coverage.model.dart';
 import '../base.entity.dart';
 
 /// 급부
 class BenefitEntity extends BaseEntity {
   final String name; // 급부명
+  final BenefitCategory category; // 급부분류
   final String? riskUnitCode; // 위험단위코드
 
   BenefitEntity(
@@ -15,12 +16,17 @@ class BenefitEntity extends BaseEntity {
       super.removedAt,
       super.createdBy,
       super.updatedBy,
-      required this.name,
+      this.name = '',
+      this.category = BenefitCategory.injure,
       this.riskUnitCode});
 
   @override
-  BenefitEntity copyWith({String? name}) {
-    return BenefitEntity(name: name ?? this.name);
+  BenefitEntity copyWith(
+      {String? name, BenefitCategory? category, String? riskUnitCode}) {
+    return BenefitEntity(
+        name: name ?? this.name,
+        category: category ?? this.category,
+        riskUnitCode: riskUnitCode ?? this.riskUnitCode);
   }
 
   factory BenefitEntity.fromResModel(FetchBenefitResponseModel model) {
@@ -32,6 +38,7 @@ class BenefitEntity extends BaseEntity {
         createdBy: model.created_by,
         updatedBy: model.updated_by,
         name: model.name,
+        category: model.category,
         riskUnitCode: model.risk_unit_code);
   }
 
@@ -39,6 +46,7 @@ class BenefitEntity extends BaseEntity {
     return BenefitEntity(
         id: model.benefit_id,
         name: model.benefit_name,
+        category: model.benefit_category,
         riskUnitCode: model.risk_unit_code);
   }
 }

@@ -21,10 +21,10 @@ enum CoverageType {
       label: '단순담보', value: 'SINGLE_BENEFIT', description: '급부1 (ex.상해사망)'),
   multipleDetailedCoverage(
       label: '세부보장多',
-      value: 'MULTILPLE_DETAILED_COVERAGE',
+      value: 'MULTI_DETAILED_COVERAGE',
       description: '세부보장N (ex.수술비1-5종)'),
   multipleBenefit(
-      label: '급부多', value: 'MULTILPLE_BENEFIT', description: '급부N (ex.유사암진단비)'),
+      label: '급부多', value: 'MULTI_BENEFIT', description: '급부N (ex.유사암진단비)'),
   ;
 
   final String label; // 사용자에게 보여줄 텍스트

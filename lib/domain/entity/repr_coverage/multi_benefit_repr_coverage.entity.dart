@@ -1,9 +1,9 @@
 part of 'abs_repr_coverage.entity.dart';
 
-class MultipleBenefitReprCoverageEntity extends AbsBaseReprCoverageEntity {
+class MultiBenefitReprCoverageEntity extends AbsReprCoverageEntity {
   late final List<BenefitEntity> benefits;
 
-  MultipleBenefitReprCoverageEntity(
+  MultiBenefitReprCoverageEntity(
       {required super.id,
       required super.code,
       required super.name,
@@ -14,12 +14,12 @@ class MultipleBenefitReprCoverageEntity extends AbsBaseReprCoverageEntity {
   }
 
   @override
-  MultipleBenefitReprCoverageEntity copyWith(
+  MultiBenefitReprCoverageEntity copyWith(
       {String? code,
       String? name,
       CoverageCategory? category,
       List<BenefitEntity>? benefits}) {
-    return MultipleBenefitReprCoverageEntity(
+    return MultiBenefitReprCoverageEntity(
       id: id,
       code: code ?? this.code,
       name: name ?? this.name,
@@ -28,10 +28,10 @@ class MultipleBenefitReprCoverageEntity extends AbsBaseReprCoverageEntity {
     );
   }
 
-  factory MultipleBenefitReprCoverageEntity.fromResModel(
+  factory MultiBenefitReprCoverageEntity.fromResModel(
       FetchReprCoverageResponseModel model) {
     assert(model.details.length == 1);
-    return MultipleBenefitReprCoverageEntity(
+    return MultiBenefitReprCoverageEntity(
         id: model.id,
         code: model.code,
         name: model.name,

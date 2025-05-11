@@ -63,6 +63,7 @@ SELECT
             'seq',                r.seq,
             'benefit_id',         b.id,
             'benefit_name',       b.name,
+            'benefit_category',   b.category,
             'risk_unit_code',     b.risk_unit_code,
             'detailed_cov_name',  r.detailed_cov_name
         )

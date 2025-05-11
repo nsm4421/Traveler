@@ -29,11 +29,12 @@ class FetchReprCoverageResponseModel with _$FetchReprCoverageResponseModel {
 
 @freezed
 @JsonSerializable()
-class ReprCovDetailModel with _$ReprCovDetail {
+class ReprCovDetailModel with _$ReprCovDetailModel {
   ReprCovDetailModel({
     required this.seq, // 순번
     required this.benefit_id, // 급부id
     required this.benefit_name, // 급부명
+    required this.benefit_category, // 급부분류
     required this.risk_unit_code, // 위험단위코드
     required this.detailed_cov_name, // 세부보장명
   });
@@ -41,9 +42,10 @@ class ReprCovDetailModel with _$ReprCovDetail {
   final int seq;
   final String benefit_id;
   final String benefit_name;
+  final BenefitCategory benefit_category;
   final String? risk_unit_code;
   final String? detailed_cov_name;
 
   factory ReprCovDetailModel.fromJson(Map<String, dynamic> json) =>
-      _$ReprCovDetailFromJson(json);
+      _$ReprCovDetailModelFromJson(json);
 }
