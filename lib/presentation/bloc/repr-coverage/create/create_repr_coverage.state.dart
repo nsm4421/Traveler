@@ -1,33 +1,20 @@
 part of 'create_repr_coverage.cubit.dart';
 
-class BaseCreateReprCoverageState extends BaseState {
+abstract class AbsCreateReprCoverageState extends BaseState {
   final String name;
   final CoverageCategory category;
 
-  BaseCreateReprCoverageState({
+  CoverageType get type;
+
+  AbsCreateReprCoverageState({
     super.status,
     super.message,
     this.name = '',
     this.category = CoverageCategory.injure,
   });
-
-  @override
-  BaseCreateReprCoverageState copyWith({
-    Status? status,
-    String? message,
-    String? name,
-    CoverageCategory? category,
-  }) {
-    return BaseCreateReprCoverageState(
-      status: status ?? this.status,
-      message: message ?? this.message,
-      name: name ?? this.name,
-      category: category ?? this.category,
-    );
-  }
 }
 
-class CreateSingleBenefitReprCoverageState extends BaseCreateReprCoverageState {
+class CreateSingleBenefitReprCoverageState extends AbsCreateReprCoverageState {
   late final BenefitEntity benefit;
 
   CreateSingleBenefitReprCoverageState(
@@ -36,8 +23,11 @@ class CreateSingleBenefitReprCoverageState extends BaseCreateReprCoverageState {
       super.name,
       super.category,
       BenefitEntity? benefit}) {
-    this.benefit = benefit ?? BenefitEntity();
+    this.benefit = benefit ?? BenefitEntity(name: '');
   }
+
+  @override
+  CoverageType get type => CoverageType.singleBenefit;
 
   @override
   CreateSingleBenefitReprCoverageState copyWith(
@@ -56,7 +46,7 @@ class CreateSingleBenefitReprCoverageState extends BaseCreateReprCoverageState {
 }
 
 class CreateMultipleBenefitReprCoverageState
-    extends BaseCreateReprCoverageState {
+    extends AbsCreateReprCoverageState {
   late final List<BenefitEntity> benefits;
 
   CreateMultipleBenefitReprCoverageState(
@@ -67,6 +57,9 @@ class CreateMultipleBenefitReprCoverageState
       List<BenefitEntity>? benefits}) {
     this.benefits = benefits ?? [];
   }
+
+  @override
+  CoverageType get type => CoverageType.multipleBenefit;
 
   @override
   CreateMultipleBenefitReprCoverageState copyWith(
@@ -85,7 +78,7 @@ class CreateMultipleBenefitReprCoverageState
 }
 
 class CreateMultipleDetailedCoverageReprCoverageState
-    extends BaseCreateReprCoverageState {
+    extends AbsCreateReprCoverageState {
   late final List<DetailedCoverageEntity> detailedCoverages;
 
   CreateMultipleDetailedCoverageReprCoverageState(
@@ -96,6 +89,9 @@ class CreateMultipleDetailedCoverageReprCoverageState
       List<DetailedCoverageEntity>? detailedCoverages}) {
     this.detailedCoverages = detailedCoverages ?? [];
   }
+
+  @override
+  CoverageType get type => CoverageType.multipleDetailedCoverage;
 
   @override
   CreateMultipleDetailedCoverageReprCoverageState copyWith(

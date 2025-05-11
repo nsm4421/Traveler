@@ -10,16 +10,19 @@ enum LogTags {
 
 extension LoggerExtension on Logger {
   /// datasource
-  void logErrorOnDataSource(String message) => e([LogTags.dataSource, message]);
+  void logErrorOnDataSource(dynamic message) =>
+      e([LogTags.dataSource, message]);
 
-  void logInfoOnDataSource(String message) => i([LogTags.dataSource, message]);
+  void logInfoOnDataSource(dynamic message) => i([LogTags.dataSource, message]);
 
-  void logTraceOnDataSource(String message) => t([LogTags.dataSource, message]);
+  void logTraceOnDataSource(dynamic message) =>
+      t([LogTags.dataSource, message]);
 
-  void logWarningOnDataSource(String message) =>
+  void logWarningOnDataSource(dynamic message) =>
       w([LogTags.dataSource, message]);
 
-  void logDebugOnDataSource(String message) => d([LogTags.dataSource, message]);
+  void logDebugOnDataSource(dynamic message) =>
+      d([LogTags.dataSource, message]);
 
   /// repository
   void logErrorOnRepository(dynamic message) =>

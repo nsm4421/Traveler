@@ -10,7 +10,7 @@ class Success<T> extends _Response {
   final T? data;
   final String? message;
 
-  const Success({this.data, this.message});
+  const Success({this.data, this.message = 'success'});
 
   @override
   bool get ok => true;
@@ -20,7 +20,7 @@ class Failure extends _Response {
   final ErrorCode? errorCode;
   final String? message;
 
-  const Failure({this.errorCode, this.message});
+  const Failure({this.errorCode, this.message = 'error'});
 
   Failure copyWith({String? message, ErrorCode? errorCode}) => Failure(
       message: message ?? this.message, errorCode: errorCode ?? this.errorCode);
