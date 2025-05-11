@@ -1,5 +1,7 @@
-import 'package:module/domain/entity/base.entity.dart';
-import 'package:module/domain/entity/coverage/benefit.entity.dart';
+import 'package:module/data/model/repr_coverage/res_fetch_repr_coverage.model.dart';
+
+import '../base.entity.dart';
+import '../benefit/benefit.entity.dart';
 
 /// 세부보장
 class DetailedCoverageEntity extends BaseEntity {
@@ -12,6 +14,8 @@ class DetailedCoverageEntity extends BaseEntity {
       super.createdAt,
       super.updatedAt,
       super.removedAt,
+      super.createdBy,
+      super.updatedBy,
       this.name = '',
       this.seq = 1,
       required this.benefit});
@@ -26,5 +30,13 @@ class DetailedCoverageEntity extends BaseEntity {
         name: name ?? this.name,
         seq: seq ?? this.seq,
         benefit: benefit ?? this.benefit);
+  }
+
+  factory DetailedCoverageEntity.fromDetailModel(ReprCovDetailModel model) {
+    assert(model.detailed_cov_name != null);
+    return DetailedCoverageEntity(
+        benefit: BenefitEntity.fromDetailModel(model),
+        name: model.detailed_cov_name ?? '',
+        seq: model.seq);
   }
 }
