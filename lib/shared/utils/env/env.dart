@@ -5,9 +5,12 @@ part 'env.g.dart';
 /// 환경변수 주입
 @Envied(path: '.env')
 abstract class Env {
-  @EnviedField(varName: 'SUPABASE_URL')
-  static const String supabaseUrl = _Env.supabaseUrl;
+  @EnviedField(varName: 'MODE', defaultValue: 'development')
+  static const String mode = _Env.mode;
 
-  @EnviedField(varName: 'SUPABASE_KEY')
-  static const String supabaseKey = _Env.supabaseKey;
+  @EnviedField(varName: 'SUPABASE_API_URL')
+  static const String supabaseApiUrl = _Env.supabaseApiUrl;
+
+  @EnviedField(varName: 'SUPABASE_ANON_KEY')
+  static const String supabaseAnonKey = _Env.supabaseAnonKey;
 }
