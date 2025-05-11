@@ -1,4 +1,4 @@
-part of 'repr-coverage.page.dart';
+part of 'p_repr_coverage.dart';
 
 class NavigateToCreatePageButtonWidget extends StatelessWidget {
   const NavigateToCreatePageButtonWidget({super.key});

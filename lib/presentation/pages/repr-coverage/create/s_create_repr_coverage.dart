@@ -1,4 +1,4 @@
-part of 'create-repr-coverage.page.dart';
+part of 'p_create_repr_coverage.dart';
 
 class CreateRepresentCoverageScreen extends StatelessWidget {
   const CreateRepresentCoverageScreen(this._coverageType, {super.key});

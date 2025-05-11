@@ -1,4 +1,4 @@
-part of 'create-repr-coverage.page.dart';
+part of 'p_create_repr_coverage.dart';
 
 class SelectCoverageCateogryWidget extends StatefulWidget {
   const SelectCoverageCateogryWidget(this._coverageType, {super.key});

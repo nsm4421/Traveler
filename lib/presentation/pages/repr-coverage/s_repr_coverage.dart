@@ -1,4 +1,4 @@
-part of 'repr-coverage.page.dart';
+part of 'p_repr_coverage.dart';
 
 class ReprCoverageScreen extends StatelessWidget {
   const ReprCoverageScreen({super.key});

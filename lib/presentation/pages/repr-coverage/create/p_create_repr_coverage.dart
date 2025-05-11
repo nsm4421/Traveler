@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:module/dependency_injection.dart';
-import 'package:module/presentation/bloc/repr-coverage/create/create-repr-coverage.cubit.dart';
+import 'package:module/presentation/bloc/repr-coverage/create/create_repr_coverage.cubit.dart';
 import 'package:module/shared/export.dart';
 
-part 'create-repr-coverage.screen.dart';
-part 'edit-coverage-name.widget.dart';
-part 'coverage-detail.widget.dart';
-part 'select-coverage-category-widget.dart';
+part 's_create_repr_coverage.dart';
+part 'w_edit_coverage_name.dart';
+part 'w_edit_coverage_category.dart';
+part 'w_edit_benefit.dart';
 
 class CreateReprCoveragePage extends StatelessWidget {
   const CreateReprCoveragePage(this._coverageType, {super.key});

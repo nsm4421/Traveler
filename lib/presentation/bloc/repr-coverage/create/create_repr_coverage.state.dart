@@ -1,4 +1,4 @@
-part of 'create-repr-coverage.cubit.dart';
+part of 'create_repr_coverage.cubit.dart';
 
 class BaseCreateReprCoverageState extends BaseState {
   final String name;

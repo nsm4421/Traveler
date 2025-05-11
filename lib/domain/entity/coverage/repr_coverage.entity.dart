@@ -1,6 +1,6 @@
 import 'package:module/domain/entity/base.entity.dart';
 import 'package:module/domain/entity/coverage/benefit.entity.dart';
-import 'package:module/domain/entity/coverage/detail-coverage.entity.dart';
+import 'package:module/domain/entity/coverage/detail_coverage.entity.dart';
 import 'package:module/shared/export.dart';
 
 /// 대표담보코드 Interface

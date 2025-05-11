@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:module/domain/entity/coverage/benefit.entity.dart';
-import 'package:module/domain/entity/coverage/detail-coverage.entity.dart';
+import 'package:module/domain/entity/coverage/detail_coverage.entity.dart';
 import 'package:module/presentation/bloc/state.dart';
 import 'package:module/shared/export.dart';
 
-part 'create-repr-coverage.state.dart';
+part 'create_repr_coverage.state.dart';
 
 abstract class BaseCreateReprCoverageCubit<
     T extends BaseCreateReprCoverageState> extends Cubit<T> {

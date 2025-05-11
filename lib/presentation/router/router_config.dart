@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
-import 'package:module/presentation/pages/entry.page.dart';
-import 'package:module/presentation/pages/not-found.page.dart';
-import 'package:module/presentation/pages/repr-coverage/create/create-repr-coverage.page.dart';
-import 'package:module/presentation/pages/repr-coverage/repr-coverage.page.dart';
+import 'package:module/presentation/pages/p_entry.dart';
+import 'package:module/presentation/pages/p_error.dart';
+import 'package:module/presentation/pages/repr-coverage/create/p_create_repr_coverage.dart';
+import 'package:module/presentation/pages/repr-coverage/p_repr_coverage.dart';
 import 'package:module/shared/export.dart';
 
 part 'routes.dart';

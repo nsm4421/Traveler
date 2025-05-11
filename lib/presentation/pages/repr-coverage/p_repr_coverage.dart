@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:module/presentation/router/router_config.dart';
 import 'package:module/shared/export.dart';
 
-part 'repr-coverage.screen.dart';
-part 'navigate-to-create-page-modal.dart';
+part 's_repr_coverage.dart';
+part 'w_navigate_to_create_page_modal.dart';
 
 class ReprCoveragePage extends StatelessWidget {
   const ReprCoveragePage({super.key});
