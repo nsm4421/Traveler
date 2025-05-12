@@ -10,6 +10,7 @@ supabase/
 .env
 web/
 test/
+assets/
 
 lib/data/model/export.dart
 lib/data/repository_impl/export.dart

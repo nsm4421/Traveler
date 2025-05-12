@@ -11,9 +11,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
-      url: Env.supabaseApiUrl,
-      anonKey: Env.supabaseAnonKey,
-      debug: Env.mode == 'development'); // 슈파베이스 초기화
+    url: Env.supabaseApiUrl,
+    anonKey: Env.supabaseAnonKey,
+    debug: Env.mode == 'development',
+  ); // 슈파베이스 초기화
 
   timeago.setLocaleMessages('ko', timeago.KoMessages());
 
@@ -28,21 +29,20 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-        title: 'SOL2.0',
-        routerConfig: getIt<CustomRouter>().routerConfig,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          brightness: Brightness.dark,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en', ''),
-          Locale('ko', '82'),
-        ]);
+      title: 'SOL2.0',
+      routerConfig: getIt<CustomRouter>().routerConfig,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: 'NanumGothic',
+      ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('en', ''), Locale('ko', '82')],
+    );
   }
 }

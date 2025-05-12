@@ -17,7 +17,6 @@ dependencies:
   build_runner: ^2.4.11
   injectable: ^2.5.0
   flutter_bloc: ^9.1.0
-  google_fonts: ^6.2.1
   flutter_secure_storage: ^9.2.4
   get_it: ^8.0.3
   logger: ^2.5.0
@@ -54,3 +53,16 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/fonts/NanumGothic-Regular.ttf
+    - assets/fonts/NanumGothic-Bold.ttf
+    - assets/fonts/NanumGothic-ExtraBold.ttf
+  fonts:
+    - family: NanumGothic
+      fonts:
+        - asset: assets/fonts/NanumGothic-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/NanumGothic-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/NanumGothic-ExtraBold.ttf
+          weight: 800
