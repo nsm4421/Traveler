@@ -1,6 +1,6 @@
-name: module
+name: karma
 
-description: "flutter app for traveler"
+description: "sol 2.0"
 
 version: 1.0.0+1
 
@@ -41,6 +41,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   pluto_grid: ^8.0.0
+  drift: ^2.15.0
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +51,7 @@ dev_dependencies:
   envied_generator: ^1.1.1
   json_annotation: ^4.9.0
   json_serializable: ^6.8.0
+  drift_dev: ^2.15.0
 
 flutter:
   uses-material-design: true
