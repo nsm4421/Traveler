@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'dependency_injection.dart';
+import 'presentation/routers/router_config.dart';
+
 void main() async {
+  configureDependencies();
+
   runApp(const MainApp());
 }
 
@@ -9,6 +14,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Text("TEST"));
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: getIt<CustomRouter>().routerConfig,
+      theme: ThemeData.dark(),
+    );
   }
 }

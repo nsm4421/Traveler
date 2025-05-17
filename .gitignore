@@ -11,6 +11,7 @@ supabase/
 web/
 test/
 assets/
+**.export.dart
 
 lib/data/model/export.dart
 lib/data/repository_impl/export.dart
