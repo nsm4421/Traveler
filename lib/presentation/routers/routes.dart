@@ -2,8 +2,9 @@ part of 'router_config.dart';
 
 enum Routes {
   entry('/'),
+  product('/product'),
+  productModeing('/product/moding'),
   reprCoverages('/repr_coverage'),
-  createReprCoverages('/repr_coverage/create'),
   editReprCoverages('/repr_coverage/edit'),
   ;
 

@@ -1,14 +1,4 @@
-part of 's_repr_coverage.dart';
-
-enum PopUpMenu {
-  copy('복사'),
-  edit('수정'),
-  delete('삭제');
-
-  final String label;
-
-  const PopUpMenu(this.label);
-}
+part of 'p_repr_coverage.dart';
 
 class ReprCoverageItemWidget extends StatelessWidget {
   const ReprCoverageItemWidget(this._coverage, {super.key});
@@ -33,12 +23,13 @@ class ReprCoverageItemWidget extends StatelessWidget {
         onSelected: (menu) {
           switch (menu) {
             case PopUpMenu.edit:
-              context.push(Routes.createReprCoverages.path);
+              context.push(Routes.editReprCoverages.path);
               return;
             case PopUpMenu.delete:
-            // TODO : 삭제 팝업 띄우기
+              return;
             case PopUpMenu.copy:
-            // TODO : 복사 페이지로 라우팅
+              context.push(Routes.editReprCoverages.path, extra: _coverage);
+              return;
           }
         },
         itemBuilder: (context) => PopUpMenu.values

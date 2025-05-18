@@ -1,12 +1,12 @@
-part of 'create_repr_coverage.cubit.dart';
+part of 'edit_repr_coverage.cubit.dart';
 
 @CopyWith()
-class CreateReprCoverageState extends AbsBlocState {
+class EditReprCoverageState extends AbsBlocState {
   final String name; // 담보명
   final CoverageCategory category; // 담보유형
   late List<GuranteeEntity> gurantees;
 
-  CreateReprCoverageState({
+  EditReprCoverageState({
     super.status = Status.initial,
     super.message = '',
     this.name = '',

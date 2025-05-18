@@ -1,4 +1,4 @@
-part of 'p_create_repr_coverage.dart';
+part of 'p_edit_repr_coverage.dart';
 
 class EditReprCoverageNameWidget extends StatelessWidget {
   const EditReprCoverageNameWidget({super.key});
@@ -16,8 +16,9 @@ class EditReprCoverageNameWidget extends StatelessWidget {
         Expanded(
           child: Card(
             child: CustomTextFieldWidget(
+              initText: context.read<EditReprCoverageCubit>().state.name,
               onFocusLeave: (text) {
-                context.read<CreateReprCoverageCubit>().updateState(name: text);
+                context.read<EditReprCoverageCubit>().updateState(name: text);
               },
             ),
           ),

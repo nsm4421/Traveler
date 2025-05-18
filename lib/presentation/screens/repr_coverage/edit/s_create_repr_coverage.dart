@@ -1,7 +1,7 @@
-part of 'p_create_repr_coverage.dart';
+part of 'p_edit_repr_coverage.dart';
 
-class CreateReprCoverageScreen extends StatelessWidget {
-  const CreateReprCoverageScreen({
+class EditReprCoverageScreen extends StatelessWidget {
+  const EditReprCoverageScreen({
     super.key,
   });
 
@@ -9,7 +9,16 @@ class CreateReprCoverageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("대표담보 생성 페이지"),
+        title: Text(context.read<EditReprCoverageCubit>().initValue == null
+            ? "대표담보 생성 페이지"
+            : "대표담보 수정 페이지"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                // TODO : 저장
+              },
+              icon: Icon(Icons.save))
+        ],
       ),
       body: const SingleChildScrollView(
         child: Column(

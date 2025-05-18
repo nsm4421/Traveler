@@ -12,6 +12,7 @@ web/
 test/
 assets/
 **.export.dart
+**.realm.dart
 
 lib/data/model/export.dart
 lib/data/repository_impl/export.dart

@@ -1,33 +1,37 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uuid/uuid.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karma/shared/shared.export.dart';
 
 import 'package:karma/domain/entities/entities.export.dart';
 
-part 'create_repr_coverage.state.dart';
+part 'edit_repr_coverage.state.dart';
 
-part 'create_repr_coverage.cubit.g.dart';
+part 'edit_repr_coverage.cubit.g.dart';
 
 @injectable
-class CreateReprCoverageCubit extends Cubit<CreateReprCoverageState> {
-  late final String _id;
+class EditReprCoverageCubit extends Cubit<EditReprCoverageState> {
+  final ReprCoverageEntity? _initValue;
 
-  CreateReprCoverageCubit()
-      : super(CreateReprCoverageState(gurantees: [
+  ReprCoverageEntity? get initValue => _initValue;
+
+  EditReprCoverageCubit(@factoryParam this._initValue)
+      : super(EditReprCoverageState(gurantees: [
           GuranteeEntity(benefits: [BenefitEntity(benefitRiskCode: '')])
         ])) {
-    _id = const Uuid().v4();
-  }
-  void updateState({
-    String? name,
-    CoverageCategory? category,
-  }) {
     emit(state.copyWith(
-      name: name ?? state.name,
-      category: category ?? state.category,
-    ));
+        name: _initValue?.name ?? state.name,
+        category: _initValue?.category ?? state.category,
+        gurantees: _initValue?.gurantees ?? state.gurantees));
+  }
+  void updateState(
+      {String? name,
+      CoverageCategory? category,
+      List<GuranteeEntity>? gurantees}) {
+    emit(state.copyWith(
+        name: name ?? state.name,
+        category: category ?? state.category,
+        gurantees: gurantees ?? state.gurantees));
   }
 
   void insertGurantee() {

@@ -1,4 +1,4 @@
-part of 'p_create_repr_coverage.dart';
+part of 'p_edit_repr_coverage.dart';
 
 enum BenefitPopUpMenu {
   exitRiskRate('탈퇴위험률'),
@@ -28,7 +28,7 @@ class BenefitWidget extends StatelessWidget {
         if (_gurantee.benefits.length > 1)
           IconButton(
             onPressed: context
-                .read<CreateReprCoverageCubit>()
+                .read<EditReprCoverageCubit>()
                 .removeBenefitByCodeAndSeq(
                     code: _gurantee.code, seq: _benefit.seq),
             icon: const Icon(Icons.remove_circle_outline_outlined),

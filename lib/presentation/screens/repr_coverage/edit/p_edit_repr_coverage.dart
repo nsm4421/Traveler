@@ -14,19 +14,21 @@ part 'w_select_category.dart';
 part 'w_gurantee.dart';
 part 'w_benefit.dart';
 
-class CreateReprCoveragePage extends StatelessWidget {
-  const CreateReprCoveragePage({super.key});
+class EditReprCoveragePage extends StatelessWidget {
+  const EditReprCoveragePage(this._reprCoverage, {super.key});
+
+  final ReprCoverageEntity? _reprCoverage;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<CreateReprCoverageCubit>(),
-      child: BlocBuilder<CreateReprCoverageCubit, CreateReprCoverageState>(
+      create: (_) => getIt<EditReprCoverageCubit>(param1: _reprCoverage),
+      child: BlocBuilder<EditReprCoverageCubit, EditReprCoverageState>(
           builder: (context, state) {
         return LoadingOverlayWidget(
             message: '로딩중입니다',
             showOverlay: state.status != Status.initial,
-            child: const CreateReprCoverageScreen());
+            child: const EditReprCoverageScreen());
       }),
     );
   }

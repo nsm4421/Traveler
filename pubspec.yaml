@@ -30,7 +30,7 @@ dependencies:
   photo_manager_image_provider: ^2.2.0
   smooth_page_indicator: ^1.2.0+3
   cached_network_image: ^3.4.1
-  supabase_flutter: ^2.8.4
+  supabase_flutter: ^2.9.0
   envied: ^1.1.1
   sqlite3_flutter_libs: ^0.5.31
   timeago: ^3.6.0
@@ -41,8 +41,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   pluto_grid: ^8.0.0
-  drift: ^2.15.0
   copy_with_extension: ^6.0.1
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -53,7 +53,6 @@ dev_dependencies:
   envied_generator: ^1.1.1
   json_annotation: ^4.9.0
   json_serializable: ^6.8.0
-  drift_dev: ^2.15.0
 
 flutter:
   uses-material-design: true

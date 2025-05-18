@@ -1,4 +1,4 @@
-part of 'p_create_repr_coverage.dart';
+part of 'p_edit_repr_coverage.dart';
 
 class GuranteeWidget extends StatelessWidget {
   const GuranteeWidget(this._gurantee, {super.key});
@@ -12,7 +12,7 @@ class GuranteeWidget extends StatelessWidget {
       children: [
         IconButton(
           onPressed: context
-              .read<CreateReprCoverageCubit>()
+              .read<EditReprCoverageCubit>()
               .removeGuranteeByCode(_gurantee.code),
           icon: const Icon(Icons.remove_circle_outline_outlined),
           tooltip: '세부보장 삭제',
@@ -38,7 +38,7 @@ class GuranteeWidget extends StatelessWidget {
                     const Spacer(),
                     IconButton(
                       onPressed: context
-                          .read<CreateReprCoverageCubit>()
+                          .read<EditReprCoverageCubit>()
                           .insertBenefit(_gurantee.code),
                       icon: const Icon(Icons.add_circle_outline_outlined),
                       tooltip: '급부추가',

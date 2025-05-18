@@ -1,11 +1,11 @@
-part of 'p_create_repr_coverage.dart';
+part of 'p_edit_repr_coverage.dart';
 
 class SelectReprCoverageCateoryWidget extends StatelessWidget {
   const SelectReprCoverageCateoryWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CreateReprCoverageCubit, CreateReprCoverageState>(
+    return BlocBuilder<EditReprCoverageCubit, EditReprCoverageState>(
         builder: (context, state) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,7 +29,7 @@ class SelectReprCoverageCateoryWidget extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         context
-                            .read<CreateReprCoverageCubit>()
+                            .read<EditReprCoverageCubit>()
                             .updateState(category: category);
                       },
                       child: MouseRegion(
