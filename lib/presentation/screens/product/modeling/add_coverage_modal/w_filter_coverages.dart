@@ -9,40 +9,53 @@ class FiterCoverageStepWidget extends StatefulWidget {
 }
 
 class _FiterCoverageStepWidgetState extends State<FiterCoverageStepWidget> {
-  late List<String> _optionsOnLeft;
-  late List<String> _optionsOnRight;
-  late List<String> _selectedOnLeft;
-  late List<String> _selectedOnRight;
+  late List<ReprCoverageWithPropertiesEntity> _selectedOnLeft;
+  late List<ReprCoverageWithPropertiesEntity> _selectedOnRight;
 
   @override
   void initState() {
     super.initState();
-    _optionsOnLeft = [
-      '수술비2(1-5종)',
-      '갱신형 수술비2(1-5종)',
-      '수술비2(1-5종)(출생전)',
-      '갱신형 수술비2(1-5종)(출생전)',
-      '[특별조건부]수술비2(1-5종)',
-      '[계약전환용]수술비2(1-5종)',
-      '[계약전환용]갱신형 수술비2(1-5종)',
-    ];
-    _optionsOnRight = [];
     _selectedOnLeft = [];
     _selectedOnRight = [];
   }
 
-  _handleSelect(String item) => () {
+  _handleTapOnLeftSideItem(ReprCoverageWithPropertiesEntity e) => () {
         setState(() {
-          _optionsOnLeft.remove(item);
-          _optionsOnRight.add(item);
+          if (_selectedOnLeft.contains(e)) {
+            _selectedOnLeft.remove(e);
+          } else {
+            _selectedOnLeft.add(e);
+          }
+          _selectedOnRight = [];
         });
       };
-  _handleUnSelect(String item) => () {
+
+  _handleTapOnRightSideItem(ReprCoverageWithPropertiesEntity e) => () {
         setState(() {
-          _optionsOnLeft.add(item);
-          _optionsOnRight.remove(item);
+          if (_selectedOnRight.contains(e)) {
+            _selectedOnRight.remove(e);
+          } else {
+            _selectedOnRight.add(e);
+          }
+          _selectedOnLeft = [];
         });
       };
+
+  _handleAdd() {
+    _selectedOnLeft
+        .forEach((e) => context.read<AddCoverageCubit>().addCoverage(e));
+    setState(() {
+      _selectedOnLeft = [];
+    });
+  }
+
+  _handlePop() {
+    _selectedOnRight
+        .forEach((e) => context.read<AddCoverageCubit>().popCoverages(e));
+    setState(() {
+      _selectedOnRight = [];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,78 +88,143 @@ class _FiterCoverageStepWidgetState extends State<FiterCoverageStepWidget> {
           ),
         ),
         const Divider(),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
+        Expanded(
+          child: SingleChildScrollView(
+            child: BlocBuilder<AddCoverageCubit, AddCoverageState>(
+              builder: (context, state) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Align(
-                          alignment: Alignment.topCenter,
-                          child: Text("가능한 구분자 조합")),
-                      if (_optionsOnLeft.isNotEmpty)
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: _optionsOnLeft.length,
-                          itemBuilder: (context, index) => GestureDetector(
-                            onTap: _handleSelect(_optionsOnLeft[index]),
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .tertiary),
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: Text(_optionsOnLeft[index]),
-                            ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("가능한 조합"),
+                              if (state.reprCoverageCandidates.isNotEmpty)
+                                Card(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount:
+                                        state.reprCoverageCandidates.length,
+                                    itemBuilder: (context, index) {
+                                      final e =
+                                          state.reprCoverageCandidates[index];
+                                      return GestureDetector(
+                                        onTap: _handleTapOnLeftSideItem(e),
+                                        child: Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 8),
+                                          padding: const EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                              color: e.isIn(_selectedOnLeft)
+                                                  ? Theme.of(context)
+                                                      .colorScheme
+                                                      .primaryContainer
+                                                  : null,
+                                              borderRadius:
+                                                  BorderRadius.circular(12)),
+                                          child: Text(
+                                            e.name,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                    color: e.isIn(
+                                                            _selectedOnLeft)
+                                                        ? Theme.of(context)
+                                                            .colorScheme
+                                                            .onPrimaryContainer
+                                                        : null),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                )
+                            ],
                           ),
-                        )
+                        ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: _handleAdd,
+                            icon: const Icon(Icons.arrow_forward),
+                            tooltip: '선택담보 추가',
+                          ),
+                          const SizedBox(height: 8),
+                          IconButton(
+                            onPressed: _handlePop,
+                            icon: const Icon(Icons.arrow_back),
+                            tooltip: '선택담보 제외',
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("추가할 담보 조합"),
+                              if (state.reprCoveragesSelected.isNotEmpty)
+                                Card(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount:
+                                        state.reprCoveragesSelected.length,
+                                    itemBuilder: (context, index) {
+                                      final e =
+                                          state.reprCoveragesSelected[index];
+                                      return GestureDetector(
+                                        onTap: _handleTapOnRightSideItem(e),
+                                        child: Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 8),
+                                          padding: const EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                              color: e.isIn(_selectedOnRight)
+                                                  ? Theme.of(context)
+                                                      .colorScheme
+                                                      .primaryContainer
+                                                  : null,
+                                              borderRadius:
+                                                  BorderRadius.circular(12)),
+                                          child: Text(
+                                            e.name,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                    color: e.isIn(
+                                                            _selectedOnRight)
+                                                        ? Theme.of(context)
+                                                            .colorScheme
+                                                            .onPrimaryContainer
+                                                        : null),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                )
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Align(
-                          alignment: Alignment.topCenter,
-                          child: Text("선택된 구분자 조합")),
-                      if (_optionsOnRight.isNotEmpty)
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: _optionsOnRight.length,
-                          itemBuilder: (context, index) => GestureDetector(
-                            onTap: _handleUnSelect(_optionsOnRight[index]),
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .tertiary),
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: Text(_optionsOnRight[index]),
-                            ),
-                          ),
-                        )
-                    ],
-                  ),
-                ),
-              ),
-            ],
+                );
+              },
+            ),
           ),
         )
       ],

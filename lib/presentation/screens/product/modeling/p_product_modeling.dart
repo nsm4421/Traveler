@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karma/dependency_injection.dart';
 
-import 'package:karma/domain/entities/coverage/product_coverage.entity.dart';
 import 'package:karma/domain/entities/entities.export.dart';
 import 'package:karma/presentation/providers/providers.export.dart';
 import 'package:karma/shared/constants/coverage.constant.dart';
@@ -27,8 +26,5 @@ class ProductModeingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProductModelingScreen(_product);
-    // MultiBlocProvider(
-    //     providers: [BlocProvider(create: (_) => getIt<AddCoverageCubit>())],
-    //     child: ProductModelingScreen());
   }
 }

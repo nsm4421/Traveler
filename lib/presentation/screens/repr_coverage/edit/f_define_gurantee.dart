@@ -2,7 +2,7 @@ part of 'p_edit_repr_coverage.dart';
 
 enum CoveragePopUpMenu {
   addGurantee('세부보장'),
-  eliminationPeriod('면책특성'),
+  elimination('면책특성'),
   exitRate('탈퇴율');
 
   final String label;
@@ -31,8 +31,7 @@ class DefineGuranteeFragment extends StatelessWidget {
                     case CoveragePopUpMenu.addGurantee:
                       context.read<EditReprCoverageCubit>().insertGurantee();
                       return;
-                    case CoveragePopUpMenu.eliminationPeriod:
-                    // TODO : 면책기간 추가하기
+                    case CoveragePopUpMenu.elimination:
                     case CoveragePopUpMenu.exitRate:
                     // TODO : 탈퇴율 추가하기
                   }
@@ -43,6 +42,7 @@ class DefineGuranteeFragment extends StatelessWidget {
                     )
                     .toList(),
                 icon: const Icon(Icons.add_circle_outline_outlined),
+                tooltip: '담보추가',
               )
             ],
           ),

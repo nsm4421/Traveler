@@ -1,6 +1,6 @@
 part of 'p_product_modeling.dart';
 
-final _reprCoverage = ReprCoverageEntity(
+final _mockReprCoverage = ReprCoverageEntity(
     code: '6AAAA',
     name: '수술비(1-5종)',
     category: CoverageCategory.injureAndDisease,
@@ -18,13 +18,35 @@ final _reprCoverage = ReprCoverageEntity(
               name: '질병${index + 1}종',
               benefits: []))
     ]);
-final _productCoverages = List.generate(
-    _reprCoverage.gurantees.length,
-    (index) => ProductCoverageEntity.fromReprCoverage(
-          reprCoverage: _reprCoverage,
-          guranteeCode: (index + 1).toString().padLeft(2, '0'),
-          seq: index + 1,
-        ));
+
+final _mockProductCoverages = [
+  ...List.generate(
+      _mockReprCoverage.gurantees.length,
+      (index) => ProductCoverageEntity.fromReprCoverageWithProperty(
+            reprCoverageWithProperty: ReprCoverageWithPropertiesEntity(
+                reprCoverage: _mockReprCoverage),
+            guranteeCode: (index + 1).toString().padLeft(2, '0'),
+            seq: index + 1,
+          )),
+  ...List.generate(
+      _mockReprCoverage.gurantees.length,
+      (index) => ProductCoverageEntity.fromReprCoverageWithProperty(
+            reprCoverageWithProperty: ReprCoverageWithPropertiesEntity(
+                reprCoverage: _mockReprCoverage, isRenewal: true),
+            guranteeCode: (index + 1).toString().padLeft(2, '0'),
+            seq: index + 11,
+          )),
+  ...List.generate(
+      _mockReprCoverage.gurantees.length,
+      (index) => ProductCoverageEntity.fromReprCoverageWithProperty(
+            reprCoverageWithProperty: ReprCoverageWithPropertiesEntity(
+                reprCoverage: _mockReprCoverage,
+                isRenewal: true,
+                isSpecialConditioned: true),
+            guranteeCode: (index + 1).toString().padLeft(2, '0'),
+            seq: index + 21,
+          ))
+];
 
 enum ReprCovPopUpMenu {
   copy("복사"),
@@ -98,29 +120,29 @@ class _ProductModelingScreenState extends State<ProductModelingScreen> {
       ),
       body: Align(
         alignment: Alignment.topCenter,
-        child: Column(
-          children: [
-            DataTable(columns: const [
-              DataColumn(label: Text('대표담보코드')),
-              DataColumn(label: Text('대표담보명')),
-              DataColumn(label: Text('담보순번')),
-              DataColumn(label: Text('담보명')),
-            ], rows: [
-              ...List.generate(
-                  _productCoverages.length,
-                  (index) => DataRow(cells: [
-                        DataCell(Listener(
-                            onPointerDown: _handlePointerDown,
-                            child: Text(index == 0 ? _reprCoverage.code : ''))),
-                        DataCell(Listener(
-                            onPointerDown: _handlePointerDown,
-                            child: Text(index == 0 ? _reprCoverage.name : ''))),
-                        DataCell(
-                            Text((_productCoverages[index].seq).toString())),
-                        DataCell(Text(_productCoverages[index].name)),
-                      ])),
-            ])
-          ],
+        child: SingleChildScrollView(
+          child: DataTable(columns: const [
+            DataColumn(label: Text('대표담보코드')),
+            DataColumn(label: Text('대표담보명')),
+            DataColumn(label: Text('담보순번')),
+            DataColumn(label: Text('담보명')),
+          ], rows: [
+            ...List.generate(
+                _mockProductCoverages.length,
+                (index) => DataRow(cells: [
+                      DataCell(Listener(
+                          onPointerDown: _handlePointerDown,
+                          child:
+                              Text(index == 0 ? _mockReprCoverage.code : ''))),
+                      DataCell(Listener(
+                          onPointerDown: _handlePointerDown,
+                          child:
+                              Text(index == 0 ? _mockReprCoverage.name : ''))),
+                      DataCell(
+                          Text((_mockProductCoverages[index].seq).toString())),
+                      DataCell(Text(_mockProductCoverages[index].name)),
+                    ])),
+          ]),
         ),
       ),
     );

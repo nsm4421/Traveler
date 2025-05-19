@@ -11,18 +11,31 @@ enum AddCoverageStep {
 class AddCoverageState extends AbsBlocState {
   final AddCoverageStep step;
   final ReprCoverageEntity? reprCoverage;
-  late final List<ProductCoverageEntity> candidates;
-  late final List<ProductCoverageEntity> seleted;
+  late final List<ReprCoverageWithPropertiesEntity> reprCoverageCandidates;
+  late final List<ReprCoverageWithPropertiesEntity> reprCoveragesSelected;
+  late final List<ProductCoverageEntity> productCoveragesToAdd;
+  final bool renewalChecked;
+  final bool specialConditionChecked;
+  final bool convertableChecked;
+  final bool beforeBirthChecked;
+  final bool addCovChecked;
 
   AddCoverageState({
     super.status = Status.initial,
     super.message = '',
     this.reprCoverage,
     this.step = AddCoverageStep.selectReprCoverage,
-    List<ProductCoverageEntity>? candidates,
-    List<ProductCoverageEntity>? seleted,
+    List<ReprCoverageWithPropertiesEntity>? reprCoverageCandidates,
+    List<ReprCoverageWithPropertiesEntity>? reprCoveragesSelected,
+    List<ProductCoverageEntity>? productCoveragesToAdd,
+    this.renewalChecked = false,
+    this.specialConditionChecked = false,
+    this.convertableChecked = false,
+    this.beforeBirthChecked = false,
+    this.addCovChecked = false,
   }) {
-    this.candidates = candidates ?? [];
-    this.seleted = seleted ?? [];
+    this.reprCoverageCandidates = reprCoverageCandidates ?? [];
+    this.reprCoveragesSelected = reprCoveragesSelected ?? [];
+    this.productCoveragesToAdd = productCoveragesToAdd ?? [];
   }
 }

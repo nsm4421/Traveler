@@ -6,7 +6,8 @@ part 'product_coverage.entity.g.dart';
 /// 상품담보
 @CopyWith(copyWithNull: true)
 class ProductCoverageEntity {
-  final String? code; // 상품담보코드
+  final String reprCovCode;
+  final String guranteeCode;
   final String name;
   final int seq;
   final bool isRenewal;
@@ -16,8 +17,9 @@ class ProductCoverageEntity {
   final bool isAddCov;
 
   ProductCoverageEntity(
-      {required this.name,
-      this.code,
+      {required this.reprCovCode,
+      this.guranteeCode = '00',
+      required this.name,
       this.seq = 0,
       this.isRenewal = false,
       this.isSpecialConditioned = false,
@@ -25,47 +27,21 @@ class ProductCoverageEntity {
       this.isBeforeBirth = false,
       this.isAddCov = false});
 
-  factory ProductCoverageEntity.fromReprCoverage({
-    String? code,
-    required ReprCoverageEntity reprCoverage,
-    String guranteeCode = '00', // 세부보장코드
-    required int seq,
-    bool isAddCov = false,
-    bool isBeforeBirth = false,
-    bool isConvertable = false,
-    bool isRenewal = false,
-    bool isSpecialConditioned = false,
-  }) {
-    var name = reprCoverage.name;
-    if (guranteeCode != '00') {
-      // 세부보장명
-      name =
-          '$name[${reprCoverage.gurantees.firstWhere((e) => e.code == guranteeCode).name}]';
-    }
-    if (isAddCov) {
-      name = '$name(추가보장)';
-    }
-    if (isBeforeBirth) {
-      name = '$name(출생전)';
-    }
-    if (isConvertable) {
-      name = "$name(전환형)";
-    }
-    if (isRenewal) {
-      name = '갱신형 $name';
-    }
-    if (isSpecialConditioned) {
-      name = '[특별조건부]$name';
-    }
+  factory ProductCoverageEntity.fromReprCoverageWithProperty(
+      {required ReprCoverageWithPropertiesEntity reprCoverageWithProperty,
+      String guranteeCode = '00', // 세부보장코드,
+      int seq = 0}) {
     return ProductCoverageEntity(
-      code: code,
+      reprCovCode: reprCoverageWithProperty.reprCoverage.code,
+      name: guranteeCode == '00'
+          ? reprCoverageWithProperty.name
+          : '${reprCoverageWithProperty.name}(${reprCoverageWithProperty.reprCoverage.gurantees.firstWhere((e) => e.code == guranteeCode).name})',
       seq: seq,
-      name: name,
-      isRenewal: isRenewal,
-      isSpecialConditioned: isSpecialConditioned,
-      isConvertable: isConvertable,
-      isBeforeBirth: isBeforeBirth,
-      isAddCov: isAddCov,
+      isRenewal: reprCoverageWithProperty.isRenewal,
+      isSpecialConditioned: reprCoverageWithProperty.isSpecialConditioned,
+      isConvertable: reprCoverageWithProperty.isConvertable,
+      isBeforeBirth: reprCoverageWithProperty.isBeforeBirth,
+      isAddCov: reprCoverageWithProperty.isAddCov,
     );
   }
 }

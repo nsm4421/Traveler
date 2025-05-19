@@ -1,5 +1,14 @@
 part of 'p_edit_repr_coverage.dart';
 
+enum GuranteePopUpMenu {
+  addBenefit('급부추가'),
+  elimination('면책특성'),
+  exitRate('탈퇴율');
+
+  final String label;
+  const GuranteePopUpMenu(this.label);
+}
+
 class GuranteeWidget extends StatelessWidget {
   const GuranteeWidget(this._gurantee, {super.key});
 

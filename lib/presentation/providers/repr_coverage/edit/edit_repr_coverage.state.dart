@@ -1,6 +1,6 @@
 part of 'edit_repr_coverage.cubit.dart';
 
-@CopyWith()
+@CopyWith(copyWithNull: true)
 class EditReprCoverageState extends AbsBlocState {
   final String name; // 담보명
   final CoverageCategory category; // 담보유형
